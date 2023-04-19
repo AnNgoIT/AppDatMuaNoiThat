@@ -1,9 +1,10 @@
-package com.example.demo.model.User;
+package com.example.demo.DAO;
 
+import com.example.demo.Entity.Cart;
+import com.example.demo.Entity.User;
+import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 @Service
 public class UserDAO {
     @Autowired
@@ -16,3 +17,4 @@ public class UserDAO {
         return repository.save(user);
     }
 }
+
