@@ -26,13 +26,13 @@ import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.Model.CartModel;
 import ute.fit.noithatapp.Model.UserModel;
 import ute.fit.noithatapp.R;
-
 public class LoginActivity extends AppCompatActivity {
     EditText editTextUserName,editTextPassWord;
     Button loginButton,signupButton;
     UserApi userApi;
     Intent intent;
     UserModel userModel;
+
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

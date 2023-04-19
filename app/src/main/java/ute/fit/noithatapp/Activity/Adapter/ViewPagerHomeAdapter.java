@@ -1,12 +1,9 @@
 package ute.fit.noithatapp.Activity.Adapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-
 import ute.fit.noithatapp.Activity.Fragment.HomeFragment;
 import ute.fit.noithatapp.Activity.Fragment.UserFragment;
 
