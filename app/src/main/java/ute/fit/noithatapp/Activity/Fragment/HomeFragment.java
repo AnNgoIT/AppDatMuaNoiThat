@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
     CategoryApi categoryApi;
     RetrofitServer retrofitServer;
     CategoryAdapter categoryAdapter;
-    ArrayList<CategoryModel> categoryModelArrayList=new ArrayList<>();
+    ArrayList<CategoryModel> categoryModelArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,31 +53,31 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerViewCategory.setLayoutManager(layoutManager);
         //
-
-        categoryAdapter=new CategoryAdapter(getListCategory(),new CategoryAdapter.IClick() {
-            @Override
-            public void onClickCategoryItem(CategoryModel categoryModel) {
-                startActivity(new Intent(getActivity(),MainActivity.class));
-            }
-        });
-        recyclerViewCategory.setAdapter(categoryAdapter);
-        RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(getActivity(),DividerItemDecoration.HORIZONTAL);
+        getListCategory();
+        RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
         recyclerViewCategory.addItemDecoration(itemDecoration);
         return mView;
     }
-    private ArrayList<CategoryModel> getListCategory() {
-        retrofitServer=new RetrofitServer();
-        categoryApi=retrofitServer.getRetrofit().create(CategoryApi.class);
+    private void getListCategory() {
+        categoryModelArrayList = new ArrayList<>();
+        retrofitServer = new RetrofitServer();
+        categoryApi = retrofitServer.getRetrofit().create(CategoryApi.class);
         categoryApi.getCategory().enqueue(new Callback<ArrayList<CategoryModel>>() {
             @Override
             public void onResponse(Call<ArrayList<CategoryModel>> call, Response<ArrayList<CategoryModel>> response) {
-                    categoryModelArrayList=response.body();
+                categoryModelArrayList = response.body();
+                categoryAdapter = new CategoryAdapter(categoryModelArrayList, new CategoryAdapter.IClick() {
+                    @Override
+                    public void onClickCategoryItem(CategoryModel categoryModel) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                    }
+                });
+                recyclerViewCategory.setAdapter(categoryAdapter);
             }
             @Override
             public void onFailure(Call<ArrayList<CategoryModel>> call, Throwable t) {
-                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
-        return categoryModelArrayList;
     }
 }

@@ -1,39 +1,32 @@
 package ute.fit.noithatapp.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryModel {
-    private int id;
+public class CategoryModel implements Serializable {
+    private int categoryId;
     private String name;
 
-    private ArrayList<ProductModel> productModels;
+    private ArrayList<ProductModel> product;
 
-    public CategoryModel(int id, String name, ArrayList<ProductModel> productModels) {
-        this.id = id;
-        this.name = name;
-        this.productModels = productModels;
-    }
-
-    public CategoryModel(int id, String name) {
-        this.id = id;
+    public CategoryModel(int categoryId, String name) {
+        this.categoryId = categoryId;
         this.name = name;
     }
 
-    public ArrayList<ProductModel> getProductModels() {
-        return productModels;
+    public CategoryModel(int categoryId, String name, ArrayList<ProductModel> product) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.product = product;
     }
 
-    public void setProductModels(ArrayList<ProductModel> productModels) {
-        this.productModels = productModels;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getName() {
@@ -44,4 +37,11 @@ public class CategoryModel {
         this.name = name;
     }
 
+    public ArrayList<ProductModel> getProduct() {
+        return product;
+    }
+
+    public void setProduct(ArrayList<ProductModel> product) {
+        this.product = product;
+    }
 }
