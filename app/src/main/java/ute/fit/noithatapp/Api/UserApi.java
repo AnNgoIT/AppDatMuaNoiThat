@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 import ute.fit.noithatapp.Model.UserModel;
 
 public interface UserApi {
-    @POST("/user/get")
+    @POST("/user/login")
     Call<UserModel> getUser(@Body UserModel user);
 
     @POST("/user/signup")

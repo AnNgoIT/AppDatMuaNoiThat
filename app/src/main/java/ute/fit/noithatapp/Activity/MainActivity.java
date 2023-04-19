@@ -9,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.google.android.material.tabs.TabLayout;
+
 import ute.fit.noithatapp.R;
 
 

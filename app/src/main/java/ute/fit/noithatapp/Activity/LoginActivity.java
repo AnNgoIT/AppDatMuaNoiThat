@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +23,7 @@ import retrofit2.Response;
 import ute.fit.noithatapp.Api.UserApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
+import ute.fit.noithatapp.Model.CartModel;
 import ute.fit.noithatapp.Model.UserModel;
 import ute.fit.noithatapp.R;
 
@@ -33,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+       if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, HomeActivity.class));
         }
