@@ -3,6 +3,7 @@ package com.example.demo.Entity;
 import java.io.Serializable;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,9 @@ public class    Category implements Serializable{
     @Column(name = "name", columnDefinition = "nvarchar(100) not null")
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy="category",cascade = CascadeType.ALL)
     private Set<Product> product;
+
+    private String image;
 }

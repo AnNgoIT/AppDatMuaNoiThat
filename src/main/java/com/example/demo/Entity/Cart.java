@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +21,10 @@ public class Cart implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cartid")
     private Long cartid;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "cart")
+    private CartItem cartItem;
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
