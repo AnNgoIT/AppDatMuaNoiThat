@@ -2,4 +2,27 @@
     <string name="app_name">NoiThatApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="make_home_n_beautiful">Make home\n BEAUTIFUL</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="productName">Minimal Stand</string>
+    <string name="productPrice">$ 25</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="minimal_sta">
+Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home.
+</string>
+    <string name="title_activity_cart">CartActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- strings.xml -->
+    <string name="my_cart">My cart</string>
+    <string name="total_">Total:</string>
+    <string name="some_id">$ 95.00</string>
+    <string name="checkout">Check out</string>
 </resources>
