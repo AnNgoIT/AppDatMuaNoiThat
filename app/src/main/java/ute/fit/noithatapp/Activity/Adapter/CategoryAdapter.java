@@ -1,37 +1,33 @@
 package ute.fit.noithatapp.Activity.Adapter;
 
-import android.content.Intent;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import ute.fit.noithatapp.Activity.MainActivity;
 import ute.fit.noithatapp.Model.CategoryModel;
 import ute.fit.noithatapp.R;
+import com.bumptech.glide.Glide;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
-    public ArrayList<CategoryModel> getCategoryModelList() {
-        return categoryModelList;
-    }
-
-    public void setCategoryModelList(ArrayList<CategoryModel> categoryModelList) {
-        this.categoryModelList = categoryModelList;
-    }
-
     private ArrayList<CategoryModel> categoryModelList;
     private IClick iClick;
+    private Context context;
+
+    //interface for the event click
     public interface IClick{
         void onClickCategoryItem(CategoryModel categoryModel);
     }
 
-    public CategoryAdapter(ArrayList<CategoryModel> categoryModelList, IClick iClick) {
+    public CategoryAdapter(Context context,ArrayList<CategoryModel> categoryModelList, IClick iClick) {
+        this.context=context;
         this.categoryModelList = categoryModelList;
         this.iClick=iClick;
     }
@@ -39,6 +35,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.categoryModelList=categories;
     }
 
+    public ArrayList<CategoryModel> getCategoryModelList() {
+        return categoryModelList;
+    }
+
+    public void setCategoryModelList(ArrayList<CategoryModel> categoryModelList) {
+        this.categoryModelList = categoryModelList;
+    }
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,10 +54,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         CategoryModel categoryModel=categoryModelList.get(position);
         if(categoryModel==null)
             return;
+        //text
         holder.textViewCategory.setText(categoryModel.getName());
         holder.textViewCategory.setOnClickListener(view -> {
             iClick.onClickCategoryItem(categoryModel);
         });
+
+        //image
+        Glide.with(context).load(categoryModel.getImage()).into(holder.imgViewCategory);
+        holder.imgViewCategory.setOnClickListener(view -> {
+            iClick.onClickCategoryItem(categoryModel);
+        });
+
 
     }
 
@@ -68,9 +79,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewCategory;
+        private ImageView imgViewCategory;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewCategory=itemView.findViewById(R.id.textViewCategory);
+            imgViewCategory=itemView.findViewById(R.id.imgbtnCategory);
+
         }
     }
 }
