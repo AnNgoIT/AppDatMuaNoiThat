@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -36,8 +34,9 @@ public class HomeActivity extends AppCompatActivity {
         ViewPagerHomeAdapter viewPagerHomeAdapter=new ViewPagerHomeAdapter(getSupportFragmentManager(),FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mViewpager.setAdapter(viewPagerHomeAdapter);
         mTabLayout.setupWithViewPager(mViewpager);
-        mTabLayout.getTabAt(0).setIcon(R.drawable.baseline_home_24);
-        mTabLayout.getTabAt(1).setIcon(R.drawable.baseline_settings_24);
+        mTabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_bell);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
         //
 
     }
