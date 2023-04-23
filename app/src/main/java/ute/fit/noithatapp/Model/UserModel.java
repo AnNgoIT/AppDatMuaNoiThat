@@ -7,6 +7,14 @@ public class UserModel {
     private String username;
     private String password;
 
+    public UserModel(String username, String password, CartModel cartModel) {
+        this.username = username;
+        this.password = password;
+        this.cartModel = cartModel;
+    }
+
+    private CartModel cartModel;
+
     public UserModel(String name, String username, String password) {
         this.name = name;
         this.username = username;

@@ -3,7 +3,6 @@ package ute.fit.noithatapp.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -98,9 +97,10 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<UserModel> call, Throwable t) {
                         Toast.makeText(SignupActivity.this,"Fail",Toast.LENGTH_SHORT).show();
-                        Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE,"Error",t);
                     }
                 });
+
+
             }
             else {
                 Toast.makeText(SignupActivity.this,"please enter confirm password",Toast.LENGTH_SHORT).show();
