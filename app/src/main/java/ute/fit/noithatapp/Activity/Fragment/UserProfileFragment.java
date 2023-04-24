@@ -1,5 +1,6 @@
 package ute.fit.noithatapp.Activity.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import ute.fit.noithatapp.Activity.LoginActivity;
 import ute.fit.noithatapp.Activity.SettingActivity;
@@ -21,7 +24,7 @@ import ute.fit.noithatapp.R;
  * create an instance of this fragment.
  */
 public class UserProfileFragment extends Fragment {
-
+    public Activity activity= getActivity();
     RelativeLayout setting;
 
     Intent intent;
