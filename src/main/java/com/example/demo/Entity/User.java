@@ -17,7 +17,10 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name = "userId")
+	private int userId;
+
+
 	private String name;
 	private String username;
 	private String password;
@@ -31,7 +34,7 @@ public class User {
 	}
 
 	public int getId() {
-		return id;
+		return userId;
 	}
 
 
@@ -48,7 +51,7 @@ public class User {
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.userId = userId;
 	}
 
 	public void setName(String name) {
@@ -62,7 +65,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User{" +
-				"id=" + id +
+				"userId=" + userId +
 				", name='" + name + '\'' +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +

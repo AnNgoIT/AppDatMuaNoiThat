@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 @Table(name = "CartItem")
 public class CartItem implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class CartItem implements Serializable {
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cartId",referencedColumnName = "cartid")
+    @JoinColumn(name = "cartId",referencedColumnName = "cartId")
     private Cart cart;
 
     @JsonBackReference

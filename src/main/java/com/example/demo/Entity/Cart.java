@@ -15,12 +15,12 @@ import lombok.*;
 
 @Table(name = "Cart")
 public class Cart implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cartid")
-    private Long cartid;
+    @Column(name = "cartId")
+    private Long cartId;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "cart")
@@ -28,7 +28,7 @@ public class Cart implements Serializable{
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
 
 }
