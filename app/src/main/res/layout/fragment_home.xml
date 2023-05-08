@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/layout_category"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
-            android:background="@drawable/category">
+            android:background="@drawable/rec_product">
             <ImageView
                 android:id="@+id/imgViewProduct1"
                 android:layout_width="130dp"
@@ -104,7 +104,7 @@
             app:layout_constraintTop_toTopOf="@id/layout_product1"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/category">
+            android:background="@drawable/rec_product">
             <ImageView
                 android:id="@+id/imgViewProduct2"
                 android:layout_width="130dp"
