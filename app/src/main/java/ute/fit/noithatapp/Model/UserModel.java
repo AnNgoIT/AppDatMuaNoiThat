@@ -2,18 +2,11 @@ package ute.fit.noithatapp.Model;
 
 public class UserModel {
 
-    private int id;
+    private int userId;
     private String name;
     private String username;
     private String password;
 
-    public UserModel(String username, String password, CartModel cartModel) {
-        this.username = username;
-        this.password = password;
-        this.cartModel = cartModel;
-    }
-
-    private CartModel cartModel;
 
     public UserModel(String name, String username, String password) {
         this.name = name;
@@ -21,46 +14,46 @@ public class UserModel {
         this.password = password;
     }
 
-    public UserModel(int id, String name, String username, String password) {
-        this.id = id;
+    public UserModel(int userId, String name, String username, String password) {
+        this.userId = userId;
         this.name = name;
         this.username = username;
         this.password = password;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setUser(String username) {
+    public UserModel(String username, String password) {
         this.username = username;
+        this.password = password;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getPassword() {
+        return password;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUsername(String username) {
+        this.username = username;
     }
-    public UserModel(String user, String password) {
-        this.username = user;
+
+    public void setPassword(String password) {
         this.password = password;
     }
 }
