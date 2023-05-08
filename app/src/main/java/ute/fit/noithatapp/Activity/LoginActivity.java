@@ -36,10 +36,10 @@ public class LoginActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+       /*if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, HomeActivity.class));
-        }
+        }*/
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(view -> {
             String user=String.valueOf(editTextUserName.getText());
             String pass=String.valueOf(editTextPassWord.getText());
-            userModel=new UserModel(user,pass);
             if (TextUtils.isEmpty(pass)) {
                 editTextPassWord.setError("Please enter password");
                 editTextPassWord.requestFocus();
@@ -66,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 editTextUserName.requestFocus();
                 return;
             }
+            userModel=new UserModel(user,pass);
             userApi.getUser(userModel).enqueue(new Callback<UserModel>() {
                 @Override
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
