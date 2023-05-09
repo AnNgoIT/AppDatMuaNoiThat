@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,11 +70,13 @@ public class LoginActivity extends AppCompatActivity {
             userApi.getUser(userModel).enqueue(new Callback<UserModel>() {
                 @Override
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                    Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_SHORT).show();
-                    intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(userModel);
-                    startActivity(intent);
-                    finish();
+                    if(response.body() != null){
+                        Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(userModel);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
                 @Override

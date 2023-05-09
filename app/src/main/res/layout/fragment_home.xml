@@ -55,13 +55,15 @@
         <FrameLayout
             android:id="@+id/layout_category"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             app:layout_constraintTop_toBottomOf="@id/beautiful"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_category"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"/>
         </FrameLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_product1"
@@ -70,7 +72,8 @@
             app:layout_constraintTop_toBottomOf="@id/layout_category"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
-            android:background="@drawable/rec_product">
+            android:background="@drawable/rec_product"
+            android:layout_marginTop="30dp">
             <ImageView
                 android:id="@+id/imgViewProduct1"
                 android:layout_width="130dp"

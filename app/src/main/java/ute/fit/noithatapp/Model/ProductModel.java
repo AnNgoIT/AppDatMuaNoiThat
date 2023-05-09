@@ -6,15 +6,13 @@ public class ProductModel {
     private Long price;
     private CategoryModel category;
     private long quantity;
-    private CartItemModel cartItem;
     private String image;
 
-    public ProductModel(int productId, String name, Long price, long quantity, CartItemModel cartItem, String image) {
+    public ProductModel(int productId, String name, Long price, long quantity, String image) {
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.cartItem = cartItem;
         this.image = image;
     }
 
@@ -58,13 +56,6 @@ public class ProductModel {
         this.quantity = quantity;
     }
 
-    public CartItemModel getCartItem() {
-        return cartItem;
-    }
-
-    public void setCartItem(CartItemModel cartItem) {
-        this.cartItem = cartItem;
-    }
 
     public String getImage() {
         return image;
