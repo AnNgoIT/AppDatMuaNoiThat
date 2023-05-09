@@ -1,13 +1,12 @@
 package com.example.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -17,24 +16,18 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userId")
-	private Long userId;
-
-
+	private int id;
 	private String name;
 	private String username;
 	private String password;
 
-	@JsonManagedReference
-	@OneToOne(mappedBy = "user")
-	private Cart cart;
 
 	public String getUsername() {
 		return username;
 	}
 
-	public Long getId() {
-		return userId;
+	public int getId() {
+		return id;
 	}
 
 
@@ -51,7 +44,7 @@ public class User {
 	}
 
 	public void setId(int id) {
-		this.userId = userId;
+		this.id = id;
 	}
 
 	public void setName(String name) {
@@ -65,10 +58,11 @@ public class User {
 	@Override
 	public String toString() {
 		return "User{" +
-				"userId=" + userId +
+				"id=" + id +
 				", name='" + name + '\'' +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				'}';
 	}
+
 }

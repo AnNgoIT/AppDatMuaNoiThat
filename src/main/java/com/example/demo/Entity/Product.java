@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Product")
 public class Product implements Serializable {
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,22 +26,23 @@ public class Product implements Serializable {
 
     @Column(name = "name", columnDefinition = "nvarchar(100) not null")
     private String name;
-    @Column(name = "urlImage", columnDefinition = "nvarchar(250)")
-    private String Image;
+
 
     @Column(name = "price", columnDefinition = "int not null")
     private long price;
+
+
+    @Column(name = "quantity", columnDefinition = "int not null")
+    private long quantity;
+
+
+    @Column(name = "urlImage", columnDefinition = "nvarchar(250)")
+    private String Image;
 
     @JsonBackReference
     @ManyToOne
     private Category category;
 
-    @Column(name = "quantity", columnDefinition = "int not null")
-    private long quantity;
-
-    @JsonManagedReference
-    @OneToOne(mappedBy = "product")
-    private CartItem cartItem;
 
 
 }

@@ -6,27 +6,20 @@ import com.example.demo.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 public class UserController {
 
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    private CartDAO cartDAO;
+    private OrderDAO orderDAO;
     @Autowired
     private CategoryDAO categoryDAO;
     @Autowired
     private ProductDAO productDAO;
-    @Autowired
-    private CartItemDAO cartItemDAO;
 
     @PostMapping("/user/signup")
     public User saveUser(@RequestBody User user){
-        Cart cart=new Cart();
-        cart.setUser(user);
-        cartDAO.save(cart);
         return userDAO.save(user);
     }
 
@@ -44,13 +37,8 @@ public class UserController {
     public Iterable<Product> getProduct(){
         return productDAO.getProduct();
     }
-
     @GetMapping("user/products/{id}")
     public Iterable<Product> getProductByCategory(@PathVariable("id") Integer categoryId){
         return productDAO.getProductByCategory(categoryDAO.getCategoryById(categoryId));
-    }
-    @GetMapping("user/cart/{id}")
-    public Optional<Cart> getProductInCart(@PathVariable("id") Integer cartId){
-       return cartDAO.getCartById(cartId);
     }
 }

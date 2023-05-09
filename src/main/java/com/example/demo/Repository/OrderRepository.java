@@ -1,14 +1,12 @@
 package com.example.demo.Repository;
 
-import com.example.demo.Entity.Cart;
+import com.example.demo.Entity.Order;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CartRepository extends CrudRepository<Cart,Integer> {
+public interface OrderRepository extends CrudRepository<Order,Integer> {
 
-    @Override
-    Optional<Cart> findById(Integer integer);
 }
