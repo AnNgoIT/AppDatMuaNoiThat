@@ -43,6 +43,9 @@ public class Product implements Serializable {
     @ManyToOne
     private Category category;
 
+    @Column(name = "description", columnDefinition = "nvarchar(250)")
+    private String description;
+
 
 
 }

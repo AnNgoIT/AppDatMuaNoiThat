@@ -20,4 +20,6 @@ public class ProductDAO {
     }
 
     public Iterable<Product> getProductByCategory(Optional<Category> cate){return productRepository.findProductByCategory(cate);}
+
+    public Iterable<Product> getProductByNameContaining(String name){return productRepository.findProductByNameContaining(name);}
 }

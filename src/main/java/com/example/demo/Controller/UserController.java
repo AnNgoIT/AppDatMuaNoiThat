@@ -6,6 +6,8 @@ import com.example.demo.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class UserController {
 
@@ -37,8 +39,19 @@ public class UserController {
     public Iterable<Product> getProduct(){
         return productDAO.getProduct();
     }
-    @GetMapping("user/products/{id}")
+    @RequestMapping("user/category/{id}")
     public Iterable<Product> getProductByCategory(@PathVariable("id") Integer categoryId){
         return productDAO.getProductByCategory(categoryDAO.getCategoryById(categoryId));
     }
+
+    @RequestMapping("user/product/{id}")
+    public Optional<Product> getProductById(@PathVariable("id") Integer productId){
+        return productDAO.getProductById(productId);
+    }
+
+    @RequestMapping("user/products/{name}")
+    public Iterable<Product> getProductByName(@PathVariable("name") String name){
+        return productDAO.getProductByNameContaining(name);
+    }
+
 }
