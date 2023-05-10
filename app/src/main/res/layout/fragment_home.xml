@@ -21,7 +21,8 @@
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/make_home_b"/>
         <TextView
             android:id="@+id/beautiful"
             android:layout_width="wrap_content"
@@ -30,14 +31,16 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:text="BEAUTIFUL"
+            android:textColor="@color/cardview_dark_background"
             android:fontFamily="sans-serif-condensed-medium"
             app:layout_constraintTop_toBottomOf="@id/make_home"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/make_home_b"/>
         <ImageButton
             android:id="@+id/imgvCart"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="30dp"
@@ -45,8 +48,8 @@
             android:background="@drawable/baseline_shopping_cart_24" />
         <ImageButton
             android:id="@+id/imgvSearch"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="30dp"
@@ -67,13 +70,13 @@
         </FrameLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_product1"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="230dp"
             app:layout_constraintTop_toBottomOf="@id/layout_category"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
-            android:background="@drawable/rec_product"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rec_product">
             <ImageView
                 android:id="@+id/imgViewProduct1"
                 android:layout_width="130dp"
@@ -88,7 +91,7 @@
                 android:layout_height="30dp"
                 android:textAlignment="center"
                 android:textSize="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintTop_toBottomOf="@id/imgViewProduct1"
                 app:layout_constraintStart_toStartOf="parent" />
             <TextView
@@ -103,7 +106,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_product2"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="230dp"
             app:layout_constraintTop_toTopOf="@id/layout_product1"
             app:layout_constraintEnd_toEndOf="parent"
