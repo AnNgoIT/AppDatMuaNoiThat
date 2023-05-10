@@ -1,6 +1,7 @@
 package ute.fit.noithatapp.Activity.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
+import ute.fit.noithatapp.Activity.ProductByCategoryActivity;
+import ute.fit.noithatapp.Interface.ItemClickListener;
 import ute.fit.noithatapp.Model.CategoryModel;
 import ute.fit.noithatapp.R;
-import com.bumptech.glide.Glide;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
     private ArrayList<CategoryModel> categoryModelList;
@@ -51,20 +55,27 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        CategoryModel categoryModel=categoryModelList.get(position);
-        if(categoryModel==null)
-            return;
-        //text
-        holder.textViewCategory.setText(categoryModel.getName());
-        holder.textViewCategory.setOnClickListener(view -> {
-            iClick.onClickCategoryItem(categoryModel);
-        });
+        holder.textViewCategory.setText(categoryModelList.get(position).getName());
 
-        //image
-        Glide.with(context).load(categoryModel.getImage()).into(holder.imgViewCategory);
-        holder.imgViewCategory.setOnClickListener(view -> {
-            iClick.onClickCategoryItem(categoryModel);
+//        if(categoryModel==null)
+//            return;
+//        //text
+//        holder.textViewCategory.setText(categoryModel.getName());
+//        holder.textViewCategory.setOnClickListener(view -> {
+//            iClick.onClickCategoryItem(categoryModel);
+//        });
+//
+//        //image
+//        Glide.with(context).load(categoryModel.getImage()).into(holder.imgViewCategory);
+//        holder.imgViewCategory.setOnClickListener(view -> {
+//            iClick.onClickCategoryItem(categoryModel);
+//        });
+        holder.setItemClickListener((view, position1, isLongClick) -> {
+            Intent i = new Intent(context, ProductByCategoryActivity.class);
+            i.putExtra("idCategory", String.valueOf(position1 + 1));
+            view.getContext().startActivity(i);
         });
+        Glide.with(context).load(categoryModelList.get(position).getImage()).into(holder.imgViewCategory);
 
 
     }
@@ -77,11 +88,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return 0;
     }
 
-    public class CategoryViewHolder extends RecyclerView.ViewHolder{
+    public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         private TextView textViewCategory;
         private ImageView imgViewCategory;
+        private ItemClickListener itemClickListener;
+
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), true);
+            return true;
+        }
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             textViewCategory=itemView.findViewById(R.id.textViewCategory);
             imgViewCategory=itemView.findViewById(R.id.imgbtnCategory);
 

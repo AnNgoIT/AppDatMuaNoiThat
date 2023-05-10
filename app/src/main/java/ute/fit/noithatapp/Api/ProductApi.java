@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 import ute.fit.noithatapp.Model.ProductModel;
 
 public interface ProductApi {
-    @GET("/user/products")
+    @GET("/products")
     Call<ArrayList<ProductModel>> getProducts();
 }
