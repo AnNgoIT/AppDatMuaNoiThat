@@ -65,15 +65,6 @@ public class HomeFragment extends Fragment {
         imgvCart.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CartActivity.class));
         });
-        //ProductDetail
-        layout1=mView.findViewById(R.id.layout_product1);
-        layout2=mView.findViewById(R.id.layout_product2);
-        layout1.setOnClickListener(view -> {
-            startActivity(new Intent(getActivity(), ProductDetailActivity.class));
-        });
-        layout2.setOnClickListener(view -> {
-            startActivity(new Intent(getActivity(), ProductDetailActivity.class));
-        });
         recyclerViewCategory=mView.findViewById(R.id.rcv_category);//
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerViewCategory.setLayoutManager(layoutManager);
@@ -99,6 +90,24 @@ public class HomeFragment extends Fragment {
                 productPrice1.setText(productModel1.getPrice().toString()+" $");
                 productName2.setText(productModel2.getName());
                 productPrice2.setText(productModel2.getPrice().toString()+" $");
+
+                //ProductDetail //transaction data
+                layout1=mView.findViewById(R.id.layout_product1);
+                layout2=mView.findViewById(R.id.layout_product2);
+                layout1.setOnClickListener(view -> {
+                    Intent intent=new Intent(getActivity(), ProductDetailActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putInt("productId",productModel1.getProductId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                });
+                layout2.setOnClickListener(view -> {
+                    Intent intent=new Intent(getActivity(), ProductDetailActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putInt("productId",productModel2.getProductId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                });
             }
 
             @Override
@@ -119,7 +128,11 @@ public class HomeFragment extends Fragment {
                 categoryAdapter = new CategoryAdapter(getContext(),categoryModelArrayList, new CategoryAdapter.IClick() {
                     @Override
                     public void onClickCategoryItem(CategoryModel categoryModel) {
-                        startActivity(new Intent(getActivity(), ProductByCategoryActivity.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("categoryId",categoryModel.getCategoryId());
+                        Intent intent =new Intent(getActivity(), ProductByCategoryActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 });
                 recyclerViewCategory.setAdapter(categoryAdapter);

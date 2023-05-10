@@ -2,6 +2,7 @@ package ute.fit.noithatapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,5 +24,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(view -> {
             onBackPressed();
         });
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            int productId = bundle.getInt("productId", 0);
+            System.out.println(productId);
+        }
     }
 }
