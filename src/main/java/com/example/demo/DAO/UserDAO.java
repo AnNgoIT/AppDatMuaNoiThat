@@ -5,6 +5,8 @@ import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserDAO {
     @Autowired
@@ -18,5 +20,7 @@ public class UserDAO {
     }
 
     public Iterable<User> findAll(){return repository.findAll();}
+
+    public Optional<User> findUserById(Integer userId){return repository.findById(userId);}
 }
 

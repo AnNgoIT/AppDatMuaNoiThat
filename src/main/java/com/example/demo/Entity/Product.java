@@ -46,6 +46,4 @@ public class Product implements Serializable {
     @Column(name = "description", columnDefinition = "nvarchar(250)")
     private String description;
 
-
-
 }

@@ -6,6 +6,7 @@ import com.example.demo.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -52,6 +53,69 @@ public class UserController {
     @RequestMapping("user/products/{name}")
     public Iterable<Product> getProductByName(@PathVariable("name") String name){
         return productDAO.getProductByNameContaining(name);
+    }
+
+    //get product in cart
+    @RequestMapping("user/order/inCart/{id}")
+    public ArrayList<Product> getProductInCartByUser(@PathVariable("id") Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Order> orders= orderDAO.getOrderByUser(user);
+        ArrayList<Product> products=new ArrayList<>();
+        for (int i=0;i<orders.size();i++){
+            if (orders.get(i).getState().equals("inCart"))
+                products.add(orders.get(i).getProduct());
+        }
+        return products;
+    }
+    //get count product in cart
+    @RequestMapping("user/order/countProduct/inCart/{id}")
+    public ArrayList<Long> getCountProductInCart(@PathVariable("id")Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Order> orders= orderDAO.getOrderByUser(user);
+        ArrayList<Long> counts=new ArrayList<Long>();
+        for (int i=0;i<orders.size();i++){
+            if (orders.get(i).getState().equals("inCart"))
+                counts.add(orders.get(i).getCount());
+        }
+        return counts;
+    }
+
+    //get product processing
+    @RequestMapping("user/order/processing/{id}")
+    public ArrayList<Product> getProductProcessingByUser(@PathVariable("id") Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Order> orders= orderDAO.getOrderByUser(user);
+        ArrayList<Product> products=new ArrayList<>();
+        for (int i=0;i<orders.size();i++){
+            if (orders.get(i).getState().equals("processing"))
+                products.add(orders.get(i).getProduct());
+        }
+        return products;
+    }
+
+    //get count product processing
+    @RequestMapping("user/order/countProduct/processing/{id}")
+    public ArrayList<Long> getCountProductProcessing(@PathVariable("id")Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Order> orders= orderDAO.getOrderByUser(user);
+        ArrayList<Long> counts=new ArrayList<Long>();
+        for (int i=0;i<orders.size();i++){
+            if (orders.get(i).getState().equals("processing"))
+                counts.add(orders.get(i).getCount());
+        }
+        return counts;
+    }
+
+    @RequestMapping("user/order/processed/{id}")
+    public ArrayList<Product> getProductProcessedByUser(@PathVariable("id") Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Order> orders= orderDAO.getOrderByUser(user);
+        ArrayList<Product> products=new ArrayList<>();
+        for (int i=0;i<orders.size();i++){
+            if (orders.get(i).getState().equals("processed"))
+                products.add(orders.get(i).getProduct());
+        }
+        return products;
     }
 
 }
