@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -18,6 +16,7 @@ public interface CategoryApi {
     @GET("/user/categories")
     Call<ArrayList<CategoryModel>> getCategory();
 
-    @GET("/user/category/{id}")
-    Call<ArrayList<ProductModel>> getProductByCategory(@Path("id") int categoryId);
+
+    @GET("user/category/{id}")
+    Call<ArrayList<ProductModel>> getProductByCategory(@Path("id")int categoryId);
 }

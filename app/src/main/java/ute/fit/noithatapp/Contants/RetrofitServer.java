@@ -7,16 +7,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitServer {
     private Retrofit retrofit;
-    public RetrofitServer(){
-        initializeRetrofit();
+    public static RetrofitServer retrofitClient;
+
+
+    public static RetrofitServer getInstance() {
+        if (retrofitClient == null) {
+            retrofitClient = new RetrofitServer();
+        }
+        return retrofitClient;
     }
-    public void initializeRetrofit(){
-        retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.1.11:9000")
+//    public RetrofitServer(){
+//        initializeRetrofit();
+//    }
+
+    public Retrofit initializeRetrofit(String url){
+        return new Retrofit.Builder()
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .build();
     }
-    public Retrofit getRetrofit(){
-        return retrofit;
+    public Retrofit getRetrofit(String url){
+        return initializeRetrofit(url);
     }
 }

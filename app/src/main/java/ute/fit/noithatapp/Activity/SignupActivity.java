@@ -1,5 +1,7 @@
 package ute.fit.noithatapp.Activity;
 
+import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,10 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +55,7 @@ public class SignupActivity extends AppCompatActivity {
         edtPassword=findViewById(R.id.PassWord);
         signupButton=findViewById(R.id.Signup);
         retrofitServer=new RetrofitServer();
-        userApi=retrofitServer.getRetrofit().create(UserApi.class);
+        userApi=retrofitServer.getRetrofit(ROOT_URL).create(UserApi.class);
     }
     public void SignUp(){
         signupButton.setOnClickListener(view -> {

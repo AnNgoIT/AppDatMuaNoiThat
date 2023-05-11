@@ -1,10 +1,11 @@
 package ute.fit.noithatapp.Activity;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
+
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,6 +41,8 @@ public class ProductByCategoryActivity extends AppCompatActivity {
     int categoryId;
     CategoryApi categoryApi;
     RetrofitServer retrofitServer;
+    TextView name,price;
+    ImageView image;
     private RecyclerView recyclerViewProductList;
     private RecyclerView.Adapter adapter;
     private ArrayList<ProductModel> productList;
@@ -50,13 +55,20 @@ public class ProductByCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_by_category);
         overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
         retrofitServer=new RetrofitServer();
-        categoryApi=retrofitServer.getRetrofit().create(CategoryApi.class);
+        categoryApi=retrofitServer.getRetrofit(ROOT_URL).create(CategoryApi.class);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             categoryId = bundle.getInt("categoryId", 0);
         }
         recyclerViewProductList(categoryId);
+    }
+    public void Init(){
+        name=findViewById(R.id.productTitle);
+        image = findViewById(R.id.productPic);
+        price = findViewById(R.id.productPrice);
+        retrofitServer=new RetrofitServer();
+        categoryApi=retrofitServer.getRetrofit(ROOT_URL).create(CategoryApi.class);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -10,7 +10,15 @@ public class ProductModel {
 
     private String description;
 
-    public ProductModel(int productId, String name, Long price, long quantity,String description,String image) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ProductModel(int productId, String name, Long price, long quantity, String description, String image) {
         this.productId = productId;
         this.name = name;
         this.price = price;
