@@ -8,12 +8,23 @@ public class ProductModel {
     private long quantity;
     private String image;
 
-    public ProductModel(int productId, String name, Long price, long quantity, String image) {
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ProductModel(int productId, String name, Long price, long quantity, String description, String image) {
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.image = image;
+        this.description=description;
     }
 
     public int getProductId() {

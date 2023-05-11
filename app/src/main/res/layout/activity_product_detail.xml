@@ -64,7 +64,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="120dp"
             android:layout_marginTop="4dp"
             android:padding="10dp"
             android:paddingHorizontal="10dp"
@@ -76,7 +76,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="161dp"
+                android:layout_height="110dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -208,7 +208,7 @@
                 android:layout_width="250dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:text="ADD TO CART"
                 android:textAllCaps="false"
                 app:cornerRadius="6dp"

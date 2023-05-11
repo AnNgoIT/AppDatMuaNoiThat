@@ -5,6 +5,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import ute.fit.noithatapp.Model.CategoryModel;
 import ute.fit.noithatapp.Model.ProductModel;
 
@@ -14,6 +15,6 @@ public interface CategoryApi {
     Call<ArrayList<CategoryModel>> getCategory();
 
 //    @FormUrlEncoded
-    @GET("user/category/1")
-    Call<List<ProductModel>> getProductByCategory();
+    @GET("user/category/{id}")
+    Call<ArrayList<ProductModel>> getProductByCategory(@Path("id")int categoryId);
 }

@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +37,7 @@ public class ProductByCategoryActivity extends AppCompatActivity {
     ImageView image;
     private RecyclerView recyclerViewProductList;
     private RecyclerView.Adapter adapter;
-    private List<ProductModel> productList;
+    private ArrayList<ProductModel> productList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,14 +84,14 @@ public class ProductByCategoryActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    private void recyclerViewProductList(int id){
+    private void recyclerViewProductList(int categoryId){
         recyclerViewProductList = findViewById(R.id.productList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerViewProductList.setLayoutManager(mLayoutManager);
         //Get API
-        categoryApi.getProductByCategory().enqueue(new Callback<List<ProductModel>>() {
+        categoryApi.getProductByCategory(categoryId).enqueue(new Callback<ArrayList<ProductModel>>() {
             @Override
-            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
+            public void onResponse(Call<ArrayList<ProductModel>> call, Response<ArrayList<ProductModel>> response) {
                 if(response.isSuccessful()){
                     productList=response.body();
                     adapter = new ProductByCategoryAdapter(productList, ProductByCategoryActivity.this);
@@ -101,7 +102,7 @@ public class ProductByCategoryActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ProductModel>> call, Throwable t) {
                 Log.d("logg",t.getMessage());
             }
         });

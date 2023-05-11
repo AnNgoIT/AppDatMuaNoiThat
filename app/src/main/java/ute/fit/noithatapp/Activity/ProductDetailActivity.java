@@ -24,7 +24,7 @@ import ute.fit.noithatapp.R;
 
 public class ProductDetailActivity extends AppCompatActivity {
     Button btnBack;
-    TextView productDetailName,productDetailPrice;
+    TextView productDetailName,productDetailPrice,productDetailDes;
     ImageView productDetailImg;
 
     RetrofitServer retrofitServer;
@@ -52,18 +52,20 @@ public class ProductDetailActivity extends AppCompatActivity {
         productDetailName=findViewById(R.id.productDetailName);
         productDetailImg = findViewById(R.id.productDetailImg);
         productDetailPrice = findViewById(R.id.productDetailPrice);
+        productDetailDes=findViewById(R.id.productDetailDes);
         retrofitServer=new RetrofitServer();
         productApi=retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
     }
 
-    private void productDetail(int id){
-        productApi.getProductById().enqueue(new Callback<ProductModel>() {
+    private void productDetail(int productId){
+        productApi.getProductById(productId).enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                 if(response.isSuccessful()){
                     product=response.body();
                     productDetailName.setText(product.getName());
                     productDetailPrice.setText(product.getPrice().toString());
+                    productDetailDes.setText(product.getDescription());
                     Glide.with(getApplicationContext()).load(product.getImage()).into(productDetailImg);
                 }else{
                     response.code();
