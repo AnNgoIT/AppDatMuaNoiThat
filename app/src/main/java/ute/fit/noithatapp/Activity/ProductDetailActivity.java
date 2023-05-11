@@ -12,6 +12,7 @@ import ute.fit.noithatapp.R;
 
 public class ProductDetailActivity extends AppCompatActivity {
     Button btnBack;
+    int productId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +28,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            int productId = bundle.getInt("productId", 0);
-            System.out.println(productId);
+            productId = bundle.getInt("productId", 0);
         }
     }
 }

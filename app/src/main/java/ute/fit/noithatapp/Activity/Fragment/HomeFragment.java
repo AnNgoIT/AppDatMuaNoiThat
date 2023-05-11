@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ArrayList<ProductModel>> call, Response<ArrayList<ProductModel>> response) {
                 productModels=response.body();
                 ProductModel productModel1=productModels.get(0);
-                ProductModel productModel2=productModels.get(1);
+                ProductModel productModel2=productModels.get(2);
                 Glide.with(getContext()).load(productModel1.getImage()).into(productImg1);
                 Glide.with(getContext()).load(productModel2.getImage()).into(productImg2);
                 productName1.setText(productModel1.getName());
