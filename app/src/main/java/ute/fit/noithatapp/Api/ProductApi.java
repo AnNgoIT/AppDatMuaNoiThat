@@ -9,4 +9,7 @@ import ute.fit.noithatapp.Model.ProductModel;
 public interface ProductApi {
     @GET("user/products")
     Call<ArrayList<ProductModel>> getProducts();
+
+    @GET("user/product/2")
+    Call<ProductModel> getProductById();
 }

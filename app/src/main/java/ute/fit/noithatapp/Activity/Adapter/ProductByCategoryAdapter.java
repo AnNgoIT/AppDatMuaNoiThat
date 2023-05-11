@@ -1,6 +1,7 @@
 package ute.fit.noithatapp.Activity.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import ute.fit.noithatapp.Activity.ProductDetailActivity;
 import ute.fit.noithatapp.Interface.ItemClickListener;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
@@ -42,10 +44,10 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
         holder.name.setText(productList.get(position).getName());
         holder.price.setText((productList.get(position).getPrice().toString()));
         holder.itemView.getContext().getResources().getIdentifier(productList.get(position).getName(), "drawable", holder.itemView.getContext().getPackageName());
-//        holder.setItemClickListener((view, position1, isLongClick) -> {
-//            Intent i = new Intent(context, ProductByCategoryActivity.class);
-//            view.getContext().startActivity(i);
-//        });
+        holder.setItemClickListener((view, position1, isLongClick) -> {
+            Intent i = new Intent(context, ProductDetailActivity.class);
+            view.getContext().startActivity(i);
+        });
         Glide.with(context)
                 .load(productList.get(position).getImage())
                 .into(holder.image);
