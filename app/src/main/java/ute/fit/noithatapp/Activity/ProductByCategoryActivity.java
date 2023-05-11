@@ -1,5 +1,7 @@
 package ute.fit.noithatapp.Activity;
 
+import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
+
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,11 +25,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ute.fit.noithatapp.Activity.Adapter.ProductByCategoryAdapter;
 import ute.fit.noithatapp.Api.CategoryApi;
+import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
 public class ProductByCategoryActivity extends AppCompatActivity {
     CategoryApi categoryApi;
+    RetrofitServer retrofitServer;
+    TextView name,price;
+    ImageView image;
     private RecyclerView recyclerViewProductList;
     private RecyclerView.Adapter adapter;
     private List<ProductModel> productList;
@@ -41,9 +49,16 @@ public class ProductByCategoryActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        String idCategory = getIntent().getStringExtra("idCategory");
-        recyclerViewProductList(idCategory);
+        Init();
+        int id = getIntent().getIntExtra("id",1);
+        recyclerViewProductList(id);
+    }
+    public void Init(){
+        name=findViewById(R.id.productTitle);
+        image = findViewById(R.id.productPic);
+        price = findViewById(R.id.productPrice);
+        retrofitServer=new RetrofitServer();
+        categoryApi=retrofitServer.getRetrofit(ROOT_URL).create(CategoryApi.class);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -68,12 +83,12 @@ public class ProductByCategoryActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    private void recyclerViewProductList(String idCategory){
+    private void recyclerViewProductList(int id){
         recyclerViewProductList = findViewById(R.id.productList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerViewProductList.setLayoutManager(mLayoutManager);
         //Get API
-        categoryApi.getProductByCategory("1").enqueue(new Callback<List<ProductModel>>() {
+        categoryApi.getProductByCategory().enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
                 if(response.isSuccessful()){

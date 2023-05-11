@@ -72,7 +72,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 //        });
         holder.setItemClickListener((view, position1, isLongClick) -> {
             Intent i = new Intent(context, ProductByCategoryActivity.class);
-            i.putExtra("idCategory", String.valueOf(position1 + 1));
+            i.putExtra("id", 1);
             view.getContext().startActivity(i);
         });
         Glide.with(context).load(categoryModelList.get(position).getImage()).into(holder.imgViewCategory);

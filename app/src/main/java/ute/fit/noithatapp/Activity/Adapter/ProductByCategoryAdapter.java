@@ -39,15 +39,16 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
 
     @Override
     public void onBindViewHolder(@NonNull ProductByCategoryAdapter.ViewHolder holder, int position) {
-        holder.title.setText(productList.get(position).getName());
+        holder.name.setText(productList.get(position).getName());
+        holder.price.setText((productList.get(position).getPrice().toString()));
         holder.itemView.getContext().getResources().getIdentifier(productList.get(position).getName(), "drawable", holder.itemView.getContext().getPackageName());
 //        holder.setItemClickListener((view, position1, isLongClick) -> {
 //            Intent i = new Intent(context, ProductByCategoryActivity.class);
 //            view.getContext().startActivity(i);
 //        });
         Glide.with(context)
-                .load(productList.get(position).getName())
-                .into(holder.pic);
+                .load(productList.get(position).getImage())
+                .into(holder.image);
     }
     @Override
     public int getItemCount() {
@@ -55,8 +56,8 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener  {
         private ItemClickListener itemClickListener;
-        TextView title;
-        ImageView pic;
+        TextView name,price;
+        ImageView image;
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
 
@@ -77,8 +78,9 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
             super(itemView);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
-            title = itemView.findViewById(R.id.productTitle);
-            pic = itemView.findViewById(R.id.productPic);
+            name = itemView.findViewById(R.id.productTitle);
+            price = itemView.findViewById(R.id.productPrice);
+            image = itemView.findViewById(R.id.productPic);
         }
     }
 }

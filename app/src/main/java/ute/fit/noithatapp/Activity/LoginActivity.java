@@ -1,10 +1,9 @@
 package ute.fit.noithatapp.Activity;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Window;
@@ -13,10 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import java.io.Console;
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +20,6 @@ import retrofit2.Response;
 import ute.fit.noithatapp.Api.UserApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
-import ute.fit.noithatapp.Model.CartModel;
 import ute.fit.noithatapp.Model.UserModel;
 import ute.fit.noithatapp.R;
 public class LoginActivity extends AppCompatActivity {
@@ -98,6 +93,6 @@ public class LoginActivity extends AppCompatActivity {
         editTextUserName=findViewById(R.id.UserName);
         editTextPassWord=findViewById(R.id.PassWord);
         retrofitServer=new RetrofitServer();
-        userApi=retrofitServer.getRetrofit().create(UserApi.class);
+        userApi=retrofitServer.getRetrofit(ROOT_URL).create(UserApi.class);
     }
 }
