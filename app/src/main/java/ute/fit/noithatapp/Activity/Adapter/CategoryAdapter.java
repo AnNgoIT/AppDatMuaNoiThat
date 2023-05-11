@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,7 +80,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewCategory;
-        private ImageView imgViewCategory;
+        private ImageButton imgViewCategory;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewCategory=itemView.findViewById(R.id.textViewCategory);

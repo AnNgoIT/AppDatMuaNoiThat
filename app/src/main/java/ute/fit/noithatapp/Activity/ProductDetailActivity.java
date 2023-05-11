@@ -21,6 +21,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         //transaction
         overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
         setContentView(R.layout.activity_product_detail);
+        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
         btnBack=findViewById(R.id.buttonBackProductDetail);
         btnBack.setOnClickListener(view -> {
             onBackPressed();

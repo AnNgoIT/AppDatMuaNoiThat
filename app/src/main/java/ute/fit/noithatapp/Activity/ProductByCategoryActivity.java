@@ -48,6 +48,7 @@ public class ProductByCategoryActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
         setContentView(R.layout.activity_product_by_category);
+        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
         retrofitServer=new RetrofitServer();
         categoryApi=retrofitServer.getRetrofit().create(CategoryApi.class);
         Intent intent = getIntent();
