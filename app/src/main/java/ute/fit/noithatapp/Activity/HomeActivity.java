@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import ute.fit.noithatapp.Activity.Adapter.ViewPagerHomeAdapter;
+import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         //
         setContentView(R.layout.activity_home);
         Init();
+        System.out.println(SharedPrefManager.getInstance(this).getUserId());
     }
 
     @SuppressLint("WrongViewCast")

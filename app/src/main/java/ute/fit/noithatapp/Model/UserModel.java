@@ -2,7 +2,7 @@ package ute.fit.noithatapp.Model;
 
 public class UserModel {
 
-    private int userId;
+    private int id;
     private String name;
     private String username;
     private String password;
@@ -14,8 +14,8 @@ public class UserModel {
         this.password = password;
     }
 
-    public UserModel(int userId, String name, String username, String password) {
-        this.userId = userId;
+    public UserModel(int id, String name, String username, String password) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
@@ -25,12 +25,12 @@ public class UserModel {
         this.password = password;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int userId) {
+        this.id = userId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
