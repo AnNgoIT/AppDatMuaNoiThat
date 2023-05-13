@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         //
         setContentView(R.layout.activity_home);
         Init();
+        //Lấy id user
         System.out.println(SharedPrefManager.getInstance(this).getUserId());
     }
 

@@ -71,12 +71,6 @@ public class UserFragment extends Fragment {
         // Inflate the layout for this fragment
         //logout btn
         mView=inflater.inflate(R.layout.fragment_user, container, false);
-        btnLogout= mView.findViewById(R.id.button_logout);
-        btnLogout.setOnClickListener(view -> {
-            intent=new Intent(getActivity(), LoginActivity.class);
-            SharedPrefManager.getInstance(getActivity()).logout();
-            startActivity(intent);
-        });
         return mView;
     }
 }
