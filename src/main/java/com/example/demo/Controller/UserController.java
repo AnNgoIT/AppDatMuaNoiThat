@@ -118,4 +118,18 @@ public class UserController {
         return products;
     }
 
+    @RequestMapping("user/setting/{id}")
+    public User saveSettingUser(@PathVariable("id") Integer userId,String name,String password,String address){
+        Optional<User> newUser = userDAO.findUserById(userId);
+        User user=newUser.get();
+        user.setName(name);
+        user.setPassword(password);
+        user.setAddress(address);
+        return userDAO.saveUserSetting(user);
+    }
+
+    @RequestMapping("user/getUser/{id}")
+    public Optional<User> getUser (@PathVariable("id")Integer userId){
+        return  userDAO.findUserById(userId);
+    }
 }

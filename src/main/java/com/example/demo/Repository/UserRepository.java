@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User,Integer> {
      public User findUserByUsernameAndPassword(String user, String pass);
 
+     @Override
+     <S extends User> S save(S entity);
 }
