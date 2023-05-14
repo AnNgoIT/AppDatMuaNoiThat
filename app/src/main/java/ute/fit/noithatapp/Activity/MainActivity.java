@@ -22,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
+=======
+        //transaction
+        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
+>>>>>>> origin/main
         getStart_btn=findViewById(R.id.get_start_btn);
         getStart_btn.setOnClickListener(new View.OnClickListener() {
             @Override

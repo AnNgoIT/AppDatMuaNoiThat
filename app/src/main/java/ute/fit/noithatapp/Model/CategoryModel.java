@@ -9,6 +9,25 @@ public class CategoryModel implements Serializable {
     private String name;
 
     private ArrayList<ProductModel> product;
+<<<<<<< HEAD
+=======
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public CategoryModel(int categoryId, String name, ArrayList<ProductModel> product, String image) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.product = product;
+        this.image = image;
+    }
+>>>>>>> origin/main
 
     public CategoryModel(int categoryId, String name) {
         this.categoryId = categoryId;

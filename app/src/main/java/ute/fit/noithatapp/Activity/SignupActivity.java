@@ -1,5 +1,10 @@
 package ute.fit.noithatapp.Activity;
 
+<<<<<<< HEAD
+=======
+import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
+
+>>>>>>> origin/main
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,10 +17,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+<<<<<<< HEAD
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+=======
+>>>>>>> origin/main
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +45,12 @@ public class SignupActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_signup);
+<<<<<<< HEAD
+=======
+        //transaction
+        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
+        //
+>>>>>>> origin/main
         Init();
         HaveAccountClick();
         SignUp();
@@ -54,7 +68,11 @@ public class SignupActivity extends AppCompatActivity {
         edtPassword=findViewById(R.id.PassWord);
         signupButton=findViewById(R.id.Signup);
         retrofitServer=new RetrofitServer();
+<<<<<<< HEAD
         userApi=retrofitServer.getRetrofit().create(UserApi.class);
+=======
+        userApi=retrofitServer.getRetrofit(ROOT_URL).create(UserApi.class);
+>>>>>>> origin/main
     }
     public void SignUp(){
         signupButton.setOnClickListener(view -> {

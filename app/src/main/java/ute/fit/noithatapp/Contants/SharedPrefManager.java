@@ -11,6 +11,11 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "retrofitregisterlogin";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_PASSWORD="keypassword";
+<<<<<<< HEAD
+=======
+
+    private static final String KEY_USER="userid";
+>>>>>>> origin/main
     private static SharedPrefManager instance;
     private static Context ctx;
 
@@ -29,6 +34,10 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_PASSWORD,user.getPassword());
+<<<<<<< HEAD
+=======
+        editor.putInt(KEY_USER,user.getId());
+>>>>>>> origin/main
         editor.apply();
     }
 
@@ -46,6 +55,13 @@ public class SharedPrefManager {
                 )
         );
     }
+<<<<<<< HEAD
+=======
+    public int getUserId(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            return sharedPreferences.getInt(KEY_USER,0);
+    }
+>>>>>>> origin/main
     public void logout() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

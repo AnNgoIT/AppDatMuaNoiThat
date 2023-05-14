@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundlogin">#FFFFEE</color>
+<<<<<<< HEAD
+=======
+    <color name="black_overlay">#66000000</color>
+>>>>>>> origin/main
 </resources>
