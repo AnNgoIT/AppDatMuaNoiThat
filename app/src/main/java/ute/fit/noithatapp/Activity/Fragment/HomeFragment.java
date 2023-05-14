@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,15 +29,19 @@ import ute.fit.noithatapp.Activity.CartActivity;
 import ute.fit.noithatapp.Activity.ProductByCategoryActivity;
 import ute.fit.noithatapp.Activity.ProductDetailActivity;
 import ute.fit.noithatapp.Api.CategoryApi;
+import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Api.ProductApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
+import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.Model.CategoryModel;
+import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
 
 public class HomeFragment extends Fragment {
     View mView;
+    ImageButton imgBtnAddToCart1,imgBtnAddToCart2;
     TextView productName1,productName2,productPrice1,productPrice2;
     ImageView productImg1,productImg2;
     RecyclerView recyclerViewCategory;
@@ -48,6 +53,7 @@ public class HomeFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     ArrayList<CategoryModel> categoryModelArrayList;
     ArrayList<ProductModel> productModels;
+    OrderApi orderApi;
 
 
     @Override
@@ -57,6 +63,10 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         mView =inflater.inflate(R.layout.fragment_home, container, false);
         //find product id
+        //API
+        retrofitServer=new RetrofitServer();
+        orderApi=retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
+
         //
         productName1=mView.findViewById(R.id.tvProduct1);
         productName2=mView.findViewById(R.id.tvProduct2);
@@ -69,6 +79,43 @@ public class HomeFragment extends Fragment {
         imgvCart.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CartActivity.class));
         });
+        //ADD TO CART BTN
+        imgBtnAddToCart1=mView.findViewById(R.id.btnAddToCart1);
+        imgBtnAddToCart2=mView.findViewById(R.id.btnAddToCart2);
+        imgBtnAddToCart1.setOnClickListener(view -> {
+            int userId= SharedPrefManager.getInstance(getActivity()).getUserId();
+            Long count=Long.parseLong("1");
+            orderApi.addToCart(userId,1,count).enqueue(new Callback<OrderModel>() {
+                @Override
+                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
+                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
+
+                }
+                @Override
+                public void onFailure(Call<OrderModel> call, Throwable t) {
+                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        });
+        imgBtnAddToCart2.setOnClickListener(view -> {
+            int userId= SharedPrefManager.getInstance(getActivity()).getUserId();
+            Long count=Long.parseLong("3");
+            orderApi.addToCart(userId,1,count).enqueue(new Callback<OrderModel>() {
+                @Override
+                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
+                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
+
+                }
+                @Override
+                public void onFailure(Call<OrderModel> call, Throwable t) {
+                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        });
+        ////
+
         recyclerViewCategory=mView.findViewById(R.id.rcv_category);//
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerViewCategory.setLayoutManager(layoutManager);
@@ -91,9 +138,9 @@ public class HomeFragment extends Fragment {
                 Glide.with(getContext()).load(productModel1.getImage()).into(productImg1);
                 Glide.with(getContext()).load(productModel2.getImage()).into(productImg2);
                 productName1.setText(productModel1.getName());
-                productPrice1.setText(productModel1.getPrice().toString()+" $");
+                productPrice1.setText(productModel1.getPrice().toString()+" vnd");
                 productName2.setText(productModel2.getName());
-                productPrice2.setText(productModel2.getPrice().toString()+" $");
+                productPrice2.setText(productModel2.getPrice().toString()+" vnd");
 
                 //ProductDetail //transaction data
                 layout1=mView.findViewById(R.id.layout_product1);

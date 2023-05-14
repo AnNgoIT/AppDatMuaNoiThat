@@ -14,7 +14,7 @@
             android:id="@+id/make_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Make home beatiful"
+            android:text="Make home beautiful"
             android:textSize="25dp"
             android:textStyle="italic"
             android:fontFamily="sans-serif-condensed-medium"
@@ -76,7 +76,7 @@
                 android:id="@+id/tvProduct1"
                 android:layout_width="85dp"
                 android:layout_height="30dp"
-                android:textSize="15dp"
+                android:textSize="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:textAlignment="center"
@@ -88,17 +88,20 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
                 android:textStyle="bold"
-                android:textSize="15dp"
+                android:textSize="10dp"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/tvProduct1"
                 app:layout_constraintStart_toStartOf="parent" />
+
             <ImageButton
+                android:id="@+id/btnAddToCart1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:layout_constraintTop_toBottomOf="@id/imgViewProduct1"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/baseline_add_shopping_cart_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/baseline_add_shopping_cart_24"/>
+                app:layout_constraintTop_toBottomOf="@id/imgViewProduct1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_product2"
@@ -122,7 +125,7 @@
                 android:layout_width="85dp"
                 android:layout_height="30dp"
                 android:textAlignment="center"
-                android:textSize="15dp"
+                android:textSize="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/imgViewProduct2"
@@ -133,17 +136,20 @@
                 android:layout_height="30dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:textSize="15dp"
+                android:textSize="10dp"
                 android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/tvProduct2"
                 app:layout_constraintStart_toStartOf="parent" />
+
             <ImageButton
+                android:id="@+id/btnAddToCart2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:layout_constraintTop_toBottomOf="@id/imgViewProduct2"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/baseline_add_shopping_cart_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/baseline_add_shopping_cart_24"/>
+                app:layout_constraintTop_toBottomOf="@id/imgViewProduct2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

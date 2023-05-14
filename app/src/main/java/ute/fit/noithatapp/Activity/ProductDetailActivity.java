@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,13 +20,18 @@ import com.bumptech.glide.Glide;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Api.ProductApi;
+import ute.fit.noithatapp.Api.UserApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
+import ute.fit.noithatapp.Contants.SharedPrefManager;
+import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
 public class ProductDetailActivity extends AppCompatActivity {
-    Button btnBack;
+    EditText editQuantity;
+    Button btnBack,inCrease,deCrease,addToCart;
     int productId;
     TextView productDetailName,productDetailPrice,productDetailDes;
     ImageView productDetailImg;
@@ -33,6 +40,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private ProductModel product;
     ProductApi productApi;
+    OrderApi orderApi;
+    int quantity=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +61,48 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (bundle != null) {
             productId = bundle.getInt("productId", 0);
         }
-        Init();
+        Init(productId);
         productDetail(productId);
     }
-    public void Init(){
+    public void Init(int productId){
+        retrofitServer=new RetrofitServer();
+        orderApi=retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
         productDetailName=findViewById(R.id.productDetailName);
         productDetailImg = findViewById(R.id.productDetailImg);
         productDetailPrice = findViewById(R.id.productDetailPrice);
         productDetailDes=findViewById(R.id.productDetailDes);
+        editQuantity=findViewById(R.id.increaseAmount);
+        editQuantity.setText(String.valueOf(quantity));
+        addToCart=findViewById(R.id.btnAddToCart);
+        inCrease=findViewById(R.id.buttonIncrease);
+        deCrease=findViewById(R.id.buttonDescrease);
+        inCrease.setOnClickListener(view -> {
+            quantity+=1;
+            editQuantity.setText(String.valueOf(quantity));
+        });
+        deCrease.setOnClickListener(view -> {
+            if (quantity > 1){
+                quantity-=1;
+                editQuantity.setText(String.valueOf(quantity));
+            }
+        });
+        addToCart.setOnClickListener(view -> {
+            int userId= SharedPrefManager.getInstance(this).getUserId();
+            Long count=Long.parseLong(editQuantity.getText().toString());
+            orderApi.addToCart(userId,productId,count).enqueue(new Callback<OrderModel>() {
+                @Override
+                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
+                    Toast.makeText(ProductDetailActivity.this,"Thành công",Toast.LENGTH_SHORT).show();
+
+                }
+                @Override
+                public void onFailure(Call<OrderModel> call, Throwable t) {
+                    Toast.makeText(ProductDetailActivity.this,"Thành công",Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+        });
         retrofitServer=new RetrofitServer();
         productApi=retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
     }
