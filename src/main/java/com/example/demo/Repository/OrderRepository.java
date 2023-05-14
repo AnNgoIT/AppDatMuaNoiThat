@@ -11,4 +11,7 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Integer> {
     public ArrayList<Order> findOrderByUser(Optional<User> user);
+
+    @Override
+    <S extends Order> S save(S entity);
 }

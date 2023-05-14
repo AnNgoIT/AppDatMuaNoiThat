@@ -118,6 +118,8 @@ public class UserController {
         return products;
     }
 
+
+    //setting user
     @RequestMapping("user/setting/{id}")
     public User saveSettingUser(@PathVariable("id") Integer userId,String name,String password,String address){
         Optional<User> newUser = userDAO.findUserById(userId);
@@ -131,5 +133,29 @@ public class UserController {
     @RequestMapping("user/getUser/{id}")
     public Optional<User> getUser (@PathVariable("id")Integer userId){
         return  userDAO.findUserById(userId);
+    }
+
+    //add to cart
+    @RequestMapping("user/addtocart/{userId}/{productId}")
+    public Order addToCart(@PathVariable("userId")Integer userId,@PathVariable("productId")Integer productId,Long count){
+        Optional<User> user=userDAO.findUserById(userId);
+        Optional<Product> product=productDAO.getProductById(productId);
+        User newUser = user.get();
+        Product newProduct=product.get();
+        Order newOrder =new Order();
+        newOrder.setUser(newUser);
+        newOrder.setProduct(newProduct);
+        newOrder.setCount(count);
+        newOrder.setState("inCart");
+        return orderDAO.saveOrder(newOrder);
+    }
+
+    //Thanh toán
+    @RequestMapping("user/paying/{orderId}")
+    public Order paying(@PathVariable("orderId") Integer orderId){
+        Optional<Order> order=orderDAO.findOrderById(orderId);
+        Order newOrder=order.get();
+        newOrder.setState("processing");
+        return orderDAO.saveOrder(newOrder);
     }
 }
