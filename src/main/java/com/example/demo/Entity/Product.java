@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,20 +26,24 @@ public class Product implements Serializable {
 
     @Column(name = "name", columnDefinition = "nvarchar(100) not null")
     private String name;
-    @Column(name = "urlImage", columnDefinition = "nvarchar(250)")
-    private String Image;
+
 
     @Column(name = "price", columnDefinition = "int not null")
     private long price;
 
-    @ManyToOne
-    private Category category;
 
     @Column(name = "quantity", columnDefinition = "int not null")
     private long quantity;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<CartItem> cartItem;
 
+    @Column(name = "urlImage", columnDefinition = "nvarchar(250)")
+    private String Image;
+
+    @JsonBackReference
+    @ManyToOne
+    private Category category;
+
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
 
 }

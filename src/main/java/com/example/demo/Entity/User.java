@@ -1,13 +1,12 @@
 package com.example.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,10 +20,9 @@ public class User {
 	private String name;
 	private String username;
 	private String password;
+	private String image;
+	private String address;
 
-	@JsonManagedReference
-	@OneToOne(mappedBy = "user")
-	private Cart cart;
 
 	public String getUsername() {
 		return username;
@@ -68,4 +66,5 @@ public class User {
 				", password='" + password + '\'' +
 				'}';
 	}
+
 }
