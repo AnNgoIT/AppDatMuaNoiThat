@@ -71,35 +71,31 @@ public class SettingActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userApi.saveUserSetting(userId, name.getText().toString(), password.getText().toString(), address.getText().toString()).enqueue(new Callback<UserModel>() {
-
-                    @Override
-                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                        try{
-                            if(response.isSuccessful())
-                            {
-                                if(name.getText().toString().equals("") || password.getText().toString().equals("") || address.getText().toString().equals("")){
-                                    Toast.makeText(SettingActivity.this,"Vui lòng nhập đầy đủ thông tin!!!",Toast.LENGTH_SHORT).show();
-                                }
-                                else {
+                if(name.getText().toString().equals("") || password.getText().toString().equals("") || address.getText().toString().equals("")){
+                    Toast.makeText(SettingActivity.this,"Vui lòng nhập đầy đủ thông tin!!!",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    userApi.saveUserSetting(userId, name.getText().toString(), password.getText().toString(), address.getText().toString()).enqueue(new Callback<UserModel>() {
+                        @Override
+                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                            try{
+                                if(response.isSuccessful())
+                                {
                                     Toast.makeText(SettingActivity.this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    response.code();
                                 }
-                            }else{
-                                response.code();
                             }
-
+                            catch (Exception e) {
+                                Toast.makeText(SettingActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        catch (Exception e) {
-                            Toast.makeText(SettingActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<UserModel> call, Throwable t) {
+                            Log.d("logg", t.getMessage());
                         }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserModel> call, Throwable t) {
-                        Log.d("logg", t.getMessage());
-                    }
-                });
+                    });
+                }
             }
         });
     }
