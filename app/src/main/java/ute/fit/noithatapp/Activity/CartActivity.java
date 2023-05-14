@@ -90,25 +90,6 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-        /*
-        orderApi.getCountInCart(SharedPrefManager.getInstance(this).getUserId()).enqueue(new Callback<ArrayList<Long>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
-                if(response.isSuccessful()){
-                    countList=response.body();
-                    adapter.setCountList(countList);
-                    recyclerViewOrderList.setAdapter(adapter);
-                }else{
-                    response.code();
-                }
-            }
-            @Override
-            public void onFailure(Call<ArrayList<Long>> call, Throwable t) {
-
-            }
-        });
-        */
-
     }
     public void TotalPrice(ArrayList<Long> mCountList,ArrayList<ProductModel> mProductList){
         Long totalPrice= Long.parseLong("0".toString());

@@ -48,12 +48,12 @@
 
     <TextView
         android:id="@+id/personal_in"
-        android:layout_width="151dp"
+        android:layout_width="154dp"
         android:layout_height="22dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="88dp"
         android:gravity="center_vertical"
         android:text="Personal Infomation"
         android:textColor="#909191"
@@ -73,105 +73,118 @@
         app:srcCompat="@drawable/ic_color" />
 
     <RelativeLayout
-        android:id="@+id/component_5"
-        android:layout_width="335dp"
-        android:layout_height="64dp"
+        android:id="@+id/component_name"
+        android:layout_width="352dp"
+        android:layout_height="92dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="132dp"
-        app:layout_constraintBottom_toTopOf="@+id/component_6"
+        android:layout_marginTop="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/component_address"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="9dp"
             android:text="Name" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="322dp"
+            android:layout_height="59dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="39dp"
-            android:text="TextView" />
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="33dp"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/component_6"
-        android:layout_width="335dp"
-        android:layout_height="64dp"
+        android:id="@+id/component_address"
+        android:layout_width="351dp"
+        android:layout_height="93dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="452dp"
+        android:layout_marginBottom="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_bar"
+        app:layout_constraintVertical_bias="0.887">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txtAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="23dp"
             android:layout_marginTop="11dp"
-            android:text="Email" />
+            android:text="Adress" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="319dp"
+            android:layout_height="55dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="37dp"
-            android:text="TextView" />
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="38dp"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/txtPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/component_6" />
+        app:layout_constraintTop_toBottomOf="@+id/component_address" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ic_writePwd"
         android:layout_width="26dp"
         android:layout_height="17dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="36dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/component_6"
+        app:layout_constraintTop_toBottomOf="@+id/component_address"
         app:srcCompat="@drawable/ic_color" />
 
-    <TextView
-        android:id="@+id/textView9"
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="345dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:inputType="textPassword"
+        android:textColor="#242424"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+
+    <Button
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textSize="14sp"
-        android:textColor="#242424"
-        android:text="Passwordnhe"
-        android:inputType="textPassword"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.641" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
