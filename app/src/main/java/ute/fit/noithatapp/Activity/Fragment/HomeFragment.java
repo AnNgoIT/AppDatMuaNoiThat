@@ -16,16 +16,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ute.fit.noithatapp.Activity.Adapter.CategoryAdapter;
+import ute.fit.noithatapp.Activity.Adapter.PhotoAdapter;
 import ute.fit.noithatapp.Activity.CartActivity;
 import ute.fit.noithatapp.Activity.ProductByCategoryActivity;
 import ute.fit.noithatapp.Activity.ProductDetailActivity;
@@ -36,6 +39,7 @@ import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.Model.CategoryModel;
 import ute.fit.noithatapp.Model.OrderModel;
+import ute.fit.noithatapp.Model.PhotoModel;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
@@ -55,6 +59,10 @@ public class HomeFragment extends Fragment {
     ArrayList<CategoryModel> categoryModelArrayList;
     ArrayList<ProductModel> productModels;
     OrderApi orderApi;
+    //circle indicator
+    ViewPager viewPagerPhoto;
+    CircleIndicator circleIndicatorPhoto;
+    PhotoAdapter photoAdapter;
 
 
     @Override
@@ -80,42 +88,6 @@ public class HomeFragment extends Fragment {
         imgvCart.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CartActivity.class));
         });
-        //ADD TO CART BTN
-        imgBtnAddToCart1=mView.findViewById(R.id.btnAddToCart1);
-        imgBtnAddToCart2=mView.findViewById(R.id.btnAddToCart2);
-        imgBtnAddToCart1.setOnClickListener(view -> {
-            int userId= SharedPrefManager.getInstance(getActivity()).getUserId();
-            Long count=Long.parseLong("1");
-            orderApi.addToCart(userId,1,count).enqueue(new Callback<OrderModel>() {
-                @Override
-                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-                @Override
-                public void onFailure(Call<OrderModel> call, Throwable t) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        });
-        imgBtnAddToCart2.setOnClickListener(view -> {
-            int userId= SharedPrefManager.getInstance(getActivity()).getUserId();
-            Long count=Long.parseLong("3");
-            orderApi.addToCart(userId,1,count).enqueue(new Callback<OrderModel>() {
-                @Override
-                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-                @Override
-                public void onFailure(Call<OrderModel> call, Throwable t) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        });
-        ////
 
         recyclerViewCategory=mView.findViewById(R.id.rcv_category);//
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -123,6 +95,18 @@ public class HomeFragment extends Fragment {
         //
         getProduct();
         getListCategory();
+        //circle indicator
+        viewPagerPhoto=mView.findViewById(R.id.viewPagerPhoto);
+        circleIndicatorPhoto=mView.findViewById(R.id.circleIndicatorPhoto);
+        ArrayList<PhotoModel> photoModelArrayList=new ArrayList<>();
+        photoModelArrayList.add(new PhotoModel(R.drawable.photo1));
+        photoModelArrayList.add(new PhotoModel(R.drawable.photo2));
+        photoModelArrayList.add(new PhotoModel(R.drawable.photo3));
+        photoModelArrayList.add(new PhotoModel(R.drawable.photo4));
+        photoAdapter=new PhotoAdapter(getContext(),photoModelArrayList);
+        viewPagerPhoto.setAdapter(photoAdapter);
+        circleIndicatorPhoto.setViewPager(viewPagerPhoto);
+        photoAdapter.registerDataSetObserver(circleIndicatorPhoto.getDataSetObserver());
         return mView;
     }
 
@@ -164,6 +148,8 @@ public class HomeFragment extends Fragment {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 });
+
+
             }
 
             @Override

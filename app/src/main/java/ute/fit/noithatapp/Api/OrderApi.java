@@ -18,6 +18,9 @@ public interface OrderApi {
     @FormUrlEncoded
     @POST("/user/addtocart/{userId}/{productId}")
     Call<OrderModel> addToCart(@Path("userId")int userId, @Path("productId")int productId,@Field("count") Long count);
+    @FormUrlEncoded
+    @POST("/user/updateCart/{userId}/{productId}")
+    Call<OrderModel> updateCart(@Path("userId")int userId, @Path("productId")int productId,@Field("count") Long count);
 
     @GET("user/order/inCart/{id}")
     Call<ArrayList<ProductModel>> getProductInCart(@Path("id")Integer userId);
@@ -27,4 +30,15 @@ public interface OrderApi {
 
     @DELETE("user/orderDelete/{productId}/{userId}")
     Call<Void> deleteOrderByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
+
+    @POST("user/paying/{userId}")
+    Call<Void> checkOut(@Path("userId")Integer userId);
+
+    @GET("user/order/processing/{id}")
+    Call<ArrayList<ProductModel>> getProductProcessing(@Path("id")Integer userId);
+
+    @GET("user/order/countProduct/processing/{id}")
+    Call<ArrayList<Long>> getCountProcessing(@Path("id")Integer userId);
+
+
 }

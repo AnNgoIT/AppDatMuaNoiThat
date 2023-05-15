@@ -2,7 +2,6 @@ package ute.fit.noithatapp.Activity;
 
 import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,13 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import ute.fit.noithatapp.Activity.Fragment.HomeFragment;
-import ute.fit.noithatapp.Activity.Fragment.UserProfileFragment;
 import ute.fit.noithatapp.Api.UserApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
@@ -129,5 +126,7 @@ public class SettingActivity extends AppCompatActivity {
                 Log.d("logg", t.getMessage());
             }
         });
+
     }
+
 }
