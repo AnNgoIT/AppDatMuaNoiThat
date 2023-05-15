@@ -16,12 +16,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".HomeManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HPManagerActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activity.ProductByCategoryActivity"
             android:exported="false" />
         <activity
@@ -51,6 +45,9 @@
         <activity
             android:name=".Activity.SettingActivity"
             android:exported="true" />
+        <activity
+            android:name=".Activity.HomeManagerActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
