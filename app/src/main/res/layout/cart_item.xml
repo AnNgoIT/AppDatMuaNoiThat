@@ -93,15 +93,17 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnDeleteOrder"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/remove"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"></Button>
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="20dp"></Button>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -128,7 +130,7 @@
             android:backgroundTint="@color/white">
 
             <Button
-                android:id="@+id/buttonIncrease"
+                android:id="@+id/buttonIncreaseOrder"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:backgroundTint="#f3f3f3"
@@ -139,10 +141,10 @@
                 android:textColor="#000"
                 android:theme="@style/ButtonColor"/>
 
-            <TextView
-                android:id="@+id/increaseAmount"
+            <EditText
+                android:id="@+id/increaseAmountOrder"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginHorizontal="10dp"
                 android:gravity="center"
                 android:letterSpacing="0.05"
@@ -150,10 +152,10 @@
                 android:textColor="#242424"
                 android:textSize="18sp">
 
-            </TextView>
+            </EditText>
 
             <Button
-                android:id="@+id/buttonDescrease"
+                android:id="@+id/buttonDecreaseOrder"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:backgroundTint="#f3f3f3"

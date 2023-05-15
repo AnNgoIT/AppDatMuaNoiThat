@@ -151,18 +151,19 @@
                     android:textColor="#000"
                     android:theme="@style/ButtonColor"></Button>
 
-                <TextView
+                <EditText
+                    android:layout_marginHorizontal="10dp"
                     android:id="@+id/increaseAmount"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
                     android:gravity="center"
                     android:letterSpacing="0.05"
                     android:text="01"
                     android:textColor="#242424"
-                    android:textSize="18sp">
+                    android:textSize="10dp">
 
-                </TextView>
+                </EditText>
 
                 <Button
                     android:id="@+id/buttonDescrease"
@@ -208,6 +209,7 @@
                 app:layout_constraintVertical_bias="0.022"></TextView>
 
             <Button
+                android:id="@+id/btnAddToCart"
                 android:layout_width="250dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="25dp"
