@@ -1,6 +1,7 @@
 package com.example.demo.Repository;
 
 import com.example.demo.Entity.Order;
+import com.example.demo.Entity.Product;
 import com.example.demo.Entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,9 @@ public interface OrderRepository extends CrudRepository<Order,Integer> {
 
     @Override
     <S extends Order> S save(S entity);
+
+    public Order findOrderByProductAndUser(Optional<Product>product, Optional<User> user);
+
+    @Override
+    void deleteById(Integer integer);
 }

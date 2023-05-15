@@ -4,6 +4,7 @@ package com.example.demo.Controller;
 import com.example.demo.DAO.*;
 import com.example.demo.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -121,7 +122,7 @@ public class UserController {
 
     //setting user
     @RequestMapping("user/setting/{id}")
-    public User saveSettingUser(@PathVariable("id") Integer userId,String name,String password,String address){
+    public User saveSettingUser(@PathVariable("id") Integer userId,@RequestParam("name") String name,@RequestParam("password") String password,@RequestParam("address") String address){
         Optional<User> newUser = userDAO.findUserById(userId);
         User user=newUser.get();
         user.setName(name);
@@ -137,17 +138,22 @@ public class UserController {
 
     //add to cart
     @RequestMapping("user/addtocart/{userId}/{productId}")
-    public Order addToCart(@PathVariable("userId")Integer userId,@PathVariable("productId")Integer productId,Long count){
+    public Order addToCart(@PathVariable("userId")Integer userId,@PathVariable("productId")Integer productId,@RequestParam("count") Long count){
         Optional<User> user=userDAO.findUserById(userId);
         Optional<Product> product=productDAO.getProductById(productId);
-        User newUser = user.get();
-        Product newProduct=product.get();
-        Order newOrder =new Order();
-        newOrder.setUser(newUser);
-        newOrder.setProduct(newProduct);
-        newOrder.setCount(count);
-        newOrder.setState("inCart");
-        return orderDAO.saveOrder(newOrder);
+        Order order=orderDAO.findOrderByProductAndUser(product,user);
+        if (order == null){
+            User newUser = user.get();
+            Product newProduct=product.get();
+            Order newOrder =new Order();
+            newOrder.setUser(newUser);
+            newOrder.setProduct(newProduct);
+            newOrder.setCount(count);
+            newOrder.setState("inCart");
+            return orderDAO.saveOrder(newOrder);
+        }
+        order.setCount(order.getCount()+count);
+        return orderDAO.saveOrder(order);
     }
 
     //Thanh toán
@@ -157,5 +163,14 @@ public class UserController {
         Order newOrder=order.get();
         newOrder.setState("processing");
         return orderDAO.saveOrder(newOrder);
+    }
+
+    //Delete Order
+    @DeleteMapping("user/orderDelete/{productId}/{userId}")
+    public void deleteOrderByProductAndUser(@PathVariable("productId")Integer productId,@PathVariable("userId")Integer userId){
+        Optional<Product> product=productDAO.getProductById(productId);
+        Optional<User> user=userDAO.findUserById(userId);
+        Order order=orderDAO.findOrderByProductAndUser(product,user);
+        orderDAO.deleteByOrderByProductAndUser(Integer.parseInt(order.getOrderId().toString()));
     }
 }

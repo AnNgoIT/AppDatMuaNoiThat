@@ -19,4 +19,8 @@ public class OrderDAO {
     public Order saveOrder(Order order){return orderRepository.save(order);}
 
     public Optional<Order> findOrderById(Integer orderId){return orderRepository.findById(orderId);}
+
+    public Order findOrderByProductAndUser(Optional<Product> product,Optional<User>user){return orderRepository.findOrderByProductAndUser(product,user);}
+
+    public void deleteByOrderByProductAndUser(Integer orderId){orderRepository.deleteById(orderId);}
 }
