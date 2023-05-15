@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
 public class CartActivity extends AppCompatActivity {
-    Button btnBack;
+    Button btnBack,inCrease,deCrease;
     TextView tvTotalPrice;
     RecyclerView recyclerViewOrderList;
     RetrofitServer retrofitServer;
@@ -34,6 +35,7 @@ public class CartActivity extends AppCompatActivity {
     private OrderAdapter adapter;
     private ArrayList<ProductModel> productList;
     private ArrayList<Long> countList;
+    int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class CartActivity extends AppCompatActivity {
         btnBack.setOnClickListener(view -> {
             onBackPressed();
         });
+        userId=SharedPrefManager.getInstance(this).getUserId();
         tvTotalPrice=findViewById(R.id.totalPrice);
 
         //retrofit
@@ -56,14 +59,50 @@ public class CartActivity extends AppCompatActivity {
         recyclerViewOrderList = findViewById(R.id.CartList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerViewOrderList.setLayoutManager(mLayoutManager);
+        getData();
+        //
+    }
+    public void TotalPrice(ArrayList<Long> mCountList,ArrayList<ProductModel> mProductList){
+        Long totalPrice= Long.parseLong("0".toString());
+        for(int i=0;i<mCountList.size();i++){
+            totalPrice+=mCountList.get(i)*mProductList.get(i).getPrice();
+        }
+        tvTotalPrice.setText(totalPrice.toString()+" vnd");
+    }
+    public void getData(){
         //Call api
-        int userId=SharedPrefManager.getInstance(this).getUserId();
-        orderApi.getProductInCart(userId).enqueue(new Callback<ArrayList<ProductModel>>() {
+         orderApi.getProductInCart(userId).enqueue(new Callback<ArrayList<ProductModel>>() {
             @Override
             public void onResponse(Call<ArrayList<ProductModel>> call, Response<ArrayList<ProductModel>> response) {
                 if(response.isSuccessful()){
                     productList=response.body();
-                    adapter = new OrderAdapter(null,productList, CartActivity.this);
+                    adapter = new OrderAdapter(null, productList, CartActivity.this, new OrderAdapter.IClick() {
+                        @Override
+                        public void onClickOrderItem(Integer productId, int position) {
+                            orderApi.deleteOrderByProductAndUser(productId, userId).enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                        }
+                    }, new OrderAdapter.IClickIncrease() {
+                        @Override
+                        public void onClickIncrease(Long count, Integer productId) {
+
+                        }
+                    }, new OrderAdapter.IClickDecrease() {
+                        @Override
+                        public void onCLickDecrease(Long count, Integer productId) {
+
+                        }
+                    });
                     orderApi.getCountInCart(userId).enqueue(new Callback<ArrayList<Long>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
@@ -90,12 +129,6 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-    }
-    public void TotalPrice(ArrayList<Long> mCountList,ArrayList<ProductModel> mProductList){
-        Long totalPrice= Long.parseLong("0".toString());
-        for(int i=0;i<mCountList.size();i++){
-            totalPrice+=mCountList.get(i)*mProductList.get(i).getPrice();
-        }
-        tvTotalPrice.setText(totalPrice.toString()+" vnd");
+
     }
 }

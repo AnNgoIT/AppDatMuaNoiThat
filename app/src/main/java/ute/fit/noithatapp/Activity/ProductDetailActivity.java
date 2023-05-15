@@ -93,12 +93,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
                     Toast.makeText(ProductDetailActivity.this,"Thành công",Toast.LENGTH_SHORT).show();
-
                 }
                 @Override
                 public void onFailure(Call<OrderModel> call, Throwable t) {
                     Toast.makeText(ProductDetailActivity.this,"Thành công",Toast.LENGTH_SHORT).show();
-
                 }
             });
 

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import ute.fit.noithatapp.Model.OrderModel;
+
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
@@ -24,15 +24,33 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private ArrayList<Long> countList;
     private ArrayList<ProductModel> productModelList;
     private Context context;
-
+    private IClickIncrease iClickIncrease;
+    private IClickDecrease iClickDecrease;
+    private IClick iClick;
+    public interface IClick{
+        void onClickOrderItem(Integer productId,int position);
+    }
+    public interface  IClickIncrease{
+        void onClickIncrease(Long count,Integer productId);
+    }
+    public interface IClickDecrease{
+        void onCLickDecrease(Long count,Integer productId);
+    }
+    public void setiClick(IClick iClick) {
+        this.iClick = iClick;
+    }
     public void setCountList(ArrayList<Long> countList) {
         this.countList = countList;
     }
 
-    public OrderAdapter(ArrayList<Long> countList, ArrayList<ProductModel> productModelList, Context context) {
+    public OrderAdapter(ArrayList<Long> countList, ArrayList<ProductModel> productModelList, Context context,IClick iClick,
+                        IClickIncrease iClickIncrease,IClickDecrease iClickDecrease) {
         this.productModelList = productModelList;
         this.context = context;
         this.countList = countList;
+        this.iClick=iClick;
+        this.iClickIncrease=iClickIncrease;
+        this.iClickDecrease=iClickDecrease;
     }
 
     @NonNull
@@ -53,6 +71,26 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.tvProductPrice.setText(productModel.getPrice().toString());
         Glide.with(context).load(productModel.getImage()).into(holder.imgProduct);
         holder.edtAmount.setText(count.toString());
+        holder.btnDelete.setOnClickListener(view -> {
+            iClick.onClickOrderItem(productModel.getProductId(),position);
+            countList.remove(position);
+            productModelList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position,countList.size());
+
+        });
+        holder.btnIncrease.setOnClickListener(view -> {
+            Long newCount=Long.valueOf(holder.edtAmount.getText().toString())+Long.valueOf(1);
+            holder.edtAmount.setText(String.valueOf(newCount));
+            iClickIncrease.onClickIncrease(newCount, productModel.getProductId());
+        });
+        holder.btnDecrease.setOnClickListener(view ->{
+            Long newCount=Long.valueOf(holder.edtAmount.getText().toString())-Long.valueOf(1);
+            if (newCount >= 0) {
+                holder.edtAmount.setText(String.valueOf(newCount));
+                iClickDecrease.onCLickDecrease(newCount, productModel.getProductId());
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,7 @@ package ute.fit.noithatapp.Api;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -23,4 +24,7 @@ public interface OrderApi {
 
     @GET("user/order/countProduct/inCart/{id}")
     Call<ArrayList<Long>> getCountInCart(@Path("id")Integer userId);
+
+    @DELETE("user/orderDelete/{productId}/{userId}")
+    Call<Void> deleteOrderByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
 }
