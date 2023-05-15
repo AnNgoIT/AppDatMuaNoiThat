@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,7 +73,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     product=response.body();
                     productDetailName.setText(product.getName());
-                    productDetailPrice.setText(product.getPrice().toString());
+                    DecimalFormat formatter = new DecimalFormat("#,###,###");
+                    String price = formatter.format(product.getPrice());
+                    productDetailPrice.setText(price + " VNĐ");
                     productDetailDes.setText(product.getDescription());
                     Glide.with(getApplicationContext()).load(product.getImage()).into(productDetailImg);
                 }else{

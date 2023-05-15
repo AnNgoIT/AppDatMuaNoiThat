@@ -95,7 +95,7 @@ public class ProductByCategoryActivity extends AppCompatActivity {
     }
     private void recyclerViewProductList(int idCategory){
         recyclerViewProductList = findViewById(R.id.productList);
-        LinearLayoutManager  mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
 
         recyclerViewProductList.setLayoutManager(mLayoutManager);
         //Get API

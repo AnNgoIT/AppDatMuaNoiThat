@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import ute.fit.noithatapp.Model.CategoryModel;
 import ute.fit.noithatapp.R;
 import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
     private ArrayList<CategoryModel> categoryModelList;
@@ -62,7 +63,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         });
 
         //image
-        Glide.with(context).load(categoryModel.getImage()).into(holder.imgViewCategory);
+        Glide.with(context).load(categoryModel.getImage()).override(100,100).into(holder.imgViewCategory);
         holder.imgViewCategory.setOnClickListener(view -> {
             iClick.onClickCategoryItem(categoryModel);
         });
@@ -80,7 +81,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewCategory;
-        private ImageButton imgViewCategory;
+        private ShapeableImageView imgViewCategory;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewCategory=itemView.findViewById(R.id.textViewCategory);

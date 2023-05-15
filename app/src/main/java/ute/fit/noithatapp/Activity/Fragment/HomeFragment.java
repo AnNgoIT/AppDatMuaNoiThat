@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -91,9 +92,12 @@ public class HomeFragment extends Fragment {
                 Glide.with(getContext()).load(productModel1.getImage()).into(productImg1);
                 Glide.with(getContext()).load(productModel2.getImage()).into(productImg2);
                 productName1.setText(productModel1.getName());
-                productPrice1.setText(productModel1.getPrice().toString()+" $");
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                String price1 = formatter.format(productModel1.getPrice());
+                String price2 = formatter.format(productModel2.getPrice());
+                productPrice1.setText(price1+" VNĐ");
                 productName2.setText(productModel2.getName());
-                productPrice2.setText(productModel2.getPrice().toString()+" $");
+                productPrice2.setText(price2+" VNĐ");
 
                 //ProductDetail //transaction data
                 layout1=mView.findViewById(R.id.layout_product1);

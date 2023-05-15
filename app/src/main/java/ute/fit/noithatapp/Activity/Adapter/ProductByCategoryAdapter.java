@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import ute.fit.noithatapp.Activity.ProductByCategoryActivity;
@@ -44,7 +45,9 @@ public class ProductByCategoryAdapter extends RecyclerView.Adapter<ProductByCate
     @Override
     public void onBindViewHolder(@NonNull ProductByCategoryAdapter.ViewHolder holder, int position) {
         holder.name.setText(productList.get(position).getName());
-        holder.price.setText((productList.get(position).getPrice().toString()));
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String price = formatter.format(productList.get(position).getPrice());
+        holder.price.setText(price+" VNĐ");
         holder.itemView.getContext().getResources().getIdentifier(productList.get(position).getName(), "drawable", holder.itemView.getContext().getPackageName());
         holder.setItemClickListener((view, position1, isLongClick) -> {
             Intent intent=new Intent(context, ProductDetailActivity.class);
