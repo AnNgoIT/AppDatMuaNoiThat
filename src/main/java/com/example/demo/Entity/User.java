@@ -23,7 +23,16 @@ public class User {
 	private String password;
 	private String image;
 	private String address;
+	@Column(name = "role", columnDefinition = "varchar(32) default customer")
+	private String role;
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	public String getUsername() {
 		return username;
