@@ -120,15 +120,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/imgViewProduct1"
                 app:layout_constraintVertical_bias="0.8" />
 
-            <ImageButton
-                android:id="@+id/btnAddToCart1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/baseline_add_shopping_cart_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgViewProduct1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -190,16 +181,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvProduct2"
                 app:layout_constraintVertical_bias="0.8" />
-
-            <ImageButton
-                android:id="@+id/btnAddToCart2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/baseline_add_shopping_cart_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgViewProduct2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

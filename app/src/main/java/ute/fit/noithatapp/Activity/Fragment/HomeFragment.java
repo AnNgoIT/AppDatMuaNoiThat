@@ -42,7 +42,6 @@ import ute.fit.noithatapp.R;
 
 public class HomeFragment extends Fragment {
     View mView;
-    ImageButton imgBtnAddToCart1,imgBtnAddToCart2;
     TextView productName1,productName2,productPrice1,productPrice2;
     ImageView productImg1,productImg2;
     RecyclerView recyclerViewCategory;
@@ -79,41 +78,6 @@ public class HomeFragment extends Fragment {
         imgvCart=mView.findViewById(R.id.imgvCart);
         imgvCart.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CartActivity.class));
-        });
-        //ADD TO CART BTN
-        imgBtnAddToCart1=mView.findViewById(R.id.btnAddToCart1);
-        imgBtnAddToCart2=mView.findViewById(R.id.btnAddToCart2);
-        imgBtnAddToCart1.setOnClickListener(view -> {
-            int userId= SharedPrefManager.getInstance(getActivity()).getUserId();
-            Long count=Long.parseLong("1");
-            orderApi.addToCart(userId,1,count).enqueue(new Callback<OrderModel>() {
-                @Override
-                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-                @Override
-                public void onFailure(Call<OrderModel> call, Throwable t) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        });
-        imgBtnAddToCart2.setOnClickListener(view -> {
-            int userId= SharedPrefManager.getInstance(getActivity()).getUserId();
-            Long count=Long.parseLong("3");
-            orderApi.addToCart(userId,1,count).enqueue(new Callback<OrderModel>() {
-                @Override
-                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-                @Override
-                public void onFailure(Call<OrderModel> call, Throwable t) {
-                    Toast.makeText(getActivity(),"Thành công",Toast.LENGTH_SHORT).show();
-
-                }
-            });
         });
         ////
 
