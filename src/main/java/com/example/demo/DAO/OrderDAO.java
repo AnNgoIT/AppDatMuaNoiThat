@@ -14,13 +14,13 @@ import java.util.Optional;
 public class OrderDAO {
     @Autowired
     OrderRepository orderRepository;
-    public ArrayList<Order> getOrderByUser(Optional<User> user){return orderRepository.findOrderByUser(user);}
+    public ArrayList<Order> getOrderByUser(Optional<User> user){return orderRepository.findOrdersByUser(user);}
 
     public Order saveOrder(Order order){return orderRepository.save(order);}
 
     public Optional<Order> findOrderById(Integer orderId){return orderRepository.findById(orderId);}
 
-    public Order findOrderByProductAndUser(Optional<Product> product,Optional<User>user){return orderRepository.findOrderByProductAndUser(product,user);}
+    public Order findOrderByProductAndUserAndState(Optional<Product> product,Optional<User>user,String state){return orderRepository.findOrderByProductAndUserAndState(product,user,state);}
 
     public void deleteByOrderByProductAndUser(Integer orderId){orderRepository.deleteById(orderId);}
 }

@@ -11,13 +11,16 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Integer> {
-    public ArrayList<Order> findOrderByUser(Optional<User> user);
+    public ArrayList<Order> findOrdersByUser(Optional<User> user);
 
     @Override
     <S extends Order> S save(S entity);
 
-    public Order findOrderByProductAndUser(Optional<Product>product, Optional<User> user);
+    public ArrayList<Order> findOrderByProductAndUser(Optional<Product>product, Optional<User> user);
+
+    public Order findOrderByProductAndUserAndState(Optional<Product>product, Optional<User> user,String state);
 
     @Override
     void deleteById(Integer integer);
+
 }

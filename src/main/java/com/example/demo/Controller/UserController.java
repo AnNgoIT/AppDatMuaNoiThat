@@ -141,7 +141,7 @@ public class UserController {
     public Order addToCart(@PathVariable("userId")Integer userId,@PathVariable("productId")Integer productId,@RequestParam("count") Long count){
         Optional<User> user=userDAO.findUserById(userId);
         Optional<Product> product=productDAO.getProductById(productId);
-        Order order=orderDAO.findOrderByProductAndUser(product,user);
+        Order order=orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
         if (order == null){
             User newUser = user.get();
             Product newProduct=product.get();
@@ -155,14 +155,28 @@ public class UserController {
         order.setCount(order.getCount()+count);
         return orderDAO.saveOrder(order);
     }
+    //update cart
+    @RequestMapping("user/updateCart/{userId}/{productId}")
+    public Order updateCart(@PathVariable("userId")Integer userId,@PathVariable("productId")Integer productId,@RequestParam("count") Long count){
+        Optional<User> user=userDAO.findUserById(userId);
+        Optional<Product> product=productDAO.getProductById(productId);
+        Order order=orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
+        order.setCount(count);
+        return orderDAO.saveOrder(order);
+    }
 
     //Thanh toán
-    @RequestMapping("user/paying/{orderId}")
-    public Order paying(@PathVariable("orderId") Integer orderId){
-        Optional<Order> order=orderDAO.findOrderById(orderId);
-        Order newOrder=order.get();
-        newOrder.setState("processing");
-        return orderDAO.saveOrder(newOrder);
+    @RequestMapping("user/paying/{userId}")
+    public void paying(@PathVariable("userId") Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Order> order=orderDAO.getOrderByUser(user);
+        for (int i=0;i<order.size();i++) {
+            if (order.get(i).getState().equals("inCart")) {
+                order.get(i).setState("processing");
+                orderDAO.saveOrder(order.get(i));
+            }
+        }
+
     }
 
     //Delete Order
@@ -170,7 +184,8 @@ public class UserController {
     public void deleteOrderByProductAndUser(@PathVariable("productId")Integer productId,@PathVariable("userId")Integer userId){
         Optional<Product> product=productDAO.getProductById(productId);
         Optional<User> user=userDAO.findUserById(userId);
-        Order order=orderDAO.findOrderByProductAndUser(product,user);
+        Order order=orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
         orderDAO.deleteByOrderByProductAndUser(Integer.parseInt(order.getOrderId().toString()));
     }
+
 }

@@ -22,6 +22,7 @@ public class User {
 	private String password;
 	private String image;
 	private String address;
+	private String role;
 
 
 	public String getUsername() {
