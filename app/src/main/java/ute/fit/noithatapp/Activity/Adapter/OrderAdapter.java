@@ -1,10 +1,12 @@
 package ute.fit.noithatapp.Activity.Adapter;
 
+import android.app.NotificationChannel;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private IClickIncrease iClickIncrease;
     private IClickDecrease iClickDecrease;
     private IClick iClick;
+
     public interface IClick{
         void onClickOrderItem(Integer productId,int position);
     }
@@ -35,9 +38,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
     public interface IClickDecrease{
         void onCLickDecrease(Long count,Integer productId);
-    }
-    public void setiClick(IClick iClick) {
-        this.iClick = iClick;
     }
     public void setCountList(ArrayList<Long> countList) {
         this.countList = countList;
@@ -51,6 +51,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         this.iClick=iClick;
         this.iClickIncrease=iClickIncrease;
         this.iClickDecrease=iClickDecrease;
+    }
+
+    public ArrayList<Long> getCountList() {
+        return countList;
+    }
+
+    public ArrayList<ProductModel> getProductModelList() {
+        return productModelList;
     }
 
     @NonNull
@@ -115,5 +123,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             btnDecrease=itemView.findViewById(R.id.buttonDecreaseOrder);
             edtAmount=itemView.findViewById(R.id.increaseAmountOrder);
         }
+    }
+    public void clearAll(){
+        countList.clear();
+        productModelList.clear();
+        notifyDataSetChanged();
     }
 }

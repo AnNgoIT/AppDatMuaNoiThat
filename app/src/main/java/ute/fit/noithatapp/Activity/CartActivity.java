@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +22,22 @@ import retrofit2.Response;
 import ute.fit.noithatapp.Activity.Adapter.OrderAdapter;
 import ute.fit.noithatapp.Activity.Adapter.ProductByCategoryAdapter;
 import ute.fit.noithatapp.Api.OrderApi;
+import ute.fit.noithatapp.Api.ProductApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
+import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
 
 public class CartActivity extends AppCompatActivity {
-    Button btnBack,inCrease,deCrease;
+    Button btnBack,inCrease,deCrease,btnCheckOut;
     TextView tvTotalPrice;
     RecyclerView recyclerViewOrderList;
     RetrofitServer retrofitServer;
     OrderApi orderApi;
+    ProductApi productApi;
+
+    Long totalPrice=Long.valueOf("0");
     private OrderAdapter adapter;
     private ArrayList<ProductModel> productList;
     private ArrayList<Long> countList;
@@ -54,20 +60,36 @@ public class CartActivity extends AppCompatActivity {
         //retrofit
         retrofitServer=new RetrofitServer();
         orderApi=retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
-
+        productApi=retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
         //recycler view
         recyclerViewOrderList = findViewById(R.id.CartList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerViewOrderList.setLayoutManager(mLayoutManager);
         getData();
         //
+        //check out
+        btnCheckOut=findViewById(R.id.checkout);
+        btnCheckOut.setOnClickListener(view -> {
+            orderApi.checkOut(userId).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(CartActivity.this, "Xin thử lại", Toast.LENGTH_SHORT).show();
+                }
+            });
+            adapter.clearAll();
+            totalPrice=Long.valueOf("0");
+            tvTotalPrice.setText("0 VNĐ");
+        });
     }
     public void TotalPrice(ArrayList<Long> mCountList,ArrayList<ProductModel> mProductList){
-        Long totalPrice= Long.parseLong("0".toString());
         for(int i=0;i<mCountList.size();i++){
             totalPrice+=mCountList.get(i)*mProductList.get(i).getPrice();
         }
-        tvTotalPrice.setText(totalPrice.toString()+" vnd");
+        tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
     }
     public void getData(){
         //Call api
@@ -76,7 +98,7 @@ public class CartActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<ProductModel>> call, Response<ArrayList<ProductModel>> response) {
                 if(response.isSuccessful()){
                     productList=response.body();
-                    adapter = new OrderAdapter(null, productList, CartActivity.this, new OrderAdapter.IClick() {
+                    adapter = new OrderAdapter(new ArrayList<>(), productList, CartActivity.this, new OrderAdapter.IClick() {
                         @Override
                         public void onClickOrderItem(Integer productId, int position) {
                             orderApi.deleteOrderByProductAndUser(productId, userId).enqueue(new Callback<Void>() {
@@ -95,13 +117,59 @@ public class CartActivity extends AppCompatActivity {
                     }, new OrderAdapter.IClickIncrease() {
                         @Override
                         public void onClickIncrease(Long count, Integer productId) {
+                            orderApi.updateCart(userId, productId, count).enqueue(new Callback<OrderModel>() {
+                                @Override
+                                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
 
+                                }
+                                @Override
+                                public void onFailure(Call<OrderModel> call, Throwable t) {
+                                }
+                            });
+                            productApi.getProductById(productId).enqueue(new Callback<ProductModel>() {
+                                @Override
+                                public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+                                    ProductModel productModel=response.body();
+                                    totalPrice+=productModel.getPrice();
+                                    tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
+                                }
+
+                                @Override
+                                public void onFailure(Call<ProductModel> call, Throwable t) {
+                                    Toast.makeText(CartActivity.this, "Xin thử lại", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }, new OrderAdapter.IClickDecrease() {
                         @Override
                         public void onCLickDecrease(Long count, Integer productId) {
+                            orderApi.updateCart(userId, productId, count).enqueue(new Callback<OrderModel>() {
+                                @Override
+                                public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
 
+                                }
+
+                                @Override
+                                public void onFailure(Call<OrderModel> call, Throwable t) {
+
+                                }
+                            });
+                            productApi.getProductById(productId).enqueue(new Callback<ProductModel>() {
+                                @Override
+                                public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+                                    ProductModel productModel=response.body();
+                                    totalPrice-=productModel.getPrice();
+                                    tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
+                                }
+
+                                @Override
+                                public void onFailure(Call<ProductModel> call, Throwable t) {
+                                    Toast.makeText(CartActivity.this, "Xin thử lại", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
+
+
                     });
                     orderApi.getCountInCart(userId).enqueue(new Callback<ArrayList<Long>>() {
                         @Override

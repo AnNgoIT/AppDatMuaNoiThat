@@ -1,6 +1,8 @@
 package ute.fit.noithatapp.Activity.Fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import ute.fit.noithatapp.Activity.LoginActivity;
+import ute.fit.noithatapp.Activity.OrderActivity;
 import ute.fit.noithatapp.Activity.SettingActivity;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.R;
@@ -25,7 +28,7 @@ import ute.fit.noithatapp.R;
  */
 public class UserProfileFragment extends Fragment {
     public Activity activity= getActivity();
-    RelativeLayout setting;
+    RelativeLayout setting,myOrder;
 
     Intent intent;
 
@@ -78,11 +81,10 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView =inflater.inflate(R.layout.fragment_user_profile, container, false);
+        //loggout
         logout = mView.findViewById(R.id.logout);
         logout.setOnClickListener(view -> {
-            intent=new Intent(getActivity(), LoginActivity.class);
-            SharedPrefManager.getInstance(getActivity()).logout();
-            startActivity(intent);
+            exit(view);
         });
         setting = mView.findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +94,43 @@ public class UserProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        //Order
+        myOrder=mView.findViewById(R.id.myorder);
+        myOrder.setOnClickListener(view -> {
+            Intent intent=new Intent(getActivity(),OrderActivity.class);
+            startActivity(intent);
+        });
+
         return  mView;
     }
+    public void exit(View view){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        // Icon Of Alert Dialog
+        alertDialogBuilder.setIcon(R.drawable.baseline_question_mark_24);
+        // Setting Alert Dialog Message
+        alertDialogBuilder.setMessage("Do you want to logout ?");
+        alertDialogBuilder.setCancelable(false);
 
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                intent=new Intent(getActivity(), LoginActivity.class);
+                SharedPrefManager.getInstance(getActivity()).logout();
+                startActivity(intent);
+            }
+        });
+
+        alertDialogBuilder.setNeutralButton("Cancle", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
 }
