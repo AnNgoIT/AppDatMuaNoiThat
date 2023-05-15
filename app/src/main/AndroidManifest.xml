@@ -48,6 +48,9 @@
         <activity
             android:name=".Activity.SettingActivity"
             android:exported="true" />
+        <activity
+            android:name=".Activity.HomeManagerActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
