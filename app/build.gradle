@@ -48,5 +48,4 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
     //thư viện circle
     implementation 'me.relex:circleindicator:2.1.6'
-
 }
