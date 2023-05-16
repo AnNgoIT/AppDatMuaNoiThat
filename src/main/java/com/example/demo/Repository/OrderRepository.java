@@ -23,4 +23,6 @@ public interface OrderRepository extends CrudRepository<Order,Integer> {
     @Override
     void deleteById(Integer integer);
 
+    public ArrayList<Order> findOrdersByUserAndState(Optional<User> user,String state);
+
 }

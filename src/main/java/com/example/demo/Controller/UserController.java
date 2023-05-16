@@ -23,10 +23,12 @@ public class UserController {
     private CategoryDAO categoryDAO;
     @Autowired
     private ProductDAO productDAO;
+    @Autowired
+    private NotificationDAO notificationDAO;
 
     @PostMapping("/user/signup")
     public User saveUser(@RequestBody User user){
-        user.setRole("user");
+        user.setRole("customer");
         return userDAO.save(user);
     }
 
@@ -57,6 +59,10 @@ public class UserController {
     @RequestMapping("user/products/{name}")
     public Iterable<Product> getProductByName(@PathVariable("name") String name){
         return productDAO.getProductByNameContaining(name);
+    }
+    @RequestMapping("user/productname/{name}")
+    public Optional<Product> getOneProductByName(@PathVariable("name") String name){
+        return productDAO.getProductByName(name);
     }
 
     //get product in cart
@@ -187,6 +193,7 @@ public class UserController {
 
     }
 
+
     //Delete Order
     @DeleteMapping("user/orderDelete/{productId}/{userId}")
     public void deleteOrderByProductAndUser(@PathVariable("productId")Integer productId,@PathVariable("userId")Integer userId){
@@ -204,4 +211,66 @@ public class UserController {
         return orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
     }
 
+    //notification
+    @GetMapping("user/notification/{userId}")
+    public ArrayList<Notification> getNotification(@PathVariable("userId")Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        return notificationDAO.findNotificationByUser(user);
+    }
+
+    @PostMapping("user/saveNotification/{userId}")
+    public void saveNotification(@PathVariable("userId")Integer userId,@RequestParam("description") String description,
+                                 @RequestParam("orderId") Integer orderId,@RequestParam("state") String state){
+        Notification newNotification=new Notification();
+        newNotification.setDescription(description);
+        Optional<User> user=userDAO.findUserById(userId);
+        newNotification.setUser(user.get());
+        newNotification.setOrder(orderDAO.findOrderById(orderId).get());
+        newNotification.setState(state);
+        notificationDAO.saveNotification(newNotification);
+    }
+    @GetMapping("user/notificationOrder/{userId}")
+    public ArrayList<Long> getOrderByNotification(@PathVariable("userId")Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Notification> notification=notificationDAO.findNotificationByUser(user);
+        ArrayList<Long> orderIdList=new ArrayList<>();
+        for (int i=0;i<notification.size();i++){
+            orderIdList.add(notification.get(i).getOrder().getOrderId());
+        }
+        return orderIdList;
+    }
+    @GetMapping("user/productByOrders")
+    public ArrayList<Product> getProductByOrder(@RequestParam("listOrder")ArrayList<Integer> orderIdList) {
+        ArrayList<Product> productArrayList=new ArrayList<>();
+        for (int i = 0; i < orderIdList.size(); i++){
+            Optional<Order> order=orderDAO.findOrderById(orderIdList.get(i));
+            productArrayList.add(order.get().getProduct());
+        }
+        return productArrayList;
+    }
+    @GetMapping("user/getCountOrders")
+    public ArrayList<Long> getCountOrder(@RequestParam("listOrder")ArrayList<Integer> orderIdList){
+        ArrayList<Long> countList=new ArrayList<>();
+        for (int i = 0; i < orderIdList.size(); i++){
+            Optional<Order> order=orderDAO.findOrderById(orderIdList.get(i));
+            countList.add(order.get().getCount());
+        }
+        return countList;
+    }
+    @GetMapping("user/getOrderInCart/{userId}")
+    public ArrayList<Long> getOrderById(@PathVariable("userId")Integer userId){
+        ArrayList<Long> orderId=new ArrayList<>();
+        ArrayList<Order> orderArrayList=orderDAO.getOrderByUserAndState(userDAO.findUserById(userId),"inCart");
+        for (int i =0;i<orderArrayList.size();i++){
+            orderId.add(orderArrayList.get(i).getOrderId());
+        }
+        return orderId;
+    }
+
+    @PostMapping("user/saveNotificationHide/{notificationId}")
+    public void saveNotificationById(@PathVariable("notificationId")Integer notificationId){
+        Notification notification=notificationDAO.findByID(notificationId).get();
+        notification.setState("hide");
+        notificationDAO.saveNotification(notification);
+    }
 }
