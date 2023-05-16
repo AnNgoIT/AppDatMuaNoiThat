@@ -152,7 +152,9 @@ public class HomeFragment extends Fragment {
                 }else {
                     lvSearch.setVisibility(View.GONE);
                 }
-                searchAdapter.getFilter().filter(s);
+                if (searchAdapter != null) {
+                    searchAdapter.getFilter().filter(s);
+                }
                 lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
