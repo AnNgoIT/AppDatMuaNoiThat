@@ -197,4 +197,11 @@ public class UserController {
     }
 
 
+    @GetMapping("user/getOrderInCartByProductAndUser/{productId}/{userId}")
+    public Order getOrderInCartByProductAndUser(@PathVariable("productId")Integer productId,@PathVariable("userId")Integer userId){
+        Optional<Product> product=productDAO.getProductById(productId);
+        Optional<User> user=userDAO.findUserById(userId);
+        return orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
+    }
+
 }
