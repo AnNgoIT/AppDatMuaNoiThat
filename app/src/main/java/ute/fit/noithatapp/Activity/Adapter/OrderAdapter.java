@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import ute.fit.noithatapp.Model.ProductModel;
@@ -76,7 +77,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             return ;
         }
         holder.tvProductName.setText(productModel.getName());
-        holder.tvProductPrice.setText(productModel.getPrice().toString());
+        //
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String price = formatter.format(productModel.getPrice());
+        holder.tvProductPrice.setText(price+" VNĐ");
+        //
         Glide.with(context).load(productModel.getImage()).into(holder.imgProduct);
         holder.edtAmount.setText(count.toString());
         holder.btnDelete.setOnClickListener(view -> {

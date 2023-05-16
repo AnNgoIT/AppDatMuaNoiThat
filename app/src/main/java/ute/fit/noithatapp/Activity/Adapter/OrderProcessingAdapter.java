@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import ute.fit.noithatapp.Model.ProductModel;
@@ -47,7 +48,11 @@ public class OrderProcessingAdapter extends RecyclerView.Adapter<OrderProcessing
             return ;
         }
         holder.productName.setText(productModel.getName());
-        holder.productPrice.setText(productModel.getPrice().toString()+" VNĐ");
+        //
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String price = formatter.format(productModel.getPrice());
+        holder.productPrice.setText(price+" VNĐ");
+        //
         holder.state.setText("processing");
         holder.countProcessing.setText(count.toString());
         Glide.with(context).load(productModel.getImage()).into(holder.imageView);

@@ -2,19 +2,24 @@ package ute.fit.noithatapp.Activity;
 
 import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +28,7 @@ import ute.fit.noithatapp.Activity.Adapter.OrderAdapter;
 import ute.fit.noithatapp.Activity.Adapter.ProductByCategoryAdapter;
 import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Api.ProductApi;
+import ute.fit.noithatapp.Api.UserApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
 import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.Model.OrderModel;
@@ -35,7 +41,10 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView recyclerViewOrderList;
     RetrofitServer retrofitServer;
     OrderApi orderApi;
+    UserApi userApi;
     ProductApi productApi;
+    String[] listAddress;
+    String addressSelect;
 
     Long totalPrice=Long.valueOf("0");
     private OrderAdapter adapter;
@@ -61,29 +70,14 @@ public class CartActivity extends AppCompatActivity {
         retrofitServer=new RetrofitServer();
         orderApi=retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
         productApi=retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
+        userApi=retrofitServer.getRetrofit(ROOT_URL).create(UserApi.class);
         //recycler view
         recyclerViewOrderList = findViewById(R.id.CartList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerViewOrderList.setLayoutManager(mLayoutManager);
         getData();
         //
-        //check out
-        btnCheckOut=findViewById(R.id.checkout);
-        btnCheckOut.setOnClickListener(view -> {
-            orderApi.checkOut(userId).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                }
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(CartActivity.this, "Xin thử lại", Toast.LENGTH_SHORT).show();
-                }
-            });
-            adapter.clearAll();
-            totalPrice=Long.valueOf("0");
-            tvTotalPrice.setText("0 VNĐ");
-        });
+        Checkout();
     }
     public void TotalPrice(ArrayList<Long> mCountList,ArrayList<ProductModel> mProductList){
         for(int i=0;i<mCountList.size();i++){
@@ -198,5 +192,67 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void Checkout(){
+        //check out
+        btnCheckOut=findViewById(R.id.checkout);
+        btnCheckOut.setOnClickListener(view -> {
+            listAddress=new String[3];
+            listAddress=SharedPrefManager.getInstance(this).getUserAddress();
+
+            //dialog select address
+            AlertDialog.Builder mBuilder=new AlertDialog.Builder(CartActivity.this);
+            mBuilder.setTitle("Select address");
+            mBuilder.setIcon(R.drawable.baseline_chair_24);
+            mBuilder.setSingleChoiceItems(listAddress, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    addressSelect=listAddress[i];
+                    if (!addressSelect.equals("")){
+                        orderApi.checkOut(userId,addressSelect).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(CartActivity.this, "Xin thử lại", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        adapter.clearAll();
+                        totalPrice=Long.valueOf("0");
+                        tvTotalPrice.setText("0 VNĐ");
+                        dialogInterface.dismiss();
+                    }
+                    else{
+                        AlertDialog.Builder mBuilder=new AlertDialog.Builder(CartActivity.this);
+                        mBuilder.setTitle("Do you want to create ?");
+                        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent=new Intent(CartActivity.this,SettingActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        mBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        AlertDialog mDialog=mBuilder.create();
+                        mDialog.show();
+                    }
+                }
+            });
+            mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            AlertDialog mDialog=mBuilder.create();
+            mDialog.show();
+        });
     }
 }

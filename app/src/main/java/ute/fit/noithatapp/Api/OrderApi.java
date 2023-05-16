@@ -31,8 +31,9 @@ public interface OrderApi {
     @DELETE("user/orderDelete/{productId}/{userId}")
     Call<Void> deleteOrderByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
 
+    @FormUrlEncoded
     @POST("user/paying/{userId}")
-    Call<Void> checkOut(@Path("userId")Integer userId);
+    Call<Void> checkOut(@Path("userId")Integer userId,@Field("address") String address);
 
     @GET("user/order/processing/{id}")
     Call<ArrayList<ProductModel>> getProductProcessing(@Path("id")Integer userId);

@@ -4,6 +4,8 @@ import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import com.bumptech.glide.Glide;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
@@ -36,9 +40,7 @@ import ute.fit.noithatapp.Api.CategoryApi;
 import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Api.ProductApi;
 import ute.fit.noithatapp.Contants.RetrofitServer;
-import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.Model.CategoryModel;
-import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.Model.PhotoModel;
 import ute.fit.noithatapp.Model.ProductModel;
 import ute.fit.noithatapp.R;
@@ -47,7 +49,7 @@ import ute.fit.noithatapp.R;
 public class HomeFragment extends Fragment {
     View mView;
     ImageButton imgBtnAddToCart1,imgBtnAddToCart2;
-    TextView productName1,productName2,productPrice1,productPrice2;
+    TextView productName1,productName2,productPrice1,productPrice2,countProduct1,countProduct2;
     ImageView productImg1,productImg2;
     RecyclerView recyclerViewCategory;
     ImageView imgvCart;
@@ -63,6 +65,8 @@ public class HomeFragment extends Fragment {
     ViewPager viewPagerPhoto;
     CircleIndicator circleIndicatorPhoto;
     PhotoAdapter photoAdapter;
+    ArrayList<PhotoModel> photoModelArrayList;
+    Timer timer;
 
 
     @Override
@@ -83,6 +87,8 @@ public class HomeFragment extends Fragment {
         productPrice2=mView.findViewById(R.id.tvPriceProduct2);
         productImg1=mView.findViewById(R.id.imgViewProduct1);
         productImg2=mView.findViewById(R.id.imgViewProduct2);
+        countProduct1=mView.findViewById(R.id.countProduct1);
+        countProduct2=mView.findViewById(R.id.countProduct2);
         //CART
         imgvCart=mView.findViewById(R.id.imgvCart);
         imgvCart.setOnClickListener(view -> {
@@ -98,7 +104,7 @@ public class HomeFragment extends Fragment {
         //circle indicator
         viewPagerPhoto=mView.findViewById(R.id.viewPagerPhoto);
         circleIndicatorPhoto=mView.findViewById(R.id.circleIndicatorPhoto);
-        ArrayList<PhotoModel> photoModelArrayList=new ArrayList<>();
+        photoModelArrayList=new ArrayList<>();
         photoModelArrayList.add(new PhotoModel(R.drawable.photo1));
         photoModelArrayList.add(new PhotoModel(R.drawable.photo2));
         photoModelArrayList.add(new PhotoModel(R.drawable.photo3));
@@ -107,6 +113,7 @@ public class HomeFragment extends Fragment {
         viewPagerPhoto.setAdapter(photoAdapter);
         circleIndicatorPhoto.setViewPager(viewPagerPhoto);
         photoAdapter.registerDataSetObserver(circleIndicatorPhoto.getDataSetObserver());
+        autoSlidePhoto();
         return mView;
     }
 
@@ -129,6 +136,8 @@ public class HomeFragment extends Fragment {
                 productPrice1.setText(price1+" VNĐ");
                 productName2.setText(productModel2.getName());
                 productPrice2.setText(price2+" VNĐ");
+                countProduct1.setText("Remaining "+String.valueOf(productModel1.getQuantity()));
+                countProduct2.setText("Remaining "+String.valueOf(productModel2.getQuantity()));
 
 
                 //ProductDetail //transaction data
@@ -148,7 +157,6 @@ public class HomeFragment extends Fragment {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 });
-
 
             }
 
@@ -184,5 +192,34 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+    private void autoSlidePhoto(){
+        if(photoModelArrayList == null || photoModelArrayList.isEmpty() || viewPagerPhoto == null){
+            return;
+        }
+        if (timer==null){
+            timer= new Timer();
+        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int curentItemPhoto=viewPagerPhoto.getCurrentItem();
+                        int totalItem=photoModelArrayList.size()-1;
+                        if(curentItemPhoto < totalItem){
+                            curentItemPhoto++;
+                            viewPagerPhoto.setCurrentItem(curentItemPhoto);
+                        }else {
+                            viewPagerPhoto.setCurrentItem(0);
+
+                        }
+                    }
+                });
+            }
+        },500,5000);
+    }
+
 }

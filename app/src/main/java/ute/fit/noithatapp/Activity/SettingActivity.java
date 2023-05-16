@@ -32,7 +32,7 @@ public class SettingActivity extends AppCompatActivity {
 
     ImageView back;
 
-    EditText name, address, password;
+    EditText name, address, password,address2,address3;
 
     Button save;
 
@@ -72,13 +72,25 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(SettingActivity.this,"Vui lòng nhập đầy đủ thông tin!!!",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    userApi.saveUserSetting(userId, name.getText().toString(), password.getText().toString(), address.getText().toString()).enqueue(new Callback<UserModel>() {
+                    userApi.saveUserSetting(userId, name.getText().toString(), password.getText().toString(),
+                            address.getText().toString(),address2.getText().toString(),address3.getText().toString()).enqueue(new Callback<UserModel>() {
                         @Override
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             try{
                                 if(response.isSuccessful())
                                 {
                                     Toast.makeText(SettingActivity.this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                                    userApi.getUserById(userId).enqueue(new Callback<UserModel>() {
+                                        @Override
+                                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                                            UserModel newUser=response.body();
+                                            SharedPrefManager.getInstance(getApplicationContext()).userLogin(newUser);
+                                        }
+                                        @Override
+                                        public void onFailure(Call<UserModel> call, Throwable t) {
+
+                                        }
+                                    });
                                 }else{
                                     response.code();
                                 }
@@ -101,6 +113,8 @@ public class SettingActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         address = findViewById(R.id.address);
         password = findViewById(R.id.password);
+        address2=findViewById(R.id.address2);
+        address3=findViewById(R.id.address3);
         save = findViewById(R.id.save);
         retrofitServer = new RetrofitServer();
         userApi = retrofitServer.getRetrofit(ROOT_URL).create(UserApi.class);
@@ -115,6 +129,8 @@ public class SettingActivity extends AppCompatActivity {
                     name.setText((user.getName()));
                     address.setText(user.getAddress());
                     password.setText(user.getPassword());
+                    address2.setText(user.getAddress2());
+                    address3.setText(user.getAddress3());
 
                 }else{
                     response.code();

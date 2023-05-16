@@ -122,32 +122,33 @@
         app:layout_constraintVertical_bias="0.887">
 
         <TextView
-            android:id="@+id/txtAddress"
+            android:id="@+id/txtPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="23dp"
             android:layout_marginTop="11dp"
-            android:text="Adress" />
+            android:text="Password" />
 
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/password"
             android:layout_width="319dp"
             android:layout_height="55dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="23dp"
             android:layout_marginTop="38dp"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:inputType="textPassword"/>
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/txtPassword"
+        android:id="@+id/txtAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Password"
+        android:text="Address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
@@ -164,16 +165,59 @@
         app:srcCompat="@drawable/ic_color" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/address"
         android:layout_width="345dp"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:inputType="textPassword"
         android:textColor="#242424"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
+    <TextView
+        android:id="@+id/txtAddress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Address 2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address" />
+
+
+    <EditText
+        android:id="@+id/address2"
+        android:layout_width="345dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#242424"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddress2" />
+    <TextView
+        android:id="@+id/txtAddress3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Address 3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address2" />
+
+
+    <EditText
+        android:id="@+id/address3"
+        android:layout_width="345dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#242424"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddress3" />
 
     <Button
         android:id="@+id/save"
@@ -184,7 +228,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="40dp"
         app:layout_constraintVertical_bias="0.641" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
