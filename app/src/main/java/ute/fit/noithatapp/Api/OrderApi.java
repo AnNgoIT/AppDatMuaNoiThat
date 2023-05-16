@@ -41,5 +41,6 @@ public interface OrderApi {
     @GET("user/order/countProduct/processing/{id}")
     Call<ArrayList<Long>> getCountProcessing(@Path("id")Integer userId);
 
-
+    @GET("user/getOrderInCartByProductAndUser/{productId}/{userId}")
+    Call<OrderModel> getOrderInCartByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
 }

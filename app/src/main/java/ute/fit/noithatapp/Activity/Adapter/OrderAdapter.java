@@ -32,7 +32,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private IClick iClick;
 
     public interface IClick{
-        void onClickOrderItem(Integer productId,int position);
+        void onClickOrderItem(Integer productId,int position,String price,Long count);
     }
     public interface  IClickIncrease{
         void onClickIncrease(Long count,Integer productId);
@@ -85,7 +85,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Glide.with(context).load(productModel.getImage()).into(holder.imgProduct);
         holder.edtAmount.setText(count.toString());
         holder.btnDelete.setOnClickListener(view -> {
-            iClick.onClickOrderItem(productModel.getProductId(),position);
+            iClick.onClickOrderItem(productModel.getProductId(),position,productModel.getPrice().toString(),count);
             countList.remove(position);
             productModelList.remove(position);
             notifyItemRemoved(position);

@@ -13,19 +13,15 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ute.fit.noithatapp.Activity.Adapter.OrderAdapter;
-import ute.fit.noithatapp.Activity.Adapter.ProductByCategoryAdapter;
 import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Api.ProductApi;
 import ute.fit.noithatapp.Api.UserApi;
@@ -94,19 +90,22 @@ public class CartActivity extends AppCompatActivity {
                     productList=response.body();
                     adapter = new OrderAdapter(new ArrayList<>(), productList, CartActivity.this, new OrderAdapter.IClick() {
                         @Override
-                        public void onClickOrderItem(Integer productId, int position) {
+                        public void onClickOrderItem(Integer productId, int position, String price, Long count) {
                             orderApi.deleteOrderByProductAndUser(productId, userId).enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                                }
 
+                                }
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
 
                                 }
                             });
+                            totalPrice-=Long.valueOf(price)*count;
+                            tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
+
                         }
                     }, new OrderAdapter.IClickIncrease() {
                         @Override
@@ -146,6 +145,19 @@ public class CartActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<OrderModel> call, Throwable t) {
 
+                                }
+                            });
+                            productApi.getProductById(productId).enqueue(new Callback<ProductModel>() {
+                                @Override
+                                public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+                                    ProductModel productModel=response.body();
+                                    totalPrice-=productModel.getPrice();
+                                    tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
+                                }
+
+                                @Override
+                                public void onFailure(Call<ProductModel> call, Throwable t) {
+                                    Toast.makeText(CartActivity.this, "Xin thử lại", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             productApi.getProductById(productId).enqueue(new Callback<ProductModel>() {
