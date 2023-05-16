@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +26,7 @@ public class UserController {
 
     @PostMapping("/user/signup")
     public User saveUser(@RequestBody User user){
+        user.setRole("user");
         return userDAO.save(user);
     }
 
@@ -122,12 +125,15 @@ public class UserController {
 
     //setting user
     @RequestMapping("user/setting/{id}")
-    public User saveSettingUser(@PathVariable("id") Integer userId,@RequestParam("name") String name,@RequestParam("password") String password,@RequestParam("address") String address){
+    public User saveSettingUser(@PathVariable("id") Integer userId,@RequestParam("name") String name,@RequestParam("password") String password,
+                                @RequestParam("address") String address,@RequestParam("address2") String address2,@RequestParam("address3") String address3){
         Optional<User> newUser = userDAO.findUserById(userId);
         User user=newUser.get();
         user.setName(name);
         user.setPassword(password);
         user.setAddress(address);
+        user.setAddress2(address2);
+        user.setAddress3(address3);
         return userDAO.saveUserSetting(user);
     }
 
@@ -167,12 +173,14 @@ public class UserController {
 
     //Thanh toán
     @RequestMapping("user/paying/{userId}")
-    public void paying(@PathVariable("userId") Integer userId){
+    public void paying(@PathVariable("userId") Integer userId,@RequestParam("address") String address){
         Optional<User> user=userDAO.findUserById(userId);
         ArrayList<Order> order=orderDAO.getOrderByUser(user);
         for (int i=0;i<order.size();i++) {
             if (order.get(i).getState().equals("inCart")) {
                 order.get(i).setState("processing");
+                order.get(i).setDate(new Date());
+                order.get(i).setAddress(address);
                 orderDAO.saveOrder(order.get(i));
             }
         }
@@ -187,5 +195,6 @@ public class UserController {
         Order order=orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
         orderDAO.deleteByOrderByProductAndUser(Integer.parseInt(order.getOrderId().toString()));
     }
+
 
 }
