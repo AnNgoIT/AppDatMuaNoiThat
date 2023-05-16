@@ -19,4 +19,6 @@ public interface ProductRepository extends CrudRepository<Product,Integer> {
 
     public Iterable<Product> findProductByNameContaining(String name);
 
+    Optional<Product> findProductByName(String name);
+
 }

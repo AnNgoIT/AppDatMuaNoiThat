@@ -23,4 +23,6 @@ public class ProductDAO {
 
     public Iterable<Product> getProductByNameContaining(String name){return productRepository.findProductByNameContaining(name);}
     public Product saveProduct(Product product){return productRepository.save(product);}
+
+    public  Optional<Product> getProductByName(String name){return productRepository.findProductByName(name);}
 }

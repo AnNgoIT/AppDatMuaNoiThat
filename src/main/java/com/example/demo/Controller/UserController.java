@@ -60,6 +60,10 @@ public class UserController {
     public Iterable<Product> getProductByName(@PathVariable("name") String name){
         return productDAO.getProductByNameContaining(name);
     }
+    @RequestMapping("user/productname/{name}")
+    public Optional<Product> getOneProductByName(@PathVariable("name") String name){
+        return productDAO.getProductByName(name);
+    }
 
     //get product in cart
     @RequestMapping("user/order/inCart/{id}")
@@ -188,6 +192,7 @@ public class UserController {
         }
 
     }
+
 
     //Delete Order
     @DeleteMapping("user/orderDelete/{productId}/{userId}")
