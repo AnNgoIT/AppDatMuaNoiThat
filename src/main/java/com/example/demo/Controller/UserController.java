@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/user/signup")
     public User saveUser(@RequestBody User user){
-        user.setRole("user");
+        user.setRole("customer");
         return userDAO.save(user);
     }
 
