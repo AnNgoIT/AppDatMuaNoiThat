@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 import java.io.Serializable;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -28,4 +29,7 @@ public class Order implements Serializable{
     @JsonBackReference
     @ManyToOne
     private Product product;
+    private Date date;
+    private String address;
+
 }

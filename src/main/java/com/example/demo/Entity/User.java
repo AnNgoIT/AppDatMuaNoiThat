@@ -23,7 +23,8 @@ public class User {
 	private String password;
 	private String image;
 	private String address;
-	@Column(name = "role", columnDefinition = "varchar(32) default customer")
+	private String address2;
+	private String address3;
 	private String role;
 
 	public String getRole() {
