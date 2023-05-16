@@ -20,8 +20,11 @@ public interface NotificationApi {
 
     @FormUrlEncoded
     @POST("user/saveNotification/{userId}")
-    Call<Void> saveNotification(@Path("userId")Integer userId, @Field("description")String description, @Field("orderId") Integer orderId);
+    Call<Void> saveNotification(@Path("userId")Integer userId, @Field("description")String description, @Field("orderId") Integer orderId,@Field("state")String state);
 
     @GET("user/notificationOrder/{userId}")
     Call<OrderModel> getOrderByNotification(@Path("userId")Integer userId);
+
+    @POST("user/saveNotificationHide/{notificationId}")
+    Call<Void> saveNotificationHide(@Path("notificationId") Integer notificationId);
 }

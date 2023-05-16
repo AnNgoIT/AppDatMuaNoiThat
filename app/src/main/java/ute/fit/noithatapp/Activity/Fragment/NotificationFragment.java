@@ -104,7 +104,22 @@ public class NotificationFragment extends Fragment {
         recyclerViewOrderList = mView.findViewById(R.id.rcv_notification);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
         recyclerViewOrderList.setLayoutManager(mLayoutManager);
-        notificationAdapter=new NotificationAdapter(new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),getContext());
+        notificationAdapter=new NotificationAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), getContext(), new NotificationAdapter.IClickClear() {
+            @Override
+            public void ClickClear(NotificationModel notificationModel) {
+                notificationApi.saveNotificationHide(notificationModel.getNotificationId()).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         notificationApi.getNotificationByUser(userId).enqueue(new Callback<ArrayList<NotificationModel>>() {
             @Override
             public void onResponse(Call<ArrayList<NotificationModel>> call, Response<ArrayList<NotificationModel>> response) {
@@ -122,6 +137,7 @@ public class NotificationFragment extends Fragment {
                                    @Override
                                    public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
                                        notificationAdapter.setCountList(response.body());
+                                       notificationAdapter.filter();
                                        recyclerViewOrderList.setAdapter(notificationAdapter);
                                    }
 

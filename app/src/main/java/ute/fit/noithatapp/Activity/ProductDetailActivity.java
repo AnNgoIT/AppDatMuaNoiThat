@@ -102,6 +102,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(ProductDetailActivity.this,"Thành công",Toast.LENGTH_SHORT).show();
                 }
             });
+            Intent intent=new Intent(ProductDetailActivity.this,CartActivity.class);
+            startActivity(intent);
 
         });
         retrofitServer=new RetrofitServer();

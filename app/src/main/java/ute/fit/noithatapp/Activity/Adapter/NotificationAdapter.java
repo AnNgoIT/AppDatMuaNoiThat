@@ -23,8 +23,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     ArrayList<ProductModel> productModelArrayList;
     ArrayList<NotificationModel> notificationModelArrayList;
     Context context;
+    IClickClear iClickClear;
+    public void filter(){
+        for (int i=0;i<notificationModelArrayList.size();i++){
+            if (notificationModelArrayList.get(i).getState().equals("hide")){
+                notificationModelArrayList.remove(i);
+                productModelArrayList.remove(i);
+                countList.remove(i);
+                i--;
+            }
+        }
+    }
 
-
+    public interface IClickClear{
+        void ClickClear(NotificationModel notificationModel);
+    }
     public void setCountList(ArrayList<Long> countList) {
         this.countList = countList;
     }
@@ -46,11 +59,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
 
-    public NotificationAdapter(ArrayList<Long> countList, ArrayList<ProductModel> productModelArrayList, ArrayList<NotificationModel> notificationModelArrayList, Context context) {
+    public NotificationAdapter(ArrayList<Long> countList, ArrayList<ProductModel> productModelArrayList,
+                               ArrayList<NotificationModel> notificationModelArrayList, Context context,IClickClear iClickClear) {
         this.countList = countList;
         this.productModelArrayList = productModelArrayList;
         this.notificationModelArrayList = notificationModelArrayList;
         this.context = context;
+        this.iClickClear=iClickClear;
     }
 
     @NonNull
@@ -63,12 +78,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         NotificationModel notificationModel=notificationModelArrayList.get(position);
-        ProductModel productModel=productModelArrayList.get(position);
-        Long count=countList.get(position);
-        holder.tvDescriptionNotification.setText(notificationModel.getDescription());
-        holder.tvCountNotification.setText("Count:"+count.toString());
-        Glide.with(context).load(productModel.getImage()).into(holder.imgViewNotification);
-
+            ProductModel productModel=productModelArrayList.get(position);
+            Long count=countList.get(position);
+            holder.tvDescriptionNotification.setText(notificationModel.getDescription());
+            holder.tvCountNotification.setText("Count:"+count.toString());
+            Glide.with(context).load(productModel.getImage()).into(holder.imgViewNotification);
+            holder.tvClearNotification.setOnClickListener(view -> {
+                iClickClear.ClickClear(notificationModel);
+                countList.remove(position);
+                productModelArrayList.remove(position);
+                notificationModelArrayList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,countList.size());
+            });
     }
 
     @Override
