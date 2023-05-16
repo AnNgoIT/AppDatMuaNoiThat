@@ -31,8 +31,9 @@ public interface OrderApi {
     @DELETE("user/orderDelete/{productId}/{userId}")
     Call<Void> deleteOrderByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
 
+    @FormUrlEncoded
     @POST("user/paying/{userId}")
-    Call<Void> checkOut(@Path("userId")Integer userId);
+    Call<Void> checkOut(@Path("userId")Integer userId,@Field("address") String address);
 
     @GET("user/order/processing/{id}")
     Call<ArrayList<ProductModel>> getProductProcessing(@Path("id")Integer userId);
@@ -40,5 +41,19 @@ public interface OrderApi {
     @GET("user/order/countProduct/processing/{id}")
     Call<ArrayList<Long>> getCountProcessing(@Path("id")Integer userId);
 
+    @GET("user/getOrderInCartByProductAndUser/{productId}/{userId}")
+    Call<OrderModel> getOrderInCartByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
+
+    @GET("user/getOrderInCart/{userId}")
+    Call<ArrayList<Integer>> getOrderInCartByUser(@Path("userId")Integer userId);
+
+    @GET("user/notificationOrder/{userId}")
+    Call<ArrayList<Integer>> getNotificationOrder(@Path("userId")Integer userId);
+
+    @GET("user/productByOrders")
+    Call<ArrayList<ProductModel>> getProductByOrder(@Query("listOrder")ArrayList<Integer> orderList);
+
+    @GET("user/getCountOrders")
+    Call<ArrayList<Long>> getCountOrder(@Query("listOrder") ArrayList<Integer> orderList);
 
 }

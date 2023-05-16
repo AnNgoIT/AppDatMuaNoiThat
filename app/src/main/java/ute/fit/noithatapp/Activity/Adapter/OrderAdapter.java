@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import ute.fit.noithatapp.Model.ProductModel;
@@ -31,7 +32,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private IClick iClick;
 
     public interface IClick{
-        void onClickOrderItem(Integer productId,int position);
+        void onClickOrderItem(Integer productId,int position,String price,Long count);
     }
     public interface  IClickIncrease{
         void onClickIncrease(Long count,Integer productId);
@@ -76,11 +77,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             return ;
         }
         holder.tvProductName.setText(productModel.getName());
-        holder.tvProductPrice.setText(productModel.getPrice().toString());
+        //
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String price = formatter.format(productModel.getPrice());
+        holder.tvProductPrice.setText(price+" VNĐ");
+        //
         Glide.with(context).load(productModel.getImage()).into(holder.imgProduct);
         holder.edtAmount.setText(count.toString());
         holder.btnDelete.setOnClickListener(view -> {
-            iClick.onClickOrderItem(productModel.getProductId(),position);
+            iClick.onClickOrderItem(productModel.getProductId(),position,productModel.getPrice().toString(),count);
             countList.remove(position);
             productModelList.remove(position);
             notifyItemRemoved(position);

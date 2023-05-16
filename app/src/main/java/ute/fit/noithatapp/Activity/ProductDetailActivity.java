@@ -35,7 +35,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     EditText editQuantity;
     Button btnBack,inCrease,deCrease,addToCart;
     int productId;
-    TextView productDetailName,productDetailPrice,productDetailDes;
+    TextView productDetailName,productDetailPrice,productDetailDes,countProductDetail;
     ImageView productDetailImg;
 
     RetrofitServer retrofitServer;
@@ -73,6 +73,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         productDetailImg = findViewById(R.id.productDetailImg);
         productDetailPrice = findViewById(R.id.productDetailPrice);
         productDetailDes=findViewById(R.id.productDetailDes);
+        countProductDetail=findViewById(R.id.countProductDetail);
         editQuantity=findViewById(R.id.increaseAmount);
         editQuantity.setText(String.valueOf(quantity));
         addToCart=findViewById(R.id.btnAddToCart);
@@ -101,6 +102,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(ProductDetailActivity.this,"Thành công",Toast.LENGTH_SHORT).show();
                 }
             });
+            Intent intent=new Intent(ProductDetailActivity.this,CartActivity.class);
+            startActivity(intent);
 
         });
         retrofitServer=new RetrofitServer();
@@ -118,6 +121,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     String price = formatter.format(product.getPrice());
                     productDetailPrice.setText(price + " VNĐ");
                     productDetailDes.setText(product.getDescription());
+                    countProductDetail.setText("Remaining "+String.valueOf(product.getQuantity()));
                     Glide.with(getApplicationContext()).load(product.getImage()).into(productDetailImg);
                 }else{
                     response.code();

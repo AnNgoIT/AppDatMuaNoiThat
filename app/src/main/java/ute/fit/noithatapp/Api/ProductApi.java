@@ -17,4 +17,8 @@ public interface ProductApi {
 
     @GET("/user/product/{id}")
     Call<ProductModel> getProductById(@Path("id")int productId);
+    @GET("/user/productname/{name}")
+    Call<ProductModel> getProductByName(@Path("name")String name);
+    @GET("/user/products/{name}")
+    Call<ArrayList<ProductModel>> getProductsConTainingName(@Path("name") String name);
 }

@@ -66,28 +66,28 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<ProductModel>> call, Response<ArrayList<ProductModel>> response) {
                 productList=response.body();
                 orderProcessingAdapter = new OrderProcessingAdapter(productList,new ArrayList<>(),OrderActivity.this);
+                orderApi.getCountProcessing(userId).enqueue(new Callback<ArrayList<Long>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
+                        if(response.isSuccessful()){
+                            countList=response.body();
+                            orderProcessingAdapter.setCountOrderList(countList);
+                            recyclerViewOrderList.setAdapter(orderProcessingAdapter);
+                        }else{
+                            response.code();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ArrayList<Long>> call, Throwable t) {
 
+                    }
+                });
             }
             @Override
             public void onFailure(Call<ArrayList<ProductModel>> call, Throwable t) {
 
             }
         });
-        orderApi.getCountProcessing(userId).enqueue(new Callback<ArrayList<Long>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
-                if(response.isSuccessful()){
-                    countList=response.body();
-                    orderProcessingAdapter.setCountOrderList(countList);
-                    recyclerViewOrderList.setAdapter(orderProcessingAdapter);
-                }else{
-                    response.code();
-                }
-            }
-            @Override
-            public void onFailure(Call<ArrayList<Long>> call, Throwable t) {
 
-            }
-        });
     }
 }

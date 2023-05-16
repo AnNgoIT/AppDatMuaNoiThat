@@ -22,6 +22,8 @@ public interface UserApi {
 
     @FormUrlEncoded
     @POST("user/setting/{id}")
-    Call<UserModel> saveUserSetting(@Path("id")int userId, @Field("name") String name, @Field("password") String password, @Field("address") String address);
+    Call<UserModel> saveUserSetting(@Path("id")int userId, @Field("name") String name, @Field("password") String password,
+                                    @Field("address") String address, @Field("address2") String address2, @Field("address3") String address3);
+
 
 }
