@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ute.fit.noithatapp.Activity.Adapter.OrderAdapter;
+import ute.fit.noithatapp.Api.NotificationApi;
 import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Api.ProductApi;
 import ute.fit.noithatapp.Api.UserApi;
@@ -38,6 +40,7 @@ public class CartActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     OrderApi orderApi;
     UserApi userApi;
+    NotificationApi notificationApi;
     ProductApi productApi;
     String[] listAddress;
     String addressSelect;
@@ -67,6 +70,7 @@ public class CartActivity extends AppCompatActivity {
         orderApi=retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
         productApi=retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
         userApi=retrofitServer.getRetrofit(ROOT_URL).create(UserApi.class);
+        notificationApi=retrofitServer.getRetrofit(ROOT_URL).create(NotificationApi.class);
         //recycler view
         recyclerViewOrderList = findViewById(R.id.CartList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
@@ -209,9 +213,9 @@ public class CartActivity extends AppCompatActivity {
         //check out
         btnCheckOut=findViewById(R.id.checkout);
         btnCheckOut.setOnClickListener(view -> {
+
             listAddress=new String[3];
             listAddress=SharedPrefManager.getInstance(this).getUserAddress();
-
             //dialog select address
             AlertDialog.Builder mBuilder=new AlertDialog.Builder(CartActivity.this);
             mBuilder.setTitle("Select address");
@@ -221,6 +225,31 @@ public class CartActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     addressSelect=listAddress[i];
                     if (!addressSelect.equals("")){
+                        //
+                        orderApi.getOrderInCartByUser(userId).enqueue(new Callback<ArrayList<Integer>>() {
+                            @Override
+                            public void onResponse(Call<ArrayList<Integer>> call, Response<ArrayList<Integer>> response) {
+                                for (int i=0;i<response.body().size();i++){
+                                    notificationApi.saveNotification(userId,"Checkout Success",response.body().get(i)).enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ArrayList<Integer>> call, Throwable t) {
+
+                            }
+                        });
+                        //
                         orderApi.checkOut(userId,addressSelect).enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -265,6 +294,7 @@ public class CartActivity extends AppCompatActivity {
             });
             AlertDialog mDialog=mBuilder.create();
             mDialog.show();
+
         });
     }
 }

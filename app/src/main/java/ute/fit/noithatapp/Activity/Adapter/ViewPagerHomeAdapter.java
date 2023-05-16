@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import ute.fit.noithatapp.Activity.Fragment.HomeFragment;
-import ute.fit.noithatapp.Activity.Fragment.UserFragment;
+import ute.fit.noithatapp.Activity.Fragment.NotificationFragment;
 import ute.fit.noithatapp.Activity.Fragment.UserProfileFragment;
 
 public class ViewPagerHomeAdapter extends FragmentStatePagerAdapter {
@@ -20,7 +20,7 @@ public class ViewPagerHomeAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 1:
-                return new UserFragment();
+                return new NotificationFragment();
             case 2:
                 return new UserProfileFragment();
             default:

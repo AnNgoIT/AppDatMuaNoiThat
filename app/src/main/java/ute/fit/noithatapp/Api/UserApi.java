@@ -26,5 +26,4 @@ public interface UserApi {
                                     @Field("address") String address, @Field("address2") String address2, @Field("address3") String address3);
 
 
-
 }

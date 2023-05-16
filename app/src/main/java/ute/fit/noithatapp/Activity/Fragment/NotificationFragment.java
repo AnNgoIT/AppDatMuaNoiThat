@@ -10,16 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import ute.fit.noithatapp.Activity.LoginActivity;
-import ute.fit.noithatapp.Contants.SharedPrefManager;
 import ute.fit.noithatapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserFragment#newInstance} factory method to
+ * Use the {@link NotificationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserFragment extends Fragment {
+public class NotificationFragment extends Fragment {
     Button btnLogout;
     View mView;
     Intent intent;
@@ -33,7 +31,7 @@ public class UserFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UserFragment() {
+    public NotificationFragment() {
         // Required empty public constructor
     }
 
@@ -46,8 +44,8 @@ public class UserFragment extends Fragment {
      * @return A new instance of fragment UserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
+    public static NotificationFragment newInstance(String param1, String param2) {
+        NotificationFragment fragment = new NotificationFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,7 +68,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //logout btn
-        mView=inflater.inflate(R.layout.fragment_user, container, false);
+        mView=inflater.inflate(R.layout.fragment_notification, container, false);
         return mView;
     }
 }

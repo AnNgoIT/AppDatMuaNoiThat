@@ -43,4 +43,10 @@ public interface OrderApi {
 
     @GET("user/getOrderInCartByProductAndUser/{productId}/{userId}")
     Call<OrderModel> getOrderInCartByProductAndUser(@Path("productId")Integer productId,@Path("userId")Integer userId);
+
+    @GET("user/getOrderInCart/{userId}")
+    Call<ArrayList<Integer>> getOrderInCartByUser(@Path("userId")Integer userId);
+
+    @GET("user/notificationOrder/{userId}")
+    Call<ArrayList<Integer>> getNotificationOrder(@Path("userId")Integer userId);
 }
