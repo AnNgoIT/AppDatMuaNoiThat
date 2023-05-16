@@ -49,4 +49,11 @@ public interface OrderApi {
 
     @GET("user/notificationOrder/{userId}")
     Call<ArrayList<Integer>> getNotificationOrder(@Path("userId")Integer userId);
+
+    @GET("user/productByOrders")
+    Call<ArrayList<ProductModel>> getProductByOrder(@Query("listOrder")ArrayList<Integer> orderList);
+
+    @GET("user/getCountOrders")
+    Call<ArrayList<Long>> getCountOrder(@Query("listOrder") ArrayList<Integer> orderList);
+
 }

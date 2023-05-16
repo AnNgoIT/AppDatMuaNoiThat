@@ -17,4 +17,5 @@ public interface ProductApi {
 
     @GET("/user/product/{id}")
     Call<ProductModel> getProductById(@Path("id")int productId);
+
 }

@@ -2,6 +2,8 @@ package ute.fit.noithatapp.Api;
 
 import android.app.Notification;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -9,11 +11,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import ute.fit.noithatapp.Model.NotificationModel;
 import ute.fit.noithatapp.Model.OrderModel;
 
 public interface NotificationApi {
     @GET("user/notification/{userId}")
-    Call<Notification> getNotificationByUser(@Path("userId")Integer userId);
+    Call<ArrayList<NotificationModel>> getNotificationByUser(@Path("userId")Integer userId);
 
     @FormUrlEncoded
     @POST("user/saveNotification/{userId}")
