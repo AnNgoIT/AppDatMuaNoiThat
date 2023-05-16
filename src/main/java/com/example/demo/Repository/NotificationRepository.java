@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface NotificationRepository extends CrudRepository<Notification,Integer> {
     public ArrayList<Notification> findNotificationsByUser(Optional<User> user);
+
+
 }

@@ -23,6 +23,9 @@ public class Notification {
     @ManyToOne
     private Order order;
 
+
     String description;
+
+    String state;
 
 }

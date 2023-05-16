@@ -215,12 +215,13 @@ public class UserController {
 
     @PostMapping("user/saveNotification/{userId}")
     public void saveNotification(@PathVariable("userId")Integer userId,@RequestParam("description") String description,
-                                 @RequestParam("orderId") Integer orderId){
+                                 @RequestParam("orderId") Integer orderId,@RequestParam("state") String state){
         Notification newNotification=new Notification();
         newNotification.setDescription(description);
         Optional<User> user=userDAO.findUserById(userId);
         newNotification.setUser(user.get());
         newNotification.setOrder(orderDAO.findOrderById(orderId).get());
+        newNotification.setState(state);
         notificationDAO.saveNotification(newNotification);
     }
     @GetMapping("user/notificationOrder/{userId}")
@@ -259,5 +260,12 @@ public class UserController {
             orderId.add(orderArrayList.get(i).getOrderId());
         }
         return orderId;
+    }
+
+    @PostMapping("user/saveNotificationHide/{notificationId}")
+    public void saveNotificationById(@PathVariable("notificationId")Integer notificationId){
+        Notification notification=notificationDAO.findByID(notificationId).get();
+        notification.setState("hide");
+        notificationDAO.saveNotification(notification);
     }
 }
