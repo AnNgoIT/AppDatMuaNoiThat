@@ -32,10 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, HomeActivity.class));
-        }
+//       if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+//            finish();
+//            startActivity(new Intent(this, HomeActivity.class));
+//        }
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -71,7 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                         user=response.body();
                         /////////////
                         Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_SHORT).show();
-                        intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        if(user.getRole().toString().equals("manager")){
+                            intent = new Intent(LoginActivity.this, HomeManagerActivity.class);
+                        }
+                        else {
+                            intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        }
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                         startActivity(intent);
                         finish();
