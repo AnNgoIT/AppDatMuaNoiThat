@@ -23,6 +23,8 @@ public class User {
 	private String password;
 	private String image;
 	private String address;
+	private String address2;
+	private String address3;
 	private String role;
 
 

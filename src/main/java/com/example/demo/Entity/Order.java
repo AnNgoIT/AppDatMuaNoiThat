@@ -29,6 +29,7 @@ public class Order implements Serializable{
     @JsonBackReference
     @ManyToOne
     private Product product;
-
     private Date date;
+    private String address;
+
 }
