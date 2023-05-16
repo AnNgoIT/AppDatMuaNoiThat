@@ -10,6 +10,16 @@ public class UserModel {
     private String image;
 
     private String address;
+    private String address2;
+    private String address3;
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
 
     private String role;
 
@@ -22,6 +32,18 @@ public class UserModel {
         this.name = name;
         this.username = username;
         this.password = password;
+    }
+
+    public UserModel(int id, String name, String username, String password, String image, String address, String address2, String address3, String role) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.image = image;
+        this.address = address;
+        this.address2 = address2;
+        this.address3 = address3;
+        this.role = role;
     }
 
     public UserModel(int id, String name, String username, String password, String image, String address, String role) {
@@ -90,4 +112,3 @@ public class UserModel {
         this.address = address;
     }
 }
-
