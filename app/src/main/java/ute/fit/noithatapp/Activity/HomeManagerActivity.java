@@ -7,6 +7,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.google.android.material.tabs.TabLayout;
@@ -24,6 +26,10 @@ public class HomeManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //transaction
+        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
         setContentView(R.layout.activity_home_manager);
         Init();
     }
