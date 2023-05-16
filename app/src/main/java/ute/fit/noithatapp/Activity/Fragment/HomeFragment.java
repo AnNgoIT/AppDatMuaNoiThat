@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +72,11 @@ public class HomeFragment extends Fragment {
     PhotoAdapter photoAdapter;
     ArrayList<PhotoModel> photoModelArrayList;
     Timer timer;
+    //Search
+    SearchView searchView;
+    ListView lvSearch;
+    ArrayList<String> arrayListSearch;
+    ArrayAdapter<String> searchAdapter;
 
 
     @Override
@@ -90,6 +100,12 @@ public class HomeFragment extends Fragment {
         countProduct1=mView.findViewById(R.id.countProduct1);
         countProduct2=mView.findViewById(R.id.countProduct2);
         //CART
+        //
+        //Search
+        searchView = mView.findViewById(R.id.imgvSearch);
+        lvSearch = mView.findViewById(R.id.lvSearch);
+        searchProduct();
+        //
         imgvCart=mView.findViewById(R.id.imgvCart);
         imgvCart.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CartActivity.class));
@@ -115,6 +131,77 @@ public class HomeFragment extends Fragment {
         photoAdapter.registerDataSetObserver(circleIndicatorPhoto.getDataSetObserver());
         autoSlidePhoto();
         return mView;
+    }
+    private void searchProduct(){
+
+        arrayListSearch = new ArrayList<>();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                if ( s.length() > 0)
+                {
+                    getListProductContainingName(s);
+                    searchAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, arrayListSearch);
+                    lvSearch.setAdapter(searchAdapter);
+                    lvSearch.setVisibility(View.VISIBLE);
+                }else {
+                    lvSearch.setVisibility(View.GONE);
+                }
+                searchAdapter.getFilter().filter(s);
+                lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String productName = adapterView.getItemAtPosition(i).toString();
+                        productApi.getProductByName(productName).enqueue(new Callback<ProductModel>() {
+                            @Override
+                            public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+                                if (response.isSuccessful()) {
+                                    ProductModel product = response.body();
+                                    Intent intent = new Intent(getContext(), ProductDetailActivity.class);
+                                    intent.putExtra("productId", product.getProductId());
+                                    startActivity(intent);
+                                } else {
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ProductModel> call, Throwable t) {
+                            }
+                        });
+                    }
+                });
+                return false;
+            }
+        });
+    }
+    private void getListProductContainingName(String s) {
+        productModels = new ArrayList<>();
+        retrofitServer = new RetrofitServer();
+        productApi = retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
+        productApi.getProductsConTainingName(s).enqueue(new Callback<ArrayList<ProductModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ProductModel>> call, Response<ArrayList<ProductModel>> response) {
+                if (response.isSuccessful()) {
+                    productModels = response.body();
+                    arrayListSearch.clear();
+                    for (ProductModel product : productModels) {
+                        arrayListSearch.add(product.getName());
+                    }
+                    Log.d("TAG", "giá trị của biến là: " + arrayListSearch);
+                    Log.d("TAG", "duoc roi ");
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ProductModel>> call, Throwable t) {
+            }
+        });
     }
 
     private void getProduct() {
