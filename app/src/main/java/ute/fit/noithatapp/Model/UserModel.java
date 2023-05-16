@@ -112,4 +112,3 @@ public class UserModel {
         this.address = address;
     }
 }
-
