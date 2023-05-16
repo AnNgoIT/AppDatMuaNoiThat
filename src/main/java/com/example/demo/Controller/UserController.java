@@ -23,6 +23,8 @@ public class UserController {
     private CategoryDAO categoryDAO;
     @Autowired
     private ProductDAO productDAO;
+    @Autowired
+    private NotificationDAO notificationDAO;
 
     @PostMapping("/user/signup")
     public User saveUser(@RequestBody User user){
@@ -204,4 +206,45 @@ public class UserController {
         return orderDAO.findOrderByProductAndUserAndState(product,user,"inCart");
     }
 
+    //notification
+    @GetMapping("user/notification/{userId}")
+    public ArrayList<Notification> getNotification(@PathVariable("userId")Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        return notificationDAO.findNotificationByUser(user);
+    }
+
+    @PostMapping("user/saveNotification/{userId}")
+    public void saveNotification(@PathVariable("userId")Integer userId,@RequestParam("description") String description,
+                                 @RequestParam("orderId") Integer orderId){
+        Notification newNotification=new Notification();
+        newNotification.setDescription(description);
+        Optional<User> user=userDAO.findUserById(userId);
+        newNotification.setUser(user.get());
+        newNotification.setOrder(orderDAO.findOrderById(orderId).get());
+        notificationDAO.saveNotification(newNotification);
+    }
+    @GetMapping("user/notificationOrder/{userId}")
+    public ArrayList<Long> getOrderByNotification(@PathVariable("userId")Integer userId){
+        Optional<User> user=userDAO.findUserById(userId);
+        ArrayList<Notification> notification=notificationDAO.findNotificationByUser(user);
+        ArrayList<Long> orderIdList=new ArrayList<>();
+        for (int i=0;i<notification.size();i++){
+            orderIdList.add(notification.get(i).getOrder().getOrderId());
+        }
+        return orderIdList;
+    }
+    @GetMapping("user/productByOrder/{orderId}")
+    public Product getProductByOrder(@PathVariable("orderId")Integer orderId){
+        Optional<Order> order=orderDAO.findOrderById(orderId);
+        return order.get().getProduct();
+    }
+    @GetMapping("user/getOrderInCart/{userId}")
+    public ArrayList<Long> getOrderById(@PathVariable("userId")Integer userId){
+        ArrayList<Long> orderId=new ArrayList<>();
+        ArrayList<Order> orderArrayList=orderDAO.getOrderByUserAndState(userDAO.findUserById(userId),"inCart");
+        for (int i =0;i<orderArrayList.size();i++){
+            orderId.add(orderArrayList.get(i).getOrderId());
+        }
+        return orderId;
+    }
 }
