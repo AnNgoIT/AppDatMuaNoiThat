@@ -18,6 +18,13 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ute.fit.noithatapp.Api.OrderApi;
+import ute.fit.noithatapp.Contants.Const;
+import ute.fit.noithatapp.Contants.RetrofitServer;
+import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.R;
 
 /**
@@ -35,6 +42,10 @@ public class RevenueStatisticsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RetrofitServer retrofitServer;
+
+    OrderApi orderApi;
 
     public RevenueStatisticsFragment() {
         // Required empty public constructor
@@ -71,9 +82,27 @@ public class RevenueStatisticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.fragment_revenue_statistics, container, false);
+
+
         BarChart barChart = mView.findViewById(R.id.barChart);
 
         ArrayList<BarEntry> visitors = new ArrayList<>();
+
+        retrofitServer = new RetrofitServer();
+
+        orderApi = retrofitServer.getRetrofit(Const.ROOT_URL).create(OrderApi.class);
+        orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
+                System.out.println("HELLO: "+ response.body().get(20).getDate());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<OrderModel>> call, Throwable t) {
+                System.out.println("HELLO: ");
+            }
+        });
+
         visitors.add(new BarEntry(2014,420));
         visitors.add(new BarEntry(2015,475));
         visitors.add(new BarEntry(2016,508));
