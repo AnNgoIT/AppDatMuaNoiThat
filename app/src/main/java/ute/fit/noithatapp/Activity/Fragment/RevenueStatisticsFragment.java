@@ -92,7 +92,7 @@ public class RevenueStatisticsFragment extends Fragment {
         retrofitServer = new RetrofitServer();
 
         orderApi = retrofitServer.getRetrofit(Const.ROOT_URL).create(OrderApi.class);
-        orderApi.getOrdersByState().enqueue(new Callback<ArrayList<OrderModel>>() {
+        orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
                 System.out.println("HELLO: "+ response.body().get(0).getDate().getDate());

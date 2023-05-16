@@ -57,6 +57,6 @@ public interface OrderApi {
     Call<ArrayList<Long>> getCountOrder(@Query("listOrder") ArrayList<Integer> orderList);
 
     @GET("manager/ordersByState")
-    Call<ArrayList<OrderModel>> getOrdersByState();
+    Call<ArrayList<OrderModel>> getOrdersByState(@Query("state") String state);
 
 }
