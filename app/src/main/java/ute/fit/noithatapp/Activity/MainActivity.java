@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 
+import ute.fit.noithatapp.Activity.Adapter.OrderAdapter;
+import ute.fit.noithatapp.Activity.Adapter.OrderProcessingAdapter;
 import ute.fit.noithatapp.R;
 
 
@@ -29,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
             }
         });
     }

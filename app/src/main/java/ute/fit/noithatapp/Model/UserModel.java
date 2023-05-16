@@ -11,6 +11,8 @@ public class UserModel {
 
     private String address;
 
+    private String role;
+
     public UserModel(String username, String password) {
         this.username = username;
         this.password = password;
@@ -22,13 +24,22 @@ public class UserModel {
         this.password = password;
     }
 
-    public UserModel(int id, String name, String username, String password, String image, String address) {
+    public UserModel(int id, String name, String username, String password, String image, String address, String role) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
         this.image = image;
         this.address = address;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public int getId() {

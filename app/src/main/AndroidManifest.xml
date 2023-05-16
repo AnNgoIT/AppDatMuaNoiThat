@@ -16,6 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+
+            android:name=".Activity.OrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.StaticsticsActivity"
             android:exported="false" />
         <activity
@@ -48,6 +52,9 @@
         <activity
             android:name=".Activity.SettingActivity"
             android:exported="true" />
+        <activity
+            android:name=".Activity.HomeManagerActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

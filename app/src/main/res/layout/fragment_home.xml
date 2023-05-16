@@ -62,17 +62,27 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp" />
         </FrameLayout>
-
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_category"
+            app:layout_constraintStart_toStartOf="parent">
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/circleIndicatorPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.viewpager.widget.ViewPager>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_product1"
             android:layout_width="160dp"
             android:layout_height="250dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/rec_product"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_category"
             app:layout_constraintVertical_bias="0.042">
 
             <com.google.android.material.imageview.ShapeableImageView
