@@ -233,10 +233,23 @@ public class UserController {
         }
         return orderIdList;
     }
-    @GetMapping("user/productByOrder/{orderId}")
-    public Product getProductByOrder(@PathVariable("orderId")Integer orderId){
-        Optional<Order> order=orderDAO.findOrderById(orderId);
-        return order.get().getProduct();
+    @GetMapping("user/productByOrders")
+    public ArrayList<Product> getProductByOrder(@RequestParam("listOrder")ArrayList<Integer> orderIdList) {
+        ArrayList<Product> productArrayList=new ArrayList<>();
+        for (int i = 0; i < orderIdList.size(); i++){
+            Optional<Order> order=orderDAO.findOrderById(orderIdList.get(i));
+            productArrayList.add(order.get().getProduct());
+        }
+        return productArrayList;
+    }
+    @GetMapping("user/getCountOrders")
+    public ArrayList<Long> getCountOrder(@RequestParam("listOrder")ArrayList<Integer> orderIdList){
+        ArrayList<Long> countList=new ArrayList<>();
+        for (int i = 0; i < orderIdList.size(); i++){
+            Optional<Order> order=orderDAO.findOrderById(orderIdList.get(i));
+            countList.add(order.get().getCount());
+        }
+        return countList;
     }
     @GetMapping("user/getOrderInCart/{userId}")
     public ArrayList<Long> getOrderById(@PathVariable("userId")Integer userId){
