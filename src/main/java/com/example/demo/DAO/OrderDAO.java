@@ -25,4 +25,10 @@ public class OrderDAO {
     public void deleteByOrderByProductAndUser(Integer orderId){orderRepository.deleteById(orderId);}
 
     public ArrayList<Order> getOrderByUserAndState(Optional<User> user,String state){return orderRepository.findOrdersByUserAndState(user,state);}
+    public Iterable<Order> getAllOrders(){
+        return orderRepository.findAll();
+    }
+    public Iterable<Order> getOrdersByState(String state){
+        return orderRepository.findOrdersByState(state);
+    }
 }
