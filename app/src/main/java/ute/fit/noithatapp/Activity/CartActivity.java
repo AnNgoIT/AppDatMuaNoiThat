@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -107,8 +108,10 @@ public class CartActivity extends AppCompatActivity {
 
                                 }
                             });
-                            totalPrice-=Long.valueOf(price)*count;
-                            tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
+                            DecimalFormat formatter = new DecimalFormat("#,###,###");
+                            totalPrice-=Long.parseLong(price)*count;
+                            String total = formatter.format(totalPrice );
+                            tvTotalPrice.setText(total +" VNĐ");
 
                         }
                     }, new OrderAdapter.IClickIncrease() {
