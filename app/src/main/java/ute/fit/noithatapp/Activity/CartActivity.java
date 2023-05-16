@@ -230,7 +230,7 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<ArrayList<Integer>> call, Response<ArrayList<Integer>> response) {
                                 for (int i=0;i<response.body().size();i++){
-                                    notificationApi.saveNotification(userId,"Checkout Success",response.body().get(i)).enqueue(new Callback<Void>() {
+                                    notificationApi.saveNotification(userId,"Checkout Success",response.body().get(i),"show").enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
 
@@ -242,6 +242,8 @@ public class CartActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
+                                Intent intent=new Intent(CartActivity.this,HomeActivity.class);
+                                startActivity(intent);
                             }
 
                             @Override
@@ -294,7 +296,6 @@ public class CartActivity extends AppCompatActivity {
             });
             AlertDialog mDialog=mBuilder.create();
             mDialog.show();
-
         });
     }
 }

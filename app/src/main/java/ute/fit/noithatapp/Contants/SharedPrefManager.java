@@ -84,6 +84,10 @@ public class SharedPrefManager {
         listUserAddress[2]=sharedPreferences.getString(KEY_ADDRESS3,null);
         return listUserAddress;
     }
+    public String getRole(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_ROLE,null);
+    }
 
     public String getRole(){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
