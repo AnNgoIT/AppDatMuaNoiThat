@@ -110,7 +110,9 @@ public class NotificationFragment extends Fragment {
                 notificationApi.saveNotificationHide(notificationModel.getNotificationId()).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-
+                        if(notificationAdapter.getItemCount() == 0){
+                            recyclerViewOrderList.setBackgroundResource(R.drawable.emptynotification);
+                        }
                     }
 
                     @Override
@@ -138,6 +140,9 @@ public class NotificationFragment extends Fragment {
                                    public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
                                        notificationAdapter.setCountList(response.body());
                                        notificationAdapter.filter();
+                                       if(notificationAdapter.getItemCount() == 0){
+                                           recyclerViewOrderList.setBackgroundResource(R.drawable.emptynotification);
+                                       }
                                        recyclerViewOrderList.setAdapter(notificationAdapter);
                                    }
 
