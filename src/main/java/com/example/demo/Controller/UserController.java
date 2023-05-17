@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -36,7 +39,11 @@ public class UserController {
     public User getUser(@RequestBody User user){
         return userDAO.get(user);
     }
-
+    @GetMapping("/user/name/{userId}")
+    public String getUserName(@PathVariable("userId") int userId) {
+        User user = userDAO.getUserById(userId);
+        return user.getName();
+    }
     @RequestMapping("user/categories")
     public Iterable<Category> getCategory(){
         return categoryDAO.getAll();

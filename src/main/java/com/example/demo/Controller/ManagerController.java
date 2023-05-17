@@ -1,10 +1,12 @@
 package com.example.demo.Controller;
-
-
 import com.example.demo.DAO.CategoryDAO;
 import com.example.demo.DAO.OrderDAO;
 import com.example.demo.DAO.ProductDAO;
 import com.example.demo.Entity.Category;
+import com.example.demo.DAO.InvoiceDao;
+import com.example.demo.DAO.NotificationDAO;
+import com.example.demo.Entity.Invoice;
+import com.example.demo.Entity.Notification;
 import com.example.demo.Entity.Order;
 import com.example.demo.Entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ public class ManagerController {
     OrderDAO orderDAO;
 
     @Autowired
+
     private CategoryDAO categoryDAO;
 
     @GetMapping("manager/countProductByCategory/")
@@ -50,6 +53,11 @@ public class ManagerController {
         return count;
     }
 
+    InvoiceDao invoiceDAO;
+
+    @Autowired
+    NotificationDAO notificationDAO;
+
     @PostMapping("manager/updateQuantityProduct/processed/{productId}")
     public void updateCountProduct(@PathVariable("productId") Integer productId, @RequestParam("quantity") Long quantity){
         Optional<Product> product=productDAO.getProductById(productId);
@@ -71,6 +79,22 @@ public class ManagerController {
         Long totalRevenue = Long.valueOf(0);
         for(Order order : orderList){
             totalRevenue += order.getProduct().getPrice() * order.getCount();
+        }
+        return totalRevenue;
+    }@GetMapping("manager/revenueByDate")
+
+    public Long getTotalRevenueByDate(@RequestParam("date") String date) {
+
+        ArrayList<Order> orderList = orderDAO.getOrdersByState("processed");
+        Long totalRevenue = Long.valueOf(0);
+        for (Order order : orderList) {
+            Date orderDate = order.getDate();
+            LocalDate localDate = orderDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedOrderDate = localDate.format(dateTimeFormatter);
+            if (formattedOrderDate.equals(date)) {
+                totalRevenue += order.getProduct().getPrice() * order.getCount();
+            }
         }
         return totalRevenue;
     }
@@ -120,13 +144,36 @@ public class ManagerController {
                 order.setState("processed");
                 order.setDate(new Date());
                 orderDAO.saveOrder(order);
+                Invoice invoice = new Invoice();
+                invoice.setOrder(order);
+                // Thiết lập thông tin khác cho Invoice (nếu cần)
+
+                invoiceDAO.saveInvoice(invoice);
             }
         } else {
             throw new IllegalArgumentException("Invalid order ID");
         }
     }
+    @RequestMapping("manager/find/{orderId}")
+    public boolean find(@PathVariable("orderId") Integer orderId){
+        Optional<Order> order = orderDAO.findOrderById(orderId);
+        if (order.get().getState().equals("processed"))
+            return true;
+        return false;
+    }
     @DeleteMapping("manager/orderDelete/{orderId}")
     public void deleteOrder(@PathVariable("orderId") Integer orderId){
+        Optional<Order> order = orderDAO.findOrderById(orderId);
+        //Xóa references
+        Notification notification = notificationDAO.findByOrderOrderId(order);
+        notification.setOrder(null);
+        notification.setUser(null);
+        notificationDAO.delete(notification);
+        if (order.get().getState().equals("processed") ){
+            Invoice invoice = invoiceDAO.findInvoiceByOrder(order);
+            invoice.setOrder(null);
+            invoiceDAO.delete(invoice);
+        }
         orderDAO.deleteByOrderByOrderId(Integer.parseInt(orderId.toString()));
     }
 }
