@@ -5,11 +5,11 @@ import java.util.Date;
 public class OrderModel {
     private int orderId;
     private int count;
-    private int state;
+    private String state;
     private Date date;
     private String address;
 
-    public OrderModel(int orderId, int count, int state, Date date, String address) {
+    public OrderModel(int orderId, int count, String state, Date date, String address) {
         this.orderId = orderId;
         this.count = count;
         this.state = state;
@@ -49,11 +49,11 @@ public class OrderModel {
         this.count = count;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 }

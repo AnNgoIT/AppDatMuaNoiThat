@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+        /*if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             if(SharedPrefManager.getInstance(this).getRole().equals("customer")){
                 startActivity(new Intent(this, HomeActivity.class));
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomeManagerActivity.class));
 
             }
-        }
+        }*/
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

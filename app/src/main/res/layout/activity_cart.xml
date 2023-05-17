@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/my_cart"
             android:layout_width="255dp"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_marginStart="40dp"
             android:gravity="center_horizontal|top"
             android:text="@string/my_cart"
@@ -46,19 +46,21 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Carttoolbar">
+        app:layout_constraintTop_toBottomOf="@+id/Carttoolbar"
+        android:layout_marginTop="20dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/CartList"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:padding="10dp"></androidx.recyclerview.widget.RecyclerView>
+            android:padding="10dp"
+            android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
     </GridLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Totalprice"
         android:layout_width="match_parent"
-        android:layout_height="27dp"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginHorizontal="60dp"
@@ -84,7 +86,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:textSize="10dp"/>
 
         <TextView
             android:id="@+id/totalPrice"
