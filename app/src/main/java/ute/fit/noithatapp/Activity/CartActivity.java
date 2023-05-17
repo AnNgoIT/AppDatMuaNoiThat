@@ -95,7 +95,7 @@ public class CartActivity extends AppCompatActivity {
                     productList=response.body();
                     adapter = new OrderAdapter(new ArrayList<>(), productList, CartActivity.this, new OrderAdapter.IClick() {
                         @Override
-                        public void onClickOrderItem(Integer productId, int position, String price, Long count) {
+                        public void onClickOrderItem(Integer productId, int position, String price, String count) {
                             orderApi.deleteOrderByProductAndUser(productId, userId).enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
@@ -107,10 +107,8 @@ public class CartActivity extends AppCompatActivity {
 
                                 }
                             });
-                            DecimalFormat formatter = new DecimalFormat("#,###,###");
-                            totalPrice-=Long.parseLong(price)*count;
-                            String total = formatter.format(totalPrice );
-                            tvTotalPrice.setText(total +" VNĐ");
+                            totalPrice-=Long.parseLong(price)*Long.valueOf(count);
+                            tvTotalPrice.setText(totalPrice +" VNĐ");
 
                         }
                     }, new OrderAdapter.IClickIncrease() {

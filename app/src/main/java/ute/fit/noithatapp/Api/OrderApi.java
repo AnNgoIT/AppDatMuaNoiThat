@@ -58,6 +58,13 @@ public interface OrderApi {
 
     @GET("manager/ordersByState")
     Call<ArrayList<OrderModel>> getOrdersByState(@Query("state") String state);
+    @GET("manager/getAllOrdersProcessingOrState/{state1}+{state2}")
+    Call<ArrayList<OrderModel>> getAllOrdersProcessing(@Path("state1") String state1,@Path("state2") String state2);
+
+    @POST("manager/changeStateOrder/{orderId}")
+    Call<Void> changeStateOrder(@Path("orderId") int orderId);
+    @DELETE("manager/orderDelete/{orderId}")
+    Call<Void> deleteOrder(@Path("orderId") Integer orderId);
 
     @GET("manager/revenue")
     Call<Long> getTotalRevenue();

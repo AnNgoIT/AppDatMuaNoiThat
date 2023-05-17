@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -113,6 +112,7 @@ public class RevenueStatisticsFragment extends Fragment {
          orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
+<<<<<<< HEAD
                 if (response.body().size() != 0) {
                     orderModelArrayList = response.body();
                     ArrayList revenue = new ArrayList();
@@ -147,6 +147,10 @@ public class RevenueStatisticsFragment extends Fragment {
                             }
                             @Override
                             public void onFailure(Call<Long> call, Throwable t) {
+=======
+                System.out.println("HELLO: "+ response.body().get(20).getDate());
+            }
+>>>>>>> 2a029ce0ad6e2cab5493cd2fcc18919540b1d21b
 
                             }
                         });
