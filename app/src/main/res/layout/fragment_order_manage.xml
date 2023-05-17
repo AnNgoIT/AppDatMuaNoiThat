@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activity.Fragment.OrderManageFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý đơn hàng"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+    <ListView
+        android:id="@+id/listViewOrders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Order Manage Fragment" />
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
 
-</FrameLayout>
+</LinearLayout>
