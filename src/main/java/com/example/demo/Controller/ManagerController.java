@@ -28,6 +28,19 @@ public class ManagerController {
     @Autowired
     private CategoryDAO categoryDAO;
 
+    @GetMapping("manager/countProductByCategory/")
+        public ArrayList<Integer> getCountProductByCategory()
+    {
+        ArrayList<Integer> count = new ArrayList<>();
+        Iterable<Category> categories=categoryDAO.getAll();
+        for (Category category: categories) {
+            ArrayList<Product> products = (ArrayList<Product>) productDAO.getProductByCategory(Optional.of(category));
+            int quantity_product = products.size();
+            count.add(quantity_product);
+        }
+        return count;
+    }
+
     @GetMapping("manager/countProductByCategoryId/{categoryId}")
     public int getCountProductByCategoryId(@PathVariable("categoryId") Integer categoryId)
     {
