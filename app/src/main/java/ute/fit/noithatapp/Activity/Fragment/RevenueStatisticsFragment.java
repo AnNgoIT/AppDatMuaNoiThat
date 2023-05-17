@@ -94,7 +94,6 @@ public class RevenueStatisticsFragment extends Fragment {
         orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
-                System.out.println("HELLO: "+ response.body().get(20).getDate());
             }
 
             @Override

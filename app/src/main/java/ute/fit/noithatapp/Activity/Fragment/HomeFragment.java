@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
         //
         //Search
         searchView = mView.findViewById(R.id.imgvSearch);
-        lvSearch = mView.findViewById(R.id.lvSearch);
+//        lvSearch = mView.findViewById(R.id.lvSearch);
         searchProduct();
         //
         imgvCart=mView.findViewById(R.id.imgvCart);

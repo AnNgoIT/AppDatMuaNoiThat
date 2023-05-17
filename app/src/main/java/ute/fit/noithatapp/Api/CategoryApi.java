@@ -19,4 +19,7 @@ public interface CategoryApi {
 
     @GET("user/category/{id}")
     Call<ArrayList<ProductModel>> getProductByCategory(@Path("id")int categoryId);
+
+    @GET("manager/countProductByCategory/")
+    Call<ArrayList<Integer>> getCountProductByCategory();
 }
