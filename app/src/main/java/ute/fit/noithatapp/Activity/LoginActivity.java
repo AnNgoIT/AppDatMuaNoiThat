@@ -32,11 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-<<<<<<< HEAD
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-=======
         /*if (SharedPrefManager.getInstance(this).isLoggedIn()) {
->>>>>>> 2a029ce0ad6e2cab5493cd2fcc18919540b1d21b
             finish();
             if(SharedPrefManager.getInstance(this).getRole().equals("customer")){
                 startActivity(new Intent(this, HomeActivity.class));
@@ -45,21 +42,19 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomeManagerActivity.class));
 
             }
-<<<<<<< HEAD
         }
-=======
         }*/
->>>>>>> 2a029ce0ad6e2cab5493cd2fcc18919540b1d21b
-        super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_login);
-        //transaction
-        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
-        //
-        Init();
-        ButtonLogin();
-        ButtonSignup();
+            super.onCreate(savedInstanceState);
+            supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            setContentView(R.layout.activity_login);
+            //transaction
+            overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
+            //
+            Init();
+            ButtonLogin();
+            ButtonSignup();
+        }
     }
     public void ButtonLogin(){
         loginButton.setOnClickListener(view -> {

@@ -13,7 +13,8 @@ import retrofit2.http.Query;
 import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.Model.ProductModel;
 
-public interface OrderApi {
+public interface
+OrderApi {
 
     @FormUrlEncoded
     @POST("/user/addtocart/{userId}/{productId}")
