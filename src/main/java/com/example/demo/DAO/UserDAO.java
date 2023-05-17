@@ -15,6 +15,7 @@ public class UserDAO {
     public User get(User user){
         return repository.findUserByUsernameAndPassword(user.getUsername(),user.getPassword());
     }
+    public User getUserById(int userId){return repository.findUserById(userId);}
 
     public User save(User user){
         return repository.save(user);

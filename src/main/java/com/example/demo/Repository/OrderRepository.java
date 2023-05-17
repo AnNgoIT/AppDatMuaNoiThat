@@ -27,4 +27,9 @@ public interface OrderRepository extends CrudRepository<Order,Integer> {
     public ArrayList<Order> findOrdersByUserAndState(Optional<User> user,String state);
 
     public ArrayList<Order> findOrdersByState(String state);
+
+    public Optional<Order> findOrOrderByOrderId(Long orderId);
+
+    public Iterable<Order> findAllByStateOrState(String state1, String state2);
+
 }
