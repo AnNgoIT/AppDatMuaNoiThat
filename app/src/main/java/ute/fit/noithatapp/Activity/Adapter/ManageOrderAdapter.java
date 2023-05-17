@@ -116,7 +116,7 @@ public class ManageOrderAdapter extends ArrayAdapter<OrderModel> {
                             // Xóa order thành công
                             notifyDataSetChanged();
                             // Gọi lại API để lấy danh sách đơn hàng mới
-                            orderApi.getAllOrders().enqueue(new Callback<ArrayList<OrderModel>>() {
+                            orderApi.getAllOrdersProcessing("processing", "processed").enqueue(new Callback<ArrayList<OrderModel>>() {
                                 @Override
                                 public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
                                     if (response.isSuccessful()) {

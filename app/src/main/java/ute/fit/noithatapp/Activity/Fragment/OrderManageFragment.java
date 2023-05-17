@@ -88,7 +88,7 @@ public class OrderManageFragment extends Fragment {
         orderApi = retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
 
         // Gọi API để lấy danh sách đơn hàng
-        orderApi.getAllOrders().enqueue(new Callback<ArrayList<OrderModel>>() {
+        orderApi.getAllOrdersProcessing("processing", "processed").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
                 if (response.isSuccessful()) {
