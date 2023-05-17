@@ -90,5 +90,30 @@ public class ManagerController {
         }
         return total;
     }
+    @RequestMapping("manager/getAllOrdersProcessingOrState/{state1}+{state2}")
+    public Iterable<Order> getAllOrdersProcessing(@PathVariable("state1") String state1,@PathVariable("state2") String state2){
 
+        return orderDAO.getAllOrderProcessingOrState(state1, state2);
+    }
+
+    @RequestMapping("manager/changeStateOrder/{orderId}")
+    public void changeStateOrder(@PathVariable("orderId") Long orderId) {
+        Optional<Order> optionalOrder = orderDAO.findOrderByOrderId(orderId);
+
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+
+            if (order.getState().equals("processing")) {
+                order.setState("processed");
+                order.setDate(new Date());
+                orderDAO.saveOrder(order);
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid order ID");
+        }
+    }
+    @DeleteMapping("manager/orderDelete/{orderId}")
+    public void deleteOrder(@PathVariable("orderId") Integer orderId){
+        orderDAO.deleteByOrderByOrderId(Integer.parseInt(orderId.toString()));
+    }
 }
