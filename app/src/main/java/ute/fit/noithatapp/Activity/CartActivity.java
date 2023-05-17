@@ -100,7 +100,6 @@ public class CartActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     Toast.makeText(CartActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-
                                 }
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
@@ -132,6 +131,7 @@ public class CartActivity extends AppCompatActivity {
                                     ProductModel productModel=response.body();
                                     totalPrice+=productModel.getPrice();
                                     tvTotalPrice.setText(totalPrice.toString()+" VNĐ");
+
                                 }
 
                                 @Override
@@ -146,7 +146,6 @@ public class CartActivity extends AppCompatActivity {
                             orderApi.updateCart(userId, productId, count).enqueue(new Callback<OrderModel>() {
                                 @Override
                                 public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
-
                                 }
 
                                 @Override
@@ -236,7 +235,6 @@ public class CartActivity extends AppCompatActivity {
                                     notificationApi.saveNotification(userId,"Checkout Success",response.body().get(i),"show").enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
-
                                         }
 
                                         @Override

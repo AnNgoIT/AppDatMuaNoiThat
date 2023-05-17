@@ -59,4 +59,9 @@ public interface OrderApi {
     @GET("manager/ordersByState")
     Call<ArrayList<OrderModel>> getOrdersByState(@Query("state") String state);
 
+    @GET("manager/revenue")
+    Call<Long> getTotalRevenue();
+
+    @GET("manager/revenueByDate")
+    Call<Long> getTotalRevenueByDate(@Query("date") String date);
 }

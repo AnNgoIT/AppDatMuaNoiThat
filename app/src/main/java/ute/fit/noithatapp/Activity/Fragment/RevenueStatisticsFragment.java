@@ -1,5 +1,7 @@
 package ute.fit.noithatapp.Activity.Fragment;
 
+import android.annotation.SuppressLint;
+import android.gesture.GestureUtils;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,12 +14,27 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +42,8 @@ import retrofit2.Response;
 import ute.fit.noithatapp.Api.OrderApi;
 import ute.fit.noithatapp.Contants.Const;
 import ute.fit.noithatapp.Contants.RetrofitServer;
+import ute.fit.noithatapp.Formatter.MyXAxisFormatter;
+import ute.fit.noithatapp.Formatter.MyYAxisFormatter;
 import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.R;
 
@@ -45,7 +64,8 @@ public class RevenueStatisticsFragment extends Fragment {
     private String mParam2;
 
     RetrofitServer retrofitServer;
-
+    public static ArrayList<OrderModel> orderModelArrayList = null;
+    public MyXAxisFormatter myXAxis;
     OrderApi orderApi;
 
     public RevenueStatisticsFragment() {
@@ -84,49 +104,60 @@ public class RevenueStatisticsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.fragment_revenue_statistics, container, false);
 
-
         BarChart barChart = mView.findViewById(R.id.barChart);
 
-        ArrayList<BarEntry> visitors = new ArrayList<>();
 
         retrofitServer = new RetrofitServer();
 
         orderApi = retrofitServer.getRetrofit(Const.ROOT_URL).create(OrderApi.class);
-        orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
+         orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
-                System.out.println("HELLO: "+ response.body().get(0).getDate().getDate());
-            }
+                if (response.body().size() != 0) {
+                    orderModelArrayList = response.body();
+                    ArrayList revenue = new ArrayList();
+                    ArrayList<String> day = new ArrayList<>();
+                    for (int i = 0; i < orderModelArrayList.size(); i++) {
+                        Date input = orderModelArrayList.get(i).getDate();
+                        LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        String formattedDate = date.format(dateTimeFormatter);
+                        if (day.contains(formattedDate)) {
+                            continue;
+                        }
+                        day.add(formattedDate);
+                        int finalI = i;
+                        orderApi.getTotalRevenueByDate(formattedDate).enqueue(new Callback<Long>() {
+                            @Override
+                            public void onResponse(Call<Long> call, Response<Long> response) {
+                                float totalRevenue = response.body()/1000000;
+                                revenue.add(new BarEntry(finalI, totalRevenue));
+                                BarDataSet bardataset = new BarDataSet(revenue, "Revenue");
+                                barChart.animateY(3000);
+                                BarData data = new BarData(bardataset);
+                                data.setBarWidth(0.2f);
+                                myXAxis = new MyXAxisFormatter(day);
+                                bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
+                                barChart.setData(data);
+                                barChart.getXAxis().setValueFormatter(myXAxis);
+                                barChart.getXAxis().setGranularityEnabled(true);
+                                barChart.getAxisLeft().setValueFormatter(new MyYAxisFormatter());
+                                barChart.getAxisRight().setEnabled(false);
+                                barChart.setFitBars(true);
+                            }
+                            @Override
+                            public void onFailure(Call<Long> call, Throwable t) {
 
+                            }
+                        });
+                    }
+                }
+            }
             @Override
             public void onFailure(Call<ArrayList<OrderModel>> call, Throwable t) {
-                System.out.println("HELLO: ");
             }
         });
 
-        visitors.add(new BarEntry(2014,420));
-        visitors.add(new BarEntry(2015,475));
-        visitors.add(new BarEntry(2016,508));
-        visitors.add(new BarEntry(2017,660));
-        visitors.add(new BarEntry(2018,550));
-        visitors.add(new BarEntry(2019,630));
-        visitors.add(new BarEntry(2020,470));
-        visitors.add(new BarEntry(2021,450));
-        visitors.add(new BarEntry(2022,520));
-        visitors.add(new BarEntry(2023,680));
-
-
-        BarDataSet barDataSet =  new BarDataSet(visitors,"Revenue");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
-
-        BarData barData = new BarData(barDataSet);
-
-        barChart.setFitBars(true);
-        barChart.setData(barData);
-        barChart.getDescription().setText("Vendor Management");
-        barChart.animateY(2000);
         // Inflate the layout for this fragment
         return mView;
     }
