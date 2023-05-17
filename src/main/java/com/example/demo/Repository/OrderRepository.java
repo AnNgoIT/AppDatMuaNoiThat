@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @Repository
@@ -26,5 +27,4 @@ public interface OrderRepository extends CrudRepository<Order,Integer> {
     public ArrayList<Order> findOrdersByUserAndState(Optional<User> user,String state);
 
     public ArrayList<Order> findOrdersByState(String state);
-
 }

@@ -8,7 +8,11 @@ import com.example.demo.Entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -39,6 +43,22 @@ public class ManagerController {
         Long totalRevenue = Long.valueOf(0);
         for(Order order : orderList){
             totalRevenue += order.getProduct().getPrice() * order.getCount();
+        }
+        return totalRevenue;
+    }
+    @GetMapping("manager/revenueByDate")
+    public Long getTotalRevenueByDate(@RequestParam("date") String date){
+
+        ArrayList<Order> orderList = orderDAO.getOrdersByState("processing");
+        Long totalRevenue = Long.valueOf(0);
+        for(Order order : orderList){
+            Date orderDate = order.getDate();
+            LocalDate localDate = orderDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedOrderDate = localDate.format(dateTimeFormatter);
+            if(formattedOrderDate.equals(date)){
+                totalRevenue += order.getProduct().getPrice() * order.getCount();
+            }
         }
         return totalRevenue;
     }
