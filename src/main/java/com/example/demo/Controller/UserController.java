@@ -5,8 +5,15 @@ import com.example.demo.DAO.*;
 import com.example.demo.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,10 +43,34 @@ public class UserController {
     public User getUser(@RequestBody User user){
         return userDAO.get(user);
     }
-    @GetMapping("/user/name/{userId}")
-    public String getUserName(@PathVariable("userId") int userId) {
+    @GetMapping("/user/{userId}")
+    public User getUserById(@PathVariable("userId") int userId) {
         User user = userDAO.getUserById(userId);
-        return user.getName();
+        return user;
+    }
+    @PostMapping("/user/uploadImage/{userId}")
+    public ResponseEntity<Void> uploadImage(@RequestParam("image") MultipartFile image, @PathVariable("userId") int userId) {
+        // Xử lý việc lưu ảnh vào server
+        try {
+            String uploadPath = "D:\\Study\\Nam3Ki2\\LTmobile_project\\FinalProject\\Upload";
+            String fileName = image.getOriginalFilename();
+            String filePath = uploadPath + "/" + fileName;
+
+            // Lưu ảnh vào thư mục upload
+            Files.copy(image.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+
+            // Cập nhật thông tin ảnh trong database (nếu cần)
+            User user = userDAO.getUserById(userId);
+            user.setImage(fileName); // Cập nhật tên file ảnh vào trường 'image' của user
+
+            // Lưu thay đổi vào database
+            userDAO.save(user);
+
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     @RequestMapping("user/categories")
     public Iterable<Category> getCategory(){
@@ -277,4 +308,6 @@ public class UserController {
         notification.setState("hide");
         notificationDAO.saveNotification(notification);
     }
+
+
 }
