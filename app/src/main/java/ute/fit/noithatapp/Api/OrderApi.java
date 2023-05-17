@@ -58,5 +58,8 @@ public interface OrderApi {
 
     @GET("manager/ordersByState")
     Call<ArrayList<OrderModel>> getOrdersByState(@Query("state") String state);
+    @GET("manager/getAllOrders")
+    Call<ArrayList<OrderModel>> getAllOrders();
+
 
 }

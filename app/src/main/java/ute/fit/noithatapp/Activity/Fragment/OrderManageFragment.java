@@ -1,13 +1,27 @@
 package ute.fit.noithatapp.Activity.Fragment;
 
+import static ute.fit.noithatapp.Contants.Const.ROOT_URL;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ute.fit.noithatapp.Activity.Adapter.ManageOrderAdapter;
+import ute.fit.noithatapp.Api.OrderApi;
+import ute.fit.noithatapp.Contants.RetrofitServer;
+import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.R;
 
 /**
@@ -17,6 +31,10 @@ import ute.fit.noithatapp.R;
  */
 public class OrderManageFragment extends Fragment {
 
+    private RetrofitServer retrofitServer;
+    private ListView listViewOrders;
+    private ManageOrderAdapter orderAdapter;
+    private OrderApi orderApi;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,7 +78,37 @@ public class OrderManageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_manage, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_order_manage, container, false);
+
+        listViewOrders = rootView.findViewById(R.id.listViewOrders);
+        orderAdapter = new ManageOrderAdapter(getContext(), new ArrayList<>());
+        listViewOrders.setAdapter(orderAdapter);
+
+        retrofitServer = new RetrofitServer();
+        orderApi = retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
+
+        // Gọi API để lấy danh sách đơn hàng
+        orderApi.getAllOrders().enqueue(new Callback<ArrayList<OrderModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<OrderModel> orders = response.body();
+                    Log.d("TAG", "Danh sách đơn hàng: " + orders.toString());
+                    orderAdapter.updateData(orders);
+                } else {
+                    String errorMessage = "Lỗi " + response.code() + ": " + response.message();
+                    Log.e("TAG", errorMessage);
+                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<OrderModel>> call, Throwable t) {
+                Log.e("TAG", "Gọi API thất bại: " + t.getMessage());
+                Toast.makeText(getContext(), "Gọi API thất bại", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return rootView;
     }
 }
