@@ -61,5 +61,9 @@ public interface OrderApi {
     @GET("manager/getAllOrders")
     Call<ArrayList<OrderModel>> getAllOrders();
 
+    @POST("manager/changeStateOrder/{orderId}")
+    Call<Void> changeStateOrder(@Path("orderId") int orderId);
+    @DELETE("manager/orderDelete/{orderId}")
+    Call<Void> deleteOrder(@Path("orderId") Integer orderId);
 
 }
