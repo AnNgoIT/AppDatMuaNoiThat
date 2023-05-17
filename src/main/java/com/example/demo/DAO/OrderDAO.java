@@ -28,7 +28,7 @@ public class OrderDAO {
     public Iterable<Order> getAllOrders(){
         return orderRepository.findAll();
     }
-    public Iterable<Order> getOrdersByState(String state){
+    public ArrayList<Order> getOrdersByState(String state){
         return orderRepository.findOrdersByState(state);
     }
 }

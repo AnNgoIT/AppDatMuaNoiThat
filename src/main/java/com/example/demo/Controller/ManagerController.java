@@ -5,10 +5,10 @@ import com.example.demo.DAO.OrderDAO;
 import com.example.demo.DAO.ProductDAO;
 import com.example.demo.Entity.Order;
 import com.example.demo.Entity.Product;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +30,16 @@ public class ManagerController {
         return orderDAO.getAllOrders();
     }
     @GetMapping("manager/ordersByState")
-    public Iterable<Order> getOrdersByState(@RequestParam("state") String state){
+    public ArrayList<Order> getOrdersByState(@RequestParam("state") String state){
         return orderDAO.getOrdersByState(state);
+    }
+    @GetMapping("manager/revenue")
+    public Long getTotalRevenue(){
+        ArrayList<Order> orderList = orderDAO.getOrdersByState("processing");
+        Long totalRevenue = Long.valueOf(0);
+        for(Order order : orderList){
+            totalRevenue += order.getProduct().getPrice() * order.getCount();
+        }
+        return totalRevenue;
     }
 }
