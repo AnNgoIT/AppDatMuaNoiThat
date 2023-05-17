@@ -31,4 +31,10 @@ public class OrderDAO {
     public ArrayList<Order> getOrdersByState(String state){
         return orderRepository.findOrdersByState(state);
     }
+
+    public Iterable<Order> getAllOrderProcessingOrState(String state1, String state2){
+        return orderRepository.findAllByStateOrState(state1, state2);
+    }
+    public Optional<Order> findOrderByOrderId (Long orderId){return orderRepository.findOrOrderByOrderId(orderId);}
+    public void deleteByOrderByOrderId(Integer orderId){orderRepository.deleteById(orderId);}
 }
