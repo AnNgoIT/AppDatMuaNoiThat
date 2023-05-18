@@ -34,14 +34,27 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
-            if(SharedPrefManager.getInstance(this).getRole().equals("customer")){
+            if (SharedPrefManager.getInstance(this).getRole().equals("customer")) {
                 startActivity(new Intent(this, HomeActivity.class));
 
-            }else{
+            } else {
                 startActivity(new Intent(this, HomeManagerActivity.class));
 
             }
         }
+<<<<<<< HEAD
+        super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_login);
+        //transaction
+        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
+        //
+        Init();
+        ButtonLogin();
+        ButtonSignup();
+    }
+=======
             super.onCreate(savedInstanceState);
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -53,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             ButtonLogin();
             ButtonSignup();
         }
+>>>>>>> 0e526e808566995446331a85d102c123a73ef7e1
     public void ButtonLogin(){
         loginButton.setOnClickListener(view -> {
             String user=String.valueOf(editTextUserName.getText());

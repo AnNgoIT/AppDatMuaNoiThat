@@ -6,11 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="SERIAL_NUMBER" />
-            <value value="6de5c5a6" />
+            <type value="VIRTUAL_DEVICE_PATH" />
+            <value value="C:\Users\lequa\.android\avd\Pixel_6_API_30.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetsSelectedWithDialog>
+    <timeTargetWasSelectedWithDropDown value="2023-05-17T23:18:40.531209900Z" />
   </component>
 </project>

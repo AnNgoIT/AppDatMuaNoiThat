@@ -112,6 +112,10 @@ public class RevenueStatisticsFragment extends Fragment {
          orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0e526e808566995446331a85d102c123a73ef7e1
                 if (response.body().size() != 0) {
                     orderModelArrayList = response.body();
                     ArrayList revenue = new ArrayList();
@@ -145,8 +149,13 @@ public class RevenueStatisticsFragment extends Fragment {
                                 barChart.setFitBars(true);
                             }
                             @Override
+<<<<<<< HEAD
+                            public void onFailure(Call<Long> call, Throwable t) {
+                            }
+=======
                             public void onFailure(Call<Long> call, Throwable t) {}
 
+>>>>>>> 0e526e808566995446331a85d102c123a73ef7e1
                         });
                     }
                 }
