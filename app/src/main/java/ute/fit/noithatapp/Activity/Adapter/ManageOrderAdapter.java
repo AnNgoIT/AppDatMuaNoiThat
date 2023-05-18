@@ -42,6 +42,7 @@ public class ManageOrderAdapter extends ArrayAdapter<OrderModel> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
+
         retrofitServer = new RetrofitServer();
         orderApi = retrofitServer.getRetrofit(ROOT_URL).create(OrderApi.class);
 
