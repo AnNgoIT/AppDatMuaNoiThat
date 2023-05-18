@@ -13,7 +13,8 @@ import retrofit2.http.Query;
 import ute.fit.noithatapp.Model.OrderModel;
 import ute.fit.noithatapp.Model.ProductModel;
 
-public interface OrderApi {
+public interface
+OrderApi {
 
     @FormUrlEncoded
     @POST("/user/addtocart/{userId}/{productId}")
@@ -66,4 +67,9 @@ public interface OrderApi {
     @DELETE("manager/orderDelete/{orderId}")
     Call<Void> deleteOrder(@Path("orderId") Integer orderId);
 
+    @GET("manager/revenue")
+    Call<Long> getTotalRevenue();
+
+    @GET("manager/revenueByDate")
+    Call<Long> getTotalRevenueByDate(@Query("date") String date);
 }

@@ -106,9 +106,11 @@ public class ProductManageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        retrofitServer = new RetrofitServer();
+        categoryApi=retrofitServer.getRetrofit(ROOT_URL).create(CategoryApi.class);
         mView = inflater.inflate(R.layout.fragment_product_manage, container, false);
         searchView = mView.findViewById(R.id.M_imgvSearch);
-//        lvSearch = mView.findViewById(R.id.M_lvSearch);
+        lvSearch = mView.findViewById(R.id.M_lvSearch);
         searchProduct();
         getCountCategory(mView);
         return mView;
@@ -122,8 +124,6 @@ public class ProductManageFragment extends Fragment {
         tvCountCabinet=view.findViewById(R.id.countCabinetP_C);
         tvCountChair=view.findViewById(R.id.countChairP_C);
         countProductsCategory = new ArrayList<>();
-        retrofitServer = new RetrofitServer();
-        categoryApi=retrofitServer.getRetrofit(ROOT_URL).create(CategoryApi.class);
         categoryApi.getCountProductByCategory().enqueue(new Callback<ArrayList<Integer>>() {
             @Override
             public void onResponse(Call<ArrayList<Integer>> call, Response<ArrayList<Integer>> response) {
@@ -134,12 +134,12 @@ public class ProductManageFragment extends Fragment {
                 int getCountC4 = countProductsCategory.get(3);
                 int getCountC5 = countProductsCategory.get(4);
                 int getCountC6 = countProductsCategory.get(5);
-                tvCountSofa.setText(getCountC1);
-                tvCountCabinet.setText(getCountC2);
-                tvCountChair.setText(getCountC3);
-                tvCountArmChair.setText(getCountC4);
-                tvCountLamp.setText(getCountC5);
-                tvCountBed.setText(getCountC6);
+//                tvCountSofa.setText(getCountC1);
+//                tvCountCabinet.setText(getCountC2);
+//                tvCountChair.setText(getCountC3);
+//                tvCountArmChair.setText(getCountC4);
+//                tvCountLamp.setText(getCountC5);
+//                tvCountBed.setText(getCountC6);
 
             }
 
@@ -191,6 +191,7 @@ public class ProductManageFragment extends Fragment {
 
                             @Override
                             public void onFailure(Call<ProductModel> call, Throwable t) {
+
                             }
                         });
                     }
@@ -202,7 +203,6 @@ public class ProductManageFragment extends Fragment {
 
     private void getListProductContainingName(String s) {
         productModels = new ArrayList<>();
-        retrofitServer = new RetrofitServer();
         productApi = retrofitServer.getRetrofit(ROOT_URL).create(ProductApi.class);
         productApi.getProductsConTainingName(s).enqueue(new Callback<ArrayList<ProductModel>>() {
             @Override
