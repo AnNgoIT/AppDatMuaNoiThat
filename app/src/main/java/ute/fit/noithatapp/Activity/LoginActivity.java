@@ -32,24 +32,16 @@ public class LoginActivity extends AppCompatActivity {
     RetrofitServer retrofitServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-<<<<<<< HEAD
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-=======
-        /*if (SharedPrefManager.getInstance(this).isLoggedIn()) {
->>>>>>> 2a029ce0ad6e2cab5493cd2fcc18919540b1d21b
             finish();
-            if(SharedPrefManager.getInstance(this).getRole().equals("customer")){
+            if (SharedPrefManager.getInstance(this).getRole().equals("customer")) {
                 startActivity(new Intent(this, HomeActivity.class));
 
-            }else{
+            } else {
                 startActivity(new Intent(this, HomeManagerActivity.class));
 
             }
-<<<<<<< HEAD
         }
-=======
-        }*/
->>>>>>> 2a029ce0ad6e2cab5493cd2fcc18919540b1d21b
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
