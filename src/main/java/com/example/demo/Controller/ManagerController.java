@@ -154,13 +154,7 @@ public class ManagerController {
             throw new IllegalArgumentException("Invalid order ID");
         }
     }
-    @RequestMapping("manager/find/{orderId}")
-    public boolean find(@PathVariable("orderId") Integer orderId){
-        Optional<Order> order = orderDAO.findOrderById(orderId);
-        if (order.get().getState().equals("processed"))
-            return true;
-        return false;
-    }
+
     @DeleteMapping("manager/orderDelete/{orderId}")
     public void deleteOrder(@PathVariable("orderId") Integer orderId){
         Optional<Order> order = orderDAO.findOrderById(orderId);
