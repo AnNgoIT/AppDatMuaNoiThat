@@ -31,7 +31,7 @@ public class ManagerController {
 
     private CategoryDAO categoryDAO;
 
-    @GetMapping("manager/countProductByCategory/")
+    @GetMapping("manager/countProductByCategory")
         public ArrayList<Integer> getCountProductByCategory()
     {
         ArrayList<Integer> count = new ArrayList<>();
