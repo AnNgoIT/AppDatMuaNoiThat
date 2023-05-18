@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
         //
         //Search
         searchView = mView.findViewById(R.id.imgvSearch);
-        lvSearch = mView.findViewById(R.id.lvSearch);
+//        lvSearch = mView.findViewById(R.id.lvSearch);
         searchProduct();
         //
         imgvCart=mView.findViewById(R.id.imgvCart);
@@ -247,6 +247,7 @@ public class HomeFragment extends Fragment {
                     startActivity(intent);
                 });
 
+
             }
 
             @Override
@@ -275,6 +276,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
                 recyclerViewCategory.setAdapter(categoryAdapter);
+
             }
             @Override
             public void onFailure(Call<ArrayList<CategoryModel>> call, Throwable t) {

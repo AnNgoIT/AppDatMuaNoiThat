@@ -1,11 +1,18 @@
 package ute.fit.noithatapp.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -18,6 +25,7 @@ import ute.fit.noithatapp.R;
 public class HomeActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewpager;
+    int MIN_DISTANCE=150;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,8 @@ public class HomeActivity extends AppCompatActivity {
         Init();
         //Lấy id user
         System.out.println(SharedPrefManager.getInstance(this).getUserId());
+        //sự kiện kéo xuống sẽ load lại trang
+
     }
 
     @SuppressLint("WrongViewCast")
@@ -45,5 +55,4 @@ public class HomeActivity extends AppCompatActivity {
         //
 
     }
-
 }
