@@ -42,19 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         }
-<<<<<<< HEAD
-        super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_login);
-        //transaction
-        overridePendingTransition(R.anim.slide_in_form_right, R.anim.slide_out_to_left);
-        //
-        Init();
-        ButtonLogin();
-        ButtonSignup();
-    }
-=======
             super.onCreate(savedInstanceState);
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -66,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
             ButtonLogin();
             ButtonSignup();
         }
->>>>>>> 0e526e808566995446331a85d102c123a73ef7e1
     public void ButtonLogin(){
         loginButton.setOnClickListener(view -> {
             String user=String.valueOf(editTextUserName.getText());

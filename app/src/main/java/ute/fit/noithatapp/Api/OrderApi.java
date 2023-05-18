@@ -70,6 +70,6 @@ OrderApi {
     @GET("manager/revenue")
     Call<Long> getTotalRevenue();
 
-    @GET("manager/revenueByDate")
-    Call<Long> getTotalRevenueByDate(@Query("date") String date);
+    @GET("manager/totalRevenueList")
+    Call<ArrayList<Long>> getAllTotalRevenue();
 }

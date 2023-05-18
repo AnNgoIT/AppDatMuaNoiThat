@@ -1,8 +1,5 @@
 package ute.fit.noithatapp.Activity.Fragment;
 
-import android.annotation.SuppressLint;
-import android.gesture.GestureUtils;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,26 +10,15 @@ import android.view.ViewGroup;
 
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -109,36 +95,34 @@ public class RevenueStatisticsFragment extends Fragment {
         retrofitServer = new RetrofitServer();
 
         orderApi = retrofitServer.getRetrofit(Const.ROOT_URL).create(OrderApi.class);
-         orderApi.getOrdersByState("processing").enqueue(new Callback<ArrayList<OrderModel>>() {
+         orderApi.getOrdersByState("processed").enqueue(new Callback<ArrayList<OrderModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderModel>> call, Response<ArrayList<OrderModel>> response) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 0e526e808566995446331a85d102c123a73ef7e1
                 if (response.body().size() != 0) {
-                    orderModelArrayList = response.body();
-                    ArrayList revenue = new ArrayList();
-                    ArrayList<String> day = new ArrayList<>();
-                    for (int i = 0; i < orderModelArrayList.size(); i++) {
-                        Date input = orderModelArrayList.get(i).getDate();
-                        LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        String formattedDate = date.format(dateTimeFormatter);
-                        if (day.contains(formattedDate)) {
-                            continue;
-                        }
-                        day.add(formattedDate);
-                        int finalI = i;
-                        orderApi.getTotalRevenueByDate(formattedDate).enqueue(new Callback<Long>() {
+                        orderModelArrayList = response.body();
+                        ArrayList revenue = new ArrayList();
+                        ArrayList<String> day = new ArrayList<>();
+                        for (int i = 0; i < orderModelArrayList.size(); i++) {
+                            Date input = orderModelArrayList.get(i).getDate();
+                            LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            String formattedDate = date.format(dateTimeFormatter);
+                            if (day.contains(formattedDate)) {
+                                continue;
+                            }
+                            day.add(formattedDate);
+                        orderApi.getAllTotalRevenue().enqueue(new Callback<ArrayList<Long>>() {
                             @Override
-                            public void onResponse(Call<Long> call, Response<Long> response) {
-                                float totalRevenue = response.body()/1000000;
-                                revenue.add(new BarEntry(finalI, totalRevenue));
+                            public void onResponse(Call<ArrayList<Long>> call, Response<ArrayList<Long>> response) {
+                                ArrayList<Long> totalRevenue = response.body();
+                                System.out.println(totalRevenue);
+                                for(int i=0;i<totalRevenue.size();i++){
+                                    revenue.add(new BarEntry(i, (float)totalRevenue.get(i)/1000000));
+                                }
                                 BarDataSet bardataset = new BarDataSet(revenue, "Revenue");
                                 barChart.animateY(3000);
                                 BarData data = new BarData(bardataset);
-                                data.setBarWidth(0.2f);
+                                data.setBarWidth(0.7f);
                                 myXAxis = new MyXAxisFormatter(day);
                                 bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
                                 barChart.setData(data);
@@ -148,14 +132,12 @@ public class RevenueStatisticsFragment extends Fragment {
                                 barChart.getAxisRight().setEnabled(false);
                                 barChart.setFitBars(true);
                             }
-                            @Override
-<<<<<<< HEAD
-                            public void onFailure(Call<Long> call, Throwable t) {
-                            }
-=======
-                            public void onFailure(Call<Long> call, Throwable t) {}
 
->>>>>>> 0e526e808566995446331a85d102c123a73ef7e1
+                            @Override
+                            public void onFailure(Call<ArrayList<Long>> call, Throwable t) {
+
+                            }
+
                         });
                     }
                 }
